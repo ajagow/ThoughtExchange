@@ -4,4 +4,5 @@
     <color name="inputBorder">#979797</color>
     <color name="primaryDark">#222222</color>
     <color name="primaryYellow">#ffbf00</color>
+    <color name="primaryBlue">#0024B2</color>
 </resources>
