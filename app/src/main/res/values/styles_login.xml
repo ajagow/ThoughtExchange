@@ -7,6 +7,10 @@
     <style name="LoginInputLabel" parent="BaseTextInputLabelDark">
         <item name="android:layout_marginBottom">8dp</item>
     </style>
+    <style name="LoginH1" parent="BaseH1Light">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
     <style name="LoginH2" parent="BaseH2Dark">
         <item name="android:layout_marginBottom">20dp</item>
     </style>

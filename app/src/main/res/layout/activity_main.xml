@@ -11,7 +11,13 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.35"></RelativeLayout>
+        android:layout_weight="0.35">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LoginH1"
+            android:text="ThoughtExchange"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="320dp"
@@ -31,13 +37,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/LoginH2"
-                tools:text="Log in" />
+                android:text="Log in" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/LoginInputLabel"
-                tools:text="Username" />
+                android:text="Username" />
             <EditText
                 android:layout_width="match_parent"
                 style="@style/LoginInput"/>
@@ -46,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/LoginInputLabel"
-                tools:text="Password" />
+                android:text="Password" />
             <EditText
                 android:layout_width="match_parent"
                 style="@style/LoginInput" />
