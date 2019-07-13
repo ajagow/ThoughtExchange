@@ -44,18 +44,22 @@
                 android:layout_height="wrap_content"
                 style="@style/LoginInputLabel"
                 android:text="Username" />
+
             <EditText
-                android:layout_width="match_parent"
-                style="@style/LoginInput"/>
+                android:id="@+id/email"
+                style="@style/LoginInput"
+                android:layout_width="match_parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/LoginInputLabel"
                 android:text="Password" />
+
             <EditText
-                android:layout_width="match_parent"
-                style="@style/LoginInput" />
+                android:id="@+id/password"
+                style="@style/LoginInput"
+                android:layout_width="match_parent" />
 
             <Button
                 android:id="@+id/login_btn"

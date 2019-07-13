@@ -3,8 +3,8 @@ package com.mad.thoughtExchange;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -13,18 +13,12 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
-import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.mad.thoughtExchange.models.GsonRequest;
-import com.mad.thoughtExchange.models.LoginModel;
 import com.mad.thoughtExchange.responses.LoginResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,10 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static String URL = "https://blog-api-tutorial1.herokuapp.com/";
 
+    private TextView email;
+    private TextView password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
 
 
     }
@@ -46,9 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
         JSONObject jsonBody = new JSONObject();
 
+        String emailVal = email.getText().toString();
+        String passwordVal = password.getText().toString();
+
         try {
-            jsonBody.put("email", "myname2@email.com");
-            jsonBody.put("password", "password");
+            jsonBody.put("email", emailVal);
+            jsonBody.put("password", passwordVal);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -84,26 +87,4 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(jsonOblect);
     }
 
-    private Response.Listener<LoginModel> createMyReqSuccessListener() {
-        return new Response.Listener<LoginModel>() {
-            @Override
-            public void onResponse(LoginModel response) {
-                // Do whatever you want to do with response;
-                // Like response.tags.getListing_count(); etc. etc.
-                Toast.makeText(getApplicationContext(), "Response:  " + response.toString(), Toast.LENGTH_SHORT).show();
-
-            }
-        };
-    }
-
-    private Response.ErrorListener createMyReqErrorListener() {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Do whatever you want to do with error.getMessage();
-                Toast.makeText(getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        };
-    }
 }
