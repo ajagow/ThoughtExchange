@@ -2,7 +2,7 @@
 <resources>
     <!-- Login/Sign up Themes -->
     <style name="LoginInput" parent="BaseTextInput">
-        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
     </style>
     <style name="LoginInputLabel" parent="BaseTextInputLabelDark">
         <item name="android:layout_marginBottom">8dp</item>
