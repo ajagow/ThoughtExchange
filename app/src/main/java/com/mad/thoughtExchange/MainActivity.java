@@ -52,33 +52,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-//        LoginModel loginModel = new LoginModel();
-//        loginModel.setEmail("myname2@gmail.com");
-//        loginModel.setPassword("password");
-//
-//        Gson gson = new Gson();
-//        String json = gson.toJson(loginModel);
-//
-//        Log.d("LOGIN", json);
-//
-//        Map<String, String> vals = new HashMap<String, String>();
-//        vals.put("Content-Type", "application/json");
-//
-//        GsonRequest<LoginModel> myReq = new GsonRequest<LoginModel>(
-//                URL + "api/v1/users/login/",
-//                loginModel,
-//                LoginModel.class,
-//                vals,
-//                createMyReqSuccessListener(),
-//                createMyReqErrorListener());
-//
-//
-//
-//
-//        JSONParser parser = new JSONParser();
-//        JSONObject jsonBody2 = new JSONObject(json);
-
+        
 
 
         JsonObjectRequest jsonOblect = new JsonObjectRequest(Request.Method.POST, URL + "api/v1/users/login" , jsonBody, new Response.Listener<JSONObject>() {
