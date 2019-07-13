@@ -11,7 +11,13 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.35"></RelativeLayout>
+        android:layout_weight="0.35">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LoginH1"
+            android:text="ThoughtExchange"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="320dp"
@@ -19,7 +25,7 @@
         android:layout_weight="0.5"
         android:layout_gravity="center"
         android:background="@drawable/login_card_background"
-        android:padding="20dp">
+        android:padding="30dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -31,13 +37,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/LoginH2"
-                tools:text="Log in" />
+                android:text="Log in" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/LoginInputLabel"
-                tools:text="Username" />
+                android:text="Username" />
             <EditText
                 android:layout_width="match_parent"
                 style="@style/LoginInput"/>
@@ -46,22 +52,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/LoginInputLabel"
-                tools:text="Password" />
+                android:text="Password" />
             <EditText
                 android:layout_width="match_parent"
                 style="@style/LoginInput" />
 
             <Button
+                android:id="@+id/login_btn"
                 style="@style/BaseButton"
-                android:text="Login"/>
-
-            <TextView
+                android:onClick="onClick"
+                android:text="Login" />
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have an account?"/>
-            <Button
-                style="@style/BaseButton"
-                android:text="Sign up"/>
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/BaseTextInputLabelDark"
+                    android:text="Don't have an account?"/>
+                <Button
+                    style="@style/BaseButtonLink"
+                    android:text="Sign up"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </RelativeLayout>
