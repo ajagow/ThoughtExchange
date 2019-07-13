@@ -58,8 +58,10 @@
                 style="@style/LoginInput" />
 
             <Button
+                android:id="@+id/login_btn"
                 style="@style/BaseButton"
-                android:text="Login"/>
+                android:onClick="onClick"
+                android:text="Login" />
 
             <TextView
                 android:layout_width="wrap_content"
