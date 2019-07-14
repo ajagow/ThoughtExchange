@@ -188,8 +188,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ends at:" />
-
+                            android:text="94"/>
+                        <ImageView
+                            android:layout_width="11dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/coin"
+                            />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

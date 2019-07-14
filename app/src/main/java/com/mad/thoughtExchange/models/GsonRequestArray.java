@@ -1,7 +1,6 @@
 package com.mad.thoughtExchange.models;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GsonRequest<T, U> {
+public class GsonRequestArray<T, U> {
     private RequestQueue requestQueue;
 
     private final Gson gson;
@@ -36,8 +35,8 @@ public class GsonRequest<T, U> {
      * @param clazz Relevant class object, for Gson's reflection
      * @param headers Map of request headers
      */
-    public GsonRequest(int requestType, String url, T dataIn, Context context, Class<T> clazz, Class<U> responseClazz, Map<String, String> headers,
-                            Response.Listener<U> listener, Response.ErrorListener errorListener) {
+    public GsonRequestArray(int requestType, String url, T dataIn, Context context, Class<T> clazz, Class<U> responseClazz, Map<String, String> headers,
+                       Response.Listener<List<U>> listener, Response.ErrorListener errorListener) {
         this.gson = new Gson();
         if (dataIn == null) {
             jsonStringRequest = createNewGetRequest(url, responseClazz, listener, errorListener, headers);
@@ -49,8 +48,8 @@ public class GsonRequest<T, U> {
 
     }
 
-    public GsonRequest(String url, Context context, Class<U> responseClass, Response.Listener<U> listener,
-                            Response.ErrorListener errorListener, Map<String, String> headers) {
+    public GsonRequestArray(String url, Context context, Class<U> responseClass, Response.Listener<List<U>> listener,
+                       Response.ErrorListener errorListener, Map<String, String> headers) {
         this(Request.Method.GET, url, null, context, null, responseClass, headers, listener, errorListener);
     }
 
@@ -62,7 +61,7 @@ public class GsonRequest<T, U> {
     }
 
     private JsonStringRequest createNewGetRequest(String url, final Class<U> responseClazz,
-                                                  final Response.Listener<U> listener,
+                                                  final Response.Listener<List<U>> listener,
                                                   final Response.ErrorListener errorListener,
                                                   final Map<String, String> headers) {
 
@@ -70,13 +69,15 @@ public class GsonRequest<T, U> {
             @Override
             public void onResponse(String response) {
 
-                U typedResponse = gson.fromJson(response, responseClazz);
-                listener.onResponse(typedResponse);
+                Type listOfMyClassObject = TypeToken.getParameterized(List.class, responseClazz).getType();
+                List<U> responses = gson.fromJson(response, listOfMyClassObject);
+
+                listener.onResponse(responses);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 errorListener.onErrorResponse(error);
             }
         }) {
@@ -90,16 +91,20 @@ public class GsonRequest<T, U> {
     }
 
 
-    private JsonStringRequest createNewPostJsonRequest(int requestType, String url, T requestObject, Class<T> clazz, final Class<U> responseClazz, final Response.Listener<U> listener,
-                                                       final Response.ErrorListener errorListener, final Map<String, String> headers) {
+    private JsonStringRequest createNewPostJsonRequest(int requestType, String url, T requestObject,
+                                                       Class<T> clazz, final Class<U> responseClazz,
+                                                       final Response.Listener<List<U>> listener,
+                                                       final Response.ErrorListener errorListener,
+                                                       final Map<String, String> headers) {
 
         String dataIn = gson.toJson(requestObject, clazz);
 
         JsonStringRequest jsonObjectRequest = new JsonStringRequest(requestType, url, dataIn, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                U typedResponse = gson.fromJson(response, responseClazz);
-                listener.onResponse(typedResponse);
+                Type founderListType = new TypeToken<ArrayList<U>>(){}.getType();
+                List<U> responses = gson.fromJson(response, founderListType);
+                listener.onResponse(responses);
             }
         }, new Response.ErrorListener() {
             @Override
