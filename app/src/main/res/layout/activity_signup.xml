@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_gradient"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.35">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LoginH1"
+            android:text="ThoughtExchange"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="0dip"
+        android:layout_weight="0.5"
+        android:layout_gravity="center"
+        android:background="@drawable/login_card_background"
+        android:padding="30dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LoginH2"
+                android:text="Sign up" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LoginInputLabel"
+                android:text="Email" />
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/LoginInput"
+                android:layout_width="match_parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SignupInputLabel"
+                android:text="Password" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SignupInputHelp"
+                android:text="Password must be at least 8 characters"/>
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/LoginInput"
+                android:inputType="textPassword"
+                android:layout_width="match_parent" />
+
+            <Button
+                android:id="@+id/login_btn"
+                style="@style/BaseButton"
+                android:onClick="onClick"
+                android:text="Sign up" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/BaseTextInputLabelDark"
+                    android:text="Already have an account?"/>
+                <Button
+                    style="@style/BaseButtonLink"
+                    android:text="Log in"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.15"></RelativeLayout>
+
+</LinearLayout>

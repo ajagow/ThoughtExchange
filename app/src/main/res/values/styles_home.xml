@@ -34,4 +34,17 @@
     <style name="homefeed_like" parent="homefeed_likedislike_button">
         <item name="android:layout_alignParentRight">true</item>
     </style>
+
+    <!-- HOMEFEED INVEST CARD -->
+    <style name="homefeed_invest_card">
+        <item name="android:background">@drawable/card_small_background</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:paddingTop">25dp</item>
+        <item name="android:paddingBottom">25dp</item>
+    </style>
+    <style name="homefeed_invest_card_text" parent="homefeed_card_text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
 </resources>
