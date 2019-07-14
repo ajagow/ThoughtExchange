@@ -3,10 +3,13 @@
     <!--HOMEFEED TABS-->
     <style name="homefeed_tab" parent="BaseButtonLink">
         <item name="android:textColor">@color/primaryDark</item>
-        <item name="android:background">@color/lightGreyED</item>
     </style>
-    <style name="homefeed_tab_selected" parent="homefeed_tab"></style>
-    <style name="homefeed_tab_unselected" parent="homefeed_tab"></style>
+    <style name="homefeed_tab_selected" parent="homefeed_tab">
+        <item name="android:background">@drawable/tab_selected_background</item>
+    </style>
+    <style name="homefeed_tab_unselected" parent="homefeed_tab">
+        <item name="android:background">@color/LightGreyFD</item>
+    </style>
 
     <!--HOMEFEED CARD-->
     <style name="homefeed_card">
