@@ -1,72 +1,77 @@
 package com.mad.thoughtExchange.models;
 
-import android.util.Log;
+import android.content.Context;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
-import com.android.volley.error.ParseError;
-import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.error.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-public class GsonRequest<T> extends Request<T> {
-    private final Gson gson = new Gson();
-    private final Class<T> clazz;
-    private final Map<String, String> headers;
-    private final Response.Listener<T> listener;
-    private final Object dataIn;
+public class GsonRequest<T, U> {
+    private RequestQueue requestQueue;
+
+    private final Gson gson;
+    private JsonStringRequest jsonStringRequest;
+
+    private static final String PROTOCOL_CHARSET = "utf-8";
+
+    /** Content type for request. */
+    private static final String PROTOCOL_CONTENT_TYPE =
+            String.format("application/json; charset=%s", PROTOCOL_CHARSET);
 
     /**
-     * Make a GET request and return a parsed object from JSON.
+     * Make a POST request and return a parsed object from JSON.
      *
      * @param url URL of the request to make
      * @param clazz Relevant class object, for Gson's reflection
      * @param headers Map of request headers
      */
-    public GsonRequest(String url, Object dataIn, Class<T> clazz, Map<String, String> headers,
-                       Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        super(Method.POST, url, errorListener);
-        this.dataIn = dataIn;
-        this.clazz = clazz;
-        this.headers = headers;
-        this.listener = listener;
+    public GsonRequest(int requestType, String url, T dataIn, Context context, Class<T> clazz, Class<U> responseClazz, Map<String, String> headers,
+                       Response.Listener<U> listener, Response.ErrorListener errorListener) {
+        this.gson = new Gson();
+        jsonStringRequest = createNewPostJsonRequest(requestType, url, dataIn, clazz, responseClazz, listener, errorListener, headers);
+        this.requestQueue = Volley.newRequestQueue(context);
+
     }
 
-    @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
-        return headers != null ? headers : super.getHeaders();
+
+    public void volley() {
+        this.requestQueue.add(jsonStringRequest);
     }
 
-    @Override
-    protected void deliverResponse(T response) {
-        listener.onResponse(response);
+
+    private JsonStringRequest createNewPostJsonRequest(int requestType, String url, T requestObject, Class<T> clazz, final Class<U> responseClazz, final Response.Listener<U> listener,
+                                                       final Response.ErrorListener errorListener, final Map<String, String> headers) {
+
+        String dataIn = gson.toJson(requestObject, clazz);
+
+        JsonStringRequest jsonObjectRequest = new JsonStringRequest(requestType, url, dataIn, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                U typedResponse = gson.fromJson(response, responseClazz);
+                listener.onResponse(typedResponse);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                errorListener.onErrorResponse(error);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return headers;
+            }
+        };
+
+        return jsonObjectRequest;
     }
 
-    @Override
-    public byte[] getBody() throws AuthFailureError {
-        Log.d("LOGIN", gson.toJson(dataIn).getBytes().toString());
 
-        return gson.toJson(dataIn).getBytes();
-    }
 
-    @Override
-    protected Response<T> parseNetworkResponse(NetworkResponse response) {
-        try {
-            String json = new String(
-                    response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
-            return Response.success(
-                    gson.fromJson(json, clazz),
-                    HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
-            return Response.error(new ParseError(e));
-        } catch (JsonSyntaxException e) {
-            return Response.error(new ParseError(e));
-        }
-    }
+
 }

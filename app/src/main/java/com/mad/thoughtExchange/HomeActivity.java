@@ -22,9 +22,13 @@ public class HomeActivity extends AppCompatActivity {
         walletImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent explicitIntent = new Intent(HomeActivity.this, WalletActivity.class); // WalletActivity needs to be created
-                startActivity(explicitIntent);
+//                Intent explicitIntent = new Intent(HomeActivity.this, WalletActivity.class); // WalletActivity needs to be created
+//                startActivity(explicitIntent);
             }
         });
+    }
+
+    private void getCurrentFeedPost() {
+
     }
 }
