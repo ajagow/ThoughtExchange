@@ -12,9 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeInvestActivity"
             android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/noAnimTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +23,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".HomeActivity"
+        <activity
+            android:name=".HomeActivity"
+            android:theme="@style/noAnimTheme"
             android:screenOrientation="portrait">
 
         </activity>

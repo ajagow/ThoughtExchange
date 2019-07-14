@@ -11,19 +11,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeInvestActivity extends AppCompatActivity {
+
+    private Button investTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home_invest);
 
-        final Button investTab = findViewById(R.id.tab_invest);
+        investTab = findViewById(R.id.tab_feed);
 
         investTab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent explicitIntent = new Intent(HomeActivity.this, HomeInvestActivity.class);
+                Intent explicitIntent = new Intent(HomeInvestActivity.this, HomeActivity.class);
                 startActivity(explicitIntent);
             }
         });

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/primaryYellow">
 
     <include layout="@layout/activity_headerfooter" />
 
@@ -12,12 +13,14 @@
 
         <Button
             style="@style/homefeed_tab_selected"
+            android:id="@+id/tab_feed"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="0.5"
             android:text="Feed" />
 
         <Button
+            android:id="@+id/tab_invest"
             style="@style/homefeed_tab_unselected"
             android:layout_width="0dp"
             android:layout_height="50dp"

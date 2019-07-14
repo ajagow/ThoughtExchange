@@ -22,7 +22,7 @@
     <RelativeLayout
         android:layout_width="320dp"
         android:layout_height="0dip"
-        android:layout_weight="0.5"
+        android:layout_weight="0.6"
         android:layout_gravity="center"
         android:background="@drawable/login_card_background"
         android:padding="30dp">
@@ -38,6 +38,17 @@
                 android:layout_height="wrap_content"
                 style="@style/LoginH2"
                 android:text="Sign up" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LoginInputLabel"
+                android:text="Name" />
+
+            <EditText
+                android:id="@+id/name"
+                style="@style/LoginInput"
+                android:layout_width="match_parent" />
 
             <TextView
                 android:layout_width="wrap_content"
