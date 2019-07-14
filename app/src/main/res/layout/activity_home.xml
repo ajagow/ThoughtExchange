@@ -39,6 +39,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/current_feed_post"
                 style="@style/homefeed_card_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
