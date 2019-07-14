@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class SignupActivity extends AppCompatActivity {
 
     private static String URL = "https://blog-api-tutorial1.herokuapp.com/";
-    private static String USERS_PATH = "api/v1/users/";
+    private static String USERS_PATH = "api/v1/users";
 
     private TextView email;
     private TextView password;
