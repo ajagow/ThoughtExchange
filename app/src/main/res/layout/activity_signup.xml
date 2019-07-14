@@ -81,7 +81,7 @@
             <Button
                 android:id="@+id/login_btn"
                 style="@style/BaseButton"
-                android:onClick="onClick"
+                android:onClick="onSubmit"
                 android:text="Sign up" />
             <LinearLayout
                 android:layout_width="wrap_content"

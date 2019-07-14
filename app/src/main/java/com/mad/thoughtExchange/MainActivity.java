@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -41,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                this.onClick(view);
+                onSubmit(view);
             }
         });
     }
 
-    public void onClick(View view) {
+    public void onSubmit(View view) {
 
         String emailVal = email.getText().toString();
         String passwordVal = password.getText().toString();
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         loginModel.setEmail(emailVal);
         loginModel.setPassword(passwordVal);
 
-        Response.Listener<LoginResponse> resonseListener = new Response.Listener<LoginResponse>() {
+        Response.Listener<LoginResponse> responseListener = new Response.Listener<LoginResponse>() {
             @Override
             public void onResponse(LoginResponse response) {
                 onSuccessfulLogin(response);
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         GsonRequest<LoginModel, LoginResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, loginModel, this,
-                LoginModel.class, LoginResponse.class, new HashMap<String, String>(), resonseListener, errorListener);
+                LoginModel.class, LoginResponse.class, new HashMap<String, String>(), responseListener, errorListener);
 
         gsonRequest.volley();
 
