@@ -25,6 +25,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="BaseSmall" parent="TextDark">
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <!-- COMPONENT STYLES-->
     <style name="BaseTextInput">
         <item name="android:layout_height">32dp</item>

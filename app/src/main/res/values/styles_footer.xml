@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Footer" parent="BaseSmall">
+        <!--<item name="android:padding">8dp</item>-->
+    </style>
+
+    <style name="FooterAddButton" parent="BaseButton">
+        <item name="android:background">@drawable/footer_add_button</item>
+        <item name="android:textSize">72sp</item>
+    </style>
+</resources>

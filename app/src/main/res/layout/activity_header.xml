@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    style="@style/Header"
+    android:gravity="center_vertical|center_horizontal"
+    android:background="@color/white"
+    android:layout_gravity="top">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/settings"
+        android:src="@drawable/setting_cog"/>
+
+    <TextView
+        android:id="@+id/logo"
+        style="@style/HeaderAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ThoughtExchange" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/HeaderCoinWrapper">
+
+        <TextView
+            android:id="@+id/coins"
+            style="@style/HeaderCoins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1999" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/coin"/>
+    </LinearLayout>
+</LinearLayout>
