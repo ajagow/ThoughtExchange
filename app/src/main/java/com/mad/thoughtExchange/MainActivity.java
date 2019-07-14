@@ -4,28 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.LoginModel;
 import com.mad.thoughtExchange.responses.LoginResponse;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String URL = "https://blog-api-tutorial1.herokuapp.com/";
+    static String URL = "https://blog-api-tutorial1.herokuapp.com/";
     private static String USERS_PATH = "api/v1/users/login";
 
     private TextView email;
@@ -42,10 +39,7 @@ public class MainActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.login_btn);
     }
 
-    public void onClick(View view) throws JSONException {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JSONObject jsonBody = new JSONObject();
+    public void onClick(View view) {
 
         String emailVal = email.getText().toString();
         String passwordVal = password.getText().toString();
@@ -65,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                try {
+                    String body = new String(error.networkResponse.data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
             }
