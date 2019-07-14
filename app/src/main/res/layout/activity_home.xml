@@ -50,10 +50,12 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/dislike_button"
                     style="@style/homefeed_dislike"
-                    android:background="@drawable/dislike_button"/>
+                    android:background="@drawable/dislike_button" />
 
                 <Button
+                    android:id="@+id/like_button"
                     style="@style/homefeed_like"
                     android:background="@drawable/like_button" />
             </RelativeLayout>
