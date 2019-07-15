@@ -28,52 +28,59 @@ public class SignupActivity extends AppCompatActivity {
     private static String URL = "https://blog-api-tutorial1.herokuapp.com/";
     private static String USERS_PATH = "api/v1/users";
 
+    private TextView name;
     private TextView email;
     private TextView password;
-    private Button login_btn;
+    private Button signup_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_signup);
 
+        name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-
-        login_btn = findViewById(R.id.login_btn);
-        login_btn.setOnClickListener(new View.OnClickListener() {
+        signup_btn = findViewById(R.id.signup_btn);
+        System.out.println("reached here");
+        signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                this.onClick(view);
+                onSignup(view);
             }
         });
     }
 
-    public void onClick(View view) throws JSONException {
+    public void onSignup(View view) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JSONObject jsonBody = new JSONObject();
 
+        String nameVal = name.getText().toString();
         String emailVal = email.getText().toString();
         String passwordVal = password.getText().toString();
 
         SignupModel signupModel = new SignupModel();
+        signupModel.setEmail(nameVal);
         signupModel.setEmail(emailVal);
         signupModel.setPassword(passwordVal);
+
+        System.out.println(nameVal); ///
+        System.out.println(emailVal); ///
+        System.out.println(passwordVal); ///
 
         Response.Listener<SignupResponse> responseListener = new Response.Listener<SignupResponse>() {
             @Override
             public void onResponse(SignupResponse response) {
-                onSuccessfulLogin(response);
+                onSuccessfulSignup(response);
+                System.out.println(response.getToken()); ///
             }
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 Toast.makeText(getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
             }
         };
 
@@ -85,9 +92,9 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     // on successful login attempt, go to HomeActivity
-    private void onSuccessfulLogin(SignupResponse loginResponse) {
+    private void onSuccessfulSignup(SignupResponse signupResponse) {
         Intent explicitIntent = new Intent(SignupActivity.this, HomeActivity.class);
-        explicitIntent.putExtra("jwtToken", loginResponse.getToken());
+        explicitIntent.putExtra("jwtToken", signupResponse.getToken());
         startActivity(explicitIntent);
     }
 }

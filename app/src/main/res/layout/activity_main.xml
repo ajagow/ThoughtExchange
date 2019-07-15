@@ -78,6 +78,7 @@
                     style="@style/BaseTextInputLabelDark"
                     android:text="Don't have an account?"/>
                 <Button
+                    android:id="@+id/signup_btn"
                     style="@style/BaseButtonLink"
                     android:text="Sign up"/>
 

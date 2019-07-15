@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView email;
     private TextView password;
     private Button submitButton;
+    private Button signupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         submitButton = findViewById(R.id.login_btn);
+        signupButton = findViewById(R.id.signup_btn);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +45,23 @@ public class MainActivity extends AppCompatActivity {
                 onSubmit(view);
             }
         });
+
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSignup(view);
+            }
+        });
+    }
+
+    public void onSignup(View view) {
+        Intent intentToSignup = new Intent(MainActivity.this, SignupActivity.class);
+        startActivity(intentToSignup);
     }
 
     public void onSubmit(View view) {
-
         String emailVal = email.getText().toString();
         String passwordVal = password.getText().toString();
-
 
         LoginModel loginModel = new LoginModel();
         loginModel.setEmail(emailVal);
@@ -71,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Toast.makeText(getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
             }
         };
 
