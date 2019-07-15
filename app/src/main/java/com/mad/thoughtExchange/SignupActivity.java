@@ -42,7 +42,7 @@ public class SignupActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         signup_btn = findViewById(R.id.signup_btn);
-        System.out.println("reached here");
+
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +87,7 @@ public class SignupActivity extends AppCompatActivity {
         gsonRequest.volley();
     }
 
-    // on successful signup attempt, go to HomeActivity
+    // on successful sign up attempt, go to HomeActivity
     private void onSuccessfulSignup(SignupResponse signupResponse) {
         Intent explicitIntent = new Intent(SignupActivity.this, HomeActivity.class);
         explicitIntent.putExtra("jwtToken", signupResponse.getToken());

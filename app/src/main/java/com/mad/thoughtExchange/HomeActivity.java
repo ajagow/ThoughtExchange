@@ -30,19 +30,22 @@ public class HomeActivity extends AppCompatActivity {
     private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/24";
     private ImageView walletImage;
     private TextView currentFeedPost;
+    private Button investTabButton;
     private int currentPostId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         walletImage = findViewById(R.id.footer_wallet);
+        investTabButton = findViewById(R.id.tab_invest);
         currentFeedPost = findViewById(R.id.current_feed_post);
         currentPostId = -1;
 
-
         final Button likeButton = findViewById(R.id.like_button);
         final Button dislikeButton = findViewById(R.id.dislike_button);
+
         changeBackgroundOnClick(likeButton, R.drawable.like_button_clicked, R.drawable.like_button);
         changeBackgroundOnClick(dislikeButton, R.drawable.dislike_button_clicked, R.drawable.dislike_button);
         getCurrentFeedPost();
@@ -50,11 +53,18 @@ public class HomeActivity extends AppCompatActivity {
         walletImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent explicitIntent = new Intent(HomeActivity.this, HomeInvestActivity.class);
+                Intent explicitIntent = new Intent(HomeActivity.this, HomeInvestActivity.class); // Change to wallet activity
                 startActivity(explicitIntent);
             }
         });
 
+        investTabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentToInvestments = new Intent(HomeActivity.this, HomeInvestActivity.class);
+                startActivity(intentToInvestments);
+            }
+        });
     }
 
     /**
