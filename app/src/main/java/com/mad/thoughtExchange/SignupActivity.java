@@ -2,6 +2,7 @@ package com.mad.thoughtExchange;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,7 +19,6 @@ import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.SignupModel;
 import com.mad.thoughtExchange.responses.SignupResponse;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class SignupActivity extends AppCompatActivity {
 
     private static String URL = "https://blog-api-tutorial1.herokuapp.com/";
-    private static String USERS_PATH = "api/v1/users";
+    private static String USERS_PATH = "api/v1/users/";
 
     private TextView name;
     private TextView email;
@@ -61,25 +61,22 @@ public class SignupActivity extends AppCompatActivity {
         String passwordVal = password.getText().toString();
 
         SignupModel signupModel = new SignupModel();
-        signupModel.setEmail(nameVal);
+        signupModel.setName(nameVal);
         signupModel.setEmail(emailVal);
         signupModel.setPassword(passwordVal);
-
-        System.out.println(nameVal); ///
-        System.out.println(emailVal); ///
-        System.out.println(passwordVal); ///
-
+        
         Response.Listener<SignupResponse> responseListener = new Response.Listener<SignupResponse>() {
             @Override
             public void onResponse(SignupResponse response) {
                 onSuccessfulSignup(response);
-                System.out.println(response.getToken()); ///
+                Log.d("OnResponse", response.getToken()); ///
             }
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR", error.networkResponse.toString());
                 Toast.makeText(getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         };
@@ -88,10 +85,9 @@ public class SignupActivity extends AppCompatActivity {
                 SignupModel.class, SignupResponse.class, new HashMap<String, String>(), responseListener, errorListener);
 
         gsonRequest.volley();
-
     }
 
-    // on successful login attempt, go to HomeActivity
+    // on successful signup attempt, go to HomeActivity
     private void onSuccessfulSignup(SignupResponse signupResponse) {
         Intent explicitIntent = new Intent(SignupActivity.this, HomeActivity.class);
         explicitIntent.putExtra("jwtToken", signupResponse.getToken());

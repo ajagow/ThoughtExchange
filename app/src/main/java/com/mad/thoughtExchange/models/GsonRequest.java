@@ -54,9 +54,6 @@ public class GsonRequest<T, U> {
         this(Request.Method.GET, url, null, context, null, responseClass, headers, listener, errorListener);
     }
 
-
-
-
     public void volley() {
         this.requestQueue.add(jsonStringRequest);
     }
@@ -69,14 +66,12 @@ public class GsonRequest<T, U> {
         JsonStringRequest jsonObjectRequest = new JsonStringRequest(url, null, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 U typedResponse = gson.fromJson(response, responseClazz);
                 listener.onResponse(typedResponse);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 errorListener.onErrorResponse(error);
             }
         }) {
@@ -94,6 +89,7 @@ public class GsonRequest<T, U> {
                                                        final Response.ErrorListener errorListener, final Map<String, String> headers) {
 
         String dataIn = gson.toJson(requestObject, clazz);
+        Log.d("JSON Request", dataIn); //
 
         JsonStringRequest jsonObjectRequest = new JsonStringRequest(requestType, url, dataIn, new Response.Listener<String>() {
             @Override
