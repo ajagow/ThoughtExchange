@@ -5,9 +5,9 @@ Sell your thoughts
 
 ## Checkpoint 2
 ### Must:
-- User must be able to create a new account
-- User must be able to login with an existing account
-- User must be able to view the homepage screen
+- ---User must be able to create a new account---
+- ---User must be able to login with an existing account---
+- ---User must be able to view the homepage screen---
 - User must be able to navigate between pages (content might not be there yet)
 
 ### Should:
@@ -41,3 +41,12 @@ Sell your thoughts
 ### Could:
 - Have Activity that views top past ideas (of day, week, month, year)
 - Have a graph that shows a user’s growth over time
+
+## TODO
+
+### Layout
+  * Button: Signup activity to Login activity 
+### Frontend validations
+    * check email input format
+    * password confirmation
+
