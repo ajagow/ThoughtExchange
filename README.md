@@ -46,6 +46,11 @@ Sell your thoughts
 
 ### Layout
   * Button: Signup activity to Login activity 
+  * Wallet Activity
+  * Settings(?) activity
+  * new idea activity
+  * new investment activity
+
 ### Frontend validations
     * check email input format
     * password confirmation
