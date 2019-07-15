@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- New Post Themes -->
+    <style name="NewPostInput" parent="BaseTextInput">
+        <item name="android:layout_marginBottom">15dp</item>
+    </style>
+    <style name="NewPostInputLabel" parent="BaseTextInputLabelDark">
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+    <style name="NewPostInputLabelMedium" parent="BaseTextInputLabelMedium">
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+    <style name="NewPostInputHelp" parent="BaseTextInputLabelDark">
+        <item name="android:textColor">@color/LightGray62</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+    <style name="NewPostH1" parent="BaseH1Light">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+    <style name="NewPostH2" parent="BaseH2Dark">
+
+    </style>
+
+</resources>
