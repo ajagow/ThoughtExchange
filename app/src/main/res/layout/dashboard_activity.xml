@@ -13,6 +13,7 @@
         layout="@layout/activity_header"
         />
 
+
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -24,6 +25,45 @@
         android:padding="1dp"
         android:id="@+id/main_container">
 
+        <RelativeLayout
+            android:id="@+id/tab_header_and_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/tab_header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="74dp">
+
+                <Button
+                    android:id="@+id/tab_feed"
+                    style="@style/homefeed_tab_unselected"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.5"
+                    android:text="Feed" />
+
+
+                <Button
+                    android:id="@+id/tab_invest"
+                    style="@style/homefeed_tab_unselected"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.5"
+                    android:text="Invest" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/navbar_line"
+                android:layout_width="210dp"
+                android:layout_height="4dp"
+                android:layout_gravity="start"
+                android:background="@color/primaryBlue"
+                android:layout_below="@+id/tab_header"/>
+        </RelativeLayout>
+
+
     </FrameLayout>
 
     <com.luseen.spacenavigation.SpaceNavigationView
@@ -32,11 +72,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:space_item_icon_only_size="@dimen/space_item_icon_only_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:space_background_color="@color/primaryBlue"
-        />
+        app:space_item_icon_only_size="@dimen/space_item_icon_only_size" />
 
     <!--<com.google.android.material.bottomnavigation.BottomNavigationView-->
         <!--android:id="@+id/nav_view"-->

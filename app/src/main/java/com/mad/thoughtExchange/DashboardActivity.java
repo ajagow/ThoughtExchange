@@ -1,5 +1,7 @@
 package com.mad.thoughtExchange;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -16,6 +18,11 @@ import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -38,9 +45,13 @@ public class DashboardActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
 
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
+        RelativeLayout tabHeader = findViewById(R.id.tab_header_and_line);
 
         NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
-        navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm);
+        navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader);
+
+        Button invest = findViewById(R.id.tab_invest);
+
 
     }
 }

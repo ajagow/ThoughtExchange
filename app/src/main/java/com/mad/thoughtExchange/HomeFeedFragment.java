@@ -1,5 +1,7 @@
 package com.mad.thoughtExchange;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,7 +58,7 @@ public class HomeFeedFragment extends Fragment {
 
 
         walletImage = view.findViewById(R.id.footer_wallet);
-        investTabButton = view.findViewById(R.id.tab_invest);
+        investTabButton = getActivity().findViewById(R.id.tab_invest);
         currentFeedPost = view.findViewById(R.id.current_feed_post);
         currentPostId = -1;
 
@@ -70,7 +73,20 @@ public class HomeFeedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Fragment s = getFragmentManager().findFragmentByTag("3");
-                getFragmentManager().beginTransaction().hide(HomeFeedFragment.this).show(s).commit();
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left).hide(HomeFeedFragment.this).show(s).commit();
+
+                    View nav = getActivity().findViewById(R.id.navbar_line);
+
+                    Log.d("HERE", "here");
+
+                    ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",0f,550f);
+                    textViewAnimator.setDuration(750);
+                    textViewAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                    AnimatorSet set = new AnimatorSet();
+                    set.play(textViewAnimator);
+                    set.start();
+
 
             }
         });

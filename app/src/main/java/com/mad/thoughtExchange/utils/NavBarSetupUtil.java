@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,7 +19,8 @@ import java.util.List;
 
 public class NavBarSetupUtil {
 
-    public void setupNavBar(Bundle savedInstanceState, SpaceNavigationView spaceNavigationView, final FragmentManager fragmentManager) {
+    public void setupNavBar(Bundle savedInstanceState, final SpaceNavigationView spaceNavigationView,
+                            final FragmentManager fragmentManager, final RelativeLayout tabHeader) {
 
         spaceNavigationView.showIconOnly();
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
@@ -29,19 +32,20 @@ public class NavBarSetupUtil {
             public void onCentreButtonClick() {
                 Fragment active = getVisibleFragment(fragmentManager);
                 Log.d("CLICK",  "  activetag: " + active.getTag());
+                tabHeader.setVisibility(View.INVISIBLE);
                 Fragment centreFragment = fragmentManager.findFragmentByTag("2");
                 fragmentManager.beginTransaction().hide(active).show(centreFragment).commit();
             }
 
             @Override
             public void onItemClick(int itemIndex, String itemName) {
-                onAnyItemClick(fragmentManager, itemName);
+                onAnyItemClick(fragmentManager, itemName, tabHeader);
 
             }
 
             @Override
             public void onItemReselected(int itemIndex, String itemName) {
-                onAnyItemClick(fragmentManager, itemName);
+                onAnyItemClick(fragmentManager, itemName, tabHeader);
 
             }
         });
@@ -58,8 +62,9 @@ public class NavBarSetupUtil {
         return null;
     }
 
-    private void onAnyItemClick(FragmentManager fragmentManager, String itemName) {
+    private void onAnyItemClick(FragmentManager fragmentManager, String itemName, RelativeLayout tabHeader) {
         Fragment active = getVisibleFragment(fragmentManager);
+        tabHeader.setVisibility(View.VISIBLE);
         Fragment newFragment = null;
         if (itemName.equals("HOME")) {
             Log.d("CLICK", "SWITCH TO 1");
