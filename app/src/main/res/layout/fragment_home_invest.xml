@@ -5,31 +5,31 @@
     android:layout_height="match_parent"
     tools:context=".HomeInvestFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="74dp">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginTop="74dp">-->
 
-        <Button
-            android:id="@+id/tab_feed"
-            style="@style/homefeed_tab_unselected"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.5"
-            android:text="Feed" />
+        <!--<Button-->
+            <!--android:id="@+id/tab_feed"-->
+            <!--style="@style/homefeed_tab_unselected"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:text="Feed" />-->
 
-        <Button
-            android:id="@+id/tab_invest"
-            style="@style/homefeed_tab_selected"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.5"
-            android:text="Invest" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/tab_invest"-->
+            <!--style="@style/homefeed_tab_selected"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:text="Invest" />-->
+    <!--</LinearLayout>-->
 
     <ScrollView
         android:layout_width="340dp"
-        android:layout_height="440dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:scrollbars="none"
         android:layout_marginTop="130dp">
@@ -37,7 +37,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
 
             <LinearLayout
                 style="@style/homefeed_invest_card"

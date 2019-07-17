@@ -1,5 +1,7 @@
 package com.mad.thoughtExchange;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,7 +35,6 @@ public class HomeFeedFragment extends Fragment {
     private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/24";
     private ImageView walletImage;
     private TextView currentFeedPost;
-    private Button investTabButton;
     private int currentPostId;
 
     public HomeFeedFragment() {
@@ -55,7 +57,6 @@ public class HomeFeedFragment extends Fragment {
 
 
         walletImage = view.findViewById(R.id.footer_wallet);
-        investTabButton = view.findViewById(R.id.tab_invest);
         currentFeedPost = view.findViewById(R.id.current_feed_post);
         currentPostId = -1;
 
@@ -66,14 +67,6 @@ public class HomeFeedFragment extends Fragment {
         changeBackgroundOnClick(dislikeButton, R.drawable.dislike_button_clicked, R.drawable.dislike_button);
         getCurrentFeedPost();
 
-        investTabButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment s = getFragmentManager().findFragmentByTag("3");
-                getFragmentManager().beginTransaction().hide(HomeFeedFragment.this).show(s).commit();
-
-            }
-        });
 
         return view;
     }
