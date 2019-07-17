@@ -5,10 +5,96 @@
     android:layout_height="match_parent"
     tools:context=".NewContentFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/login_card_background"
+        android:padding="30dp"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/NewPostH2"
+                android:text="New Post" />
+
+            <View
+                android:layout_width="100dp"
+                android:paddingBottom="-200dp"
+                android:layout_height="4dp"
+                android:layout_gravity="start"
+                android:background="@color/primaryTurquoise" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/NewPostInputLabel"
+                android:text="Content" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NewPostInputLabelMedium"
+                    android:text="What would you like to post?" />
+
+                <TextView
+                    android:id="@+id/text_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NewPostInputLabelMedium"
+                    android:layout_alignParentEnd="true"
+                    android:text="200 characters left" />
+
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/newpost_content"
+                style="@style/NewPostInput"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignStart="@+id/newpost_content"
+                android:gravity="top"
+                android:maxLength="200" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/NewPostInputLabel"
+                android:text="Initial Investment" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/NewPostInputLabelMedium"
+                android:text="How much are you willing to invest in this?" />
+
+            <EditText
+                android:id="@+id/newpost_initial_investment"
+                style="@style/NewPostInput"
+                android:layout_width="match_parent"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/newpost_submit"
+                style="@style/BaseButton"
+                android:text="Post" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

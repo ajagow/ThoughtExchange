@@ -13,8 +13,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
+            android:label="homeactivity2"></activity>
+        <activity
+            android:name=".DashboardActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/noAnimTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,19 +25,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/noAnimTheme"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".SignupActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".CreatePostActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/noAnimTheme"></activity>
+        <activity
+            android:name=".SignupActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".CreatePostActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

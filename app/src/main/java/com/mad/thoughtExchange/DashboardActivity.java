@@ -3,53 +3,44 @@ package com.mad.thoughtExchange;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.luseen.spacenavigation.SpaceItem;
+import com.luseen.spacenavigation.SpaceNavigationView;
+import com.luseen.spacenavigation.SpaceOnClickListener;
+import com.luseen.spacenavigation.SpaceOnLongClickListener;
+import com.mad.thoughtExchange.utils.NavBarSetupUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class HomeActivity2 extends AppCompatActivity {
-    private TextView mTextMessage;
+import java.util.List;
 
-    final Fragment fragment1 = new NewContentFragment();
+public class DashboardActivity extends AppCompatActivity {
+
+    final Fragment fragment1 = new HomeFeedFragment();
+    final Fragment fragment2 = new NewContentFragment();
+    final Fragment fragment3 = new HomeInvestFragment();
     final FragmentManager fm = getSupportFragmentManager();
 
-    Fragment active = fragment1;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText("home");
-                    return true;
-                case R.id.navigation_dashboard:
-                    fm.beginTransaction().hide(active).show(fragment1).commit();
-                    active = fragment1;
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText("notification");
-                    return true;
-            }
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home2);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-//        mTextMessage = findViewById(R.id.message);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        setContentView(R.layout.dashboard_activity);
 
+        fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
+        fm.beginTransaction().add(R.id.main_container, fragment3, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
-    }
 
+        SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
+
+        NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
+        navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm);
+
+    }
 }

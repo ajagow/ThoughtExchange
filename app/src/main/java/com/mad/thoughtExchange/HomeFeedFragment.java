@@ -1,110 +1,155 @@
 package com.mad.thoughtExchange;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.mad.thoughtExchange.models.GsonRequestArray;
+import com.mad.thoughtExchange.responses.FeedPostResponse;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFeedFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFeedFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFeedFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/24";
+    private ImageView walletImage;
+    private TextView currentFeedPost;
+    private Button investTabButton;
+    private int currentPostId;
 
     public HomeFeedFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFeedFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFeedFragment newInstance(String param1, String param2) {
-        HomeFeedFragment fragment = new HomeFeedFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_feed, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_feed, container, false);
+
+        Log.d("FEED", "log");
+
+
+        walletImage = view.findViewById(R.id.footer_wallet);
+        investTabButton = view.findViewById(R.id.tab_invest);
+        currentFeedPost = view.findViewById(R.id.current_feed_post);
+        currentPostId = -1;
+
+        final Button likeButton = view.findViewById(R.id.like_button);
+        final Button dislikeButton = view.findViewById(R.id.dislike_button);
+
+        changeBackgroundOnClick(likeButton, R.drawable.like_button_clicked, R.drawable.like_button);
+        changeBackgroundOnClick(dislikeButton, R.drawable.dislike_button_clicked, R.drawable.dislike_button);
+        getCurrentFeedPost();
+
+        investTabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment s = getFragmentManager().findFragmentByTag("3");
+                getFragmentManager().beginTransaction().hide(HomeFeedFragment.this).show(s).commit();
+
+            }
+        });
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Change background image of specified component on click
+     * @param clickedComponent component being listened to
+     * @param clickedBackground the new background when clicked on
+     * @param releaseInitBackground the initial background to revert to after click
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private void changeBackgroundOnClick(final View clickedComponent,
+                                         final int clickedBackground,
+                                         final int releaseInitBackground) {
+        clickedComponent.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    clickedComponent.setBackgroundResource(clickedBackground);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    clickedComponent.setBackgroundResource(releaseInitBackground);
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void getCurrentFeedPost() {
+
+        Response.Listener<List<FeedPostResponse>> resonseListener = new Response.Listener<List<FeedPostResponse>>() {
+            @Override
+            public void onResponse(List<FeedPostResponse> response) {
+
+                getMarketPostData(response);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                onError(error);
+            }
+        };
+
+        String token = getActivity().getIntent().getStringExtra("jwtToken");
+        Map<String, String> headers = new HashMap<>();
+        headers.put("api-token", token);
+        headers.put("Content-Type", "application/json");
+
+        GsonRequestArray<String, FeedPostResponse> gsonRequest = new GsonRequestArray<String, FeedPostResponse>(MainActivity.URL + POSTS_PATH, getContext(),
+                FeedPostResponse.class, resonseListener, errorListener, headers);
+
+        gsonRequest.volley();
+
+    }
+
+    private void onError(VolleyError error) {
+        Toast.makeText(getActivity().getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    // update market feed post with information
+    private void getMarketPostData(List<FeedPostResponse> feedPostResponses) {
+        if (feedPostResponses.size() == 0) {
+            currentFeedPost.setText("no new posts");
+        }
+
+        else {
+            FeedPostResponse feedPostResponse = feedPostResponses.get(0);
+            String postContent = feedPostResponse.getContents();
+
+            currentFeedPost.setText(postContent);
+            currentPostId = feedPostResponse.getPost_id();
+        }
     }
 }
