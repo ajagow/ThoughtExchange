@@ -100,6 +100,7 @@ public class NavBarSetupUtil {
         final int exit;
 
         Log.d("CLICK HERE", "kdfls");
+        moveLineNoAnimation(navLine);
 
         if (!swipeLeft) {
             enter = R.anim.enter_from_right;
@@ -130,6 +131,10 @@ public class NavBarSetupUtil {
 
             }
         });
+    }
+
+    private void moveLineNoAnimation(View nav) {
+        nav.setTranslationX(0f);
     }
 
     private void moveLine(View nav, float start, float end) {
