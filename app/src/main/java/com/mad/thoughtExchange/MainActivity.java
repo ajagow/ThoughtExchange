@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     // on successful login attempt, go to HomeActivity
     private void onSuccessfulLogin(LoginResponse loginResponse) {
-        Intent explicitIntent = new Intent(MainActivity.this, HomeActivity.class);
+        Intent explicitIntent = new Intent(MainActivity.this, DashboardActivity.class);
         explicitIntent.putExtra("jwtToken", loginResponse.getToken());
         startActivity(explicitIntent);
     }

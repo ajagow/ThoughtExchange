@@ -89,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
 
     // on successful sign up attempt, go to HomeActivity
     private void onSuccessfulSignup(SignupResponse signupResponse) {
-        Intent explicitIntent = new Intent(SignupActivity.this, HomeActivity.class);
+        Intent explicitIntent = new Intent(SignupActivity.this, DashboardActivity.class);
         explicitIntent.putExtra("jwtToken", signupResponse.getToken());
         startActivity(explicitIntent);
     }
