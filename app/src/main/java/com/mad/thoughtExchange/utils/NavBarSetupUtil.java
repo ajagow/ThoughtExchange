@@ -42,7 +42,7 @@ public class NavBarSetupUtil {
                 Log.d("CLICK",  "  activetag: " + active.getTag());
                 tabHeader.setVisibility(View.INVISIBLE);
                 Fragment centreFragment = fragmentManager.findFragmentByTag("2");
-                fragmentManager.beginTransaction().hide(active).show(centreFragment).commit();
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_up, R.anim.fade_out).hide(active).show(centreFragment).commit();
             }
 
             @Override
