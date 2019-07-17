@@ -15,6 +15,8 @@
 
     <item
         android:id="@+id/navigation_notifications"
+
+        android:iconTintMode="src_in"
         android:icon="@drawable/wallet"
         android:title="navigation" />
 

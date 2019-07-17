@@ -13,6 +13,7 @@ import com.mad.thoughtExchange.utils.NavBarSetupUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -60,6 +61,10 @@ public class DashboardActivity extends AppCompatActivity {
         tab2 = findViewById(R.id.tab_invest);
 
         navLine = findViewById(R.id.navbar_line);
+
+        spaceNavigationView.setCentreButtonIcon(R.drawable.plus_icon);
+        spaceNavigationView.setInActiveCentreButtonIconColor(ContextCompat.getColor(this,R.color.white));
+
 
 
 

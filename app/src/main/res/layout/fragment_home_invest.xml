@@ -29,7 +29,7 @@
 
     <ScrollView
         android:layout_width="340dp"
-        android:layout_height="440dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:scrollbars="none"
         android:layout_marginTop="130dp">
@@ -37,7 +37,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
 
             <LinearLayout
                 style="@style/homefeed_invest_card"
