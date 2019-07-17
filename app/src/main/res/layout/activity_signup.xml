@@ -22,7 +22,7 @@
     <RelativeLayout
         android:layout_width="320dp"
         android:layout_height="0dip"
-        android:layout_weight="0.6"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:background="@drawable/login_card_background"
         android:padding="30dp">
@@ -94,6 +94,7 @@
                     style="@style/BaseTextInputLabelDark"
                     android:text="Already have an account?"/>
                 <Button
+                    android:id="@+id/back_to_login_btn"
                     style="@style/BaseButtonLink"
                     android:text="Log in"/>
 

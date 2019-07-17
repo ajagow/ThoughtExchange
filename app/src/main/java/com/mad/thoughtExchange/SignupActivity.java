@@ -32,6 +32,7 @@ public class SignupActivity extends AppCompatActivity {
     private TextView email;
     private TextView password;
     private Button signup_btn;
+    private Button back_to_login_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +42,22 @@ public class SignupActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+
+        back_to_login_btn = findViewById(R.id.back_to_login_btn);
         signup_btn = findViewById(R.id.signup_btn);
 
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onSignup(view);
+            }
+        });
+
+        back_to_login_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent explicitIntent = new Intent(SignupActivity.this, MainActivity.class);
+                startActivity(explicitIntent);
             }
         });
     }
