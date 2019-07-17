@@ -32,6 +32,9 @@ public class DashboardActivity extends AppCompatActivity {
     final Fragment fragment1 = new HomeFeedFragment();
     final Fragment fragment2 = new NewContentFragment();
     final Fragment fragment3 = new HomeInvestFragment();
+    final Fragment fragment4 = new WalletMyIdeasFragment();
+    final Fragment fragment5 = new WalletMyInvestmentsFragment();
+
     final FragmentManager fm = getSupportFragmentManager();
 
 
@@ -42,6 +45,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
         fm.beginTransaction().add(R.id.main_container, fragment3, "3").hide(fragment3).commit();
+        fm.beginTransaction().add(R.id.main_container, fragment4, "4").hide(fragment4).commit();
+        fm.beginTransaction().add(R.id.main_container, fragment5, "5").hide(fragment5).commit();
         fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
 
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);

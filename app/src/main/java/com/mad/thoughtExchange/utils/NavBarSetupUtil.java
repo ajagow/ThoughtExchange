@@ -71,8 +71,8 @@ public class NavBarSetupUtil {
             newFragment = fragmentManager.findFragmentByTag("1");
         }
         else {
-            Log.d("CLICK", "SWITCH TO 3");
-            newFragment = fragmentManager.findFragmentByTag("3");
+            Log.d("CLICK", "SWITCH TO 4");
+            newFragment = fragmentManager.findFragmentByTag("4");
         }
 
         fragmentManager.beginTransaction().hide(active).show(newFragment).commit();
