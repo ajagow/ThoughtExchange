@@ -2,6 +2,7 @@ package com.mad.thoughtExchange;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,6 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     Button tab1;
     Button tab2;
+    ImageView logout;
     View navLine;
 
 
@@ -60,17 +63,24 @@ public class DashboardActivity extends AppCompatActivity {
         tab1 = findViewById(R.id.tab_feed);
         tab2 = findViewById(R.id.tab_invest);
 
+        logout = findViewById(R.id.logout);
+
         navLine = findViewById(R.id.navbar_line);
 
         spaceNavigationView.setCentreButtonIcon(R.drawable.plus_icon);
         spaceNavigationView.setInActiveCentreButtonIconColor(ContextCompat.getColor(this,R.color.white));
 
 
-
-
         NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
         navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent explicitIntent = new Intent(DashboardActivity.this, MainActivity.class);
+                startActivity(explicitIntent);
+            }
+        });
 
 
     }

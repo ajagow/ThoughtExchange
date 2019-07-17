@@ -78,12 +78,14 @@ public class NavBarSetupUtil {
         if (itemName.equals("HOME")) {
             Log.d("CLICK", "SWITCH TO 1");
             newFragment = fragmentManager.findFragmentByTag("1");
+            changeTabNames(tab1, tab2, true);
             click(tab1, "3", "1", null,fragmentManager, true, nav);
             click(tab2, "1", "3", null,fragmentManager, false, nav);
 
         }
         else {
             Log.d("CLICK", "SWITCH TO 4");
+            changeTabNames(tab1, tab2, false);
             newFragment = fragmentManager.findFragmentByTag("4");
             click(tab1, "5", "4", null,fragmentManager, true, nav);
             click(tab2, "4", "5", null,fragmentManager, false, nav);
@@ -131,6 +133,17 @@ public class NavBarSetupUtil {
 
             }
         });
+    }
+
+    private void changeTabNames(Button tab1, Button tab2, boolean isHome) {
+        if (isHome) {
+            tab1.setText(R.string.feed);
+            tab2.setText(R.string.investments);
+        }
+        else {
+            tab1.setText(R.string.my_ideas);
+            tab2.setText(R.string.my_investments);
+        }
     }
 
     private void moveLineNoAnimation(View nav) {

@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:id="@+id/settings"
+        android:id="@+id/logout"
         android:src="@drawable/setting_cog"/>
 
     <TextView
