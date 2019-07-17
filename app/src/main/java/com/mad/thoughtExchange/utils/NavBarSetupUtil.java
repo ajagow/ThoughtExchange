@@ -27,6 +27,9 @@ public class NavBarSetupUtil {
                             final FragmentManager fragmentManager, final RelativeLayout tabHeader,
                             final Button tab1, final Button tab2) {
 
+        click(tab1, "3", "1", null,fragmentManager, true);
+        click(tab2, "1", "3", null,fragmentManager, false);
+
         spaceNavigationView.showIconOnly();
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
         spaceNavigationView.addSpaceItem(new SpaceItem("HOME", R.drawable.home));
@@ -75,40 +78,43 @@ public class NavBarSetupUtil {
         if (itemName.equals("HOME")) {
             Log.d("CLICK", "SWITCH TO 1");
             newFragment = fragmentManager.findFragmentByTag("1");
-            click(tab1, "1", "3", null,fragmentManager);
-            click(tab2, "3", "2", null,fragmentManager);
+            click(tab1, "3", "1", null,fragmentManager, true);
+            click(tab2, "1", "3", null,fragmentManager, false);
 
         }
         else {
             Log.d("CLICK", "SWITCH TO 4");
             newFragment = fragmentManager.findFragmentByTag("4");
-            click(tab1, "4", "5", null,fragmentManager);
-            click(tab2, "5", "4", null,fragmentManager);
+            click(tab1, "5", "4", null,fragmentManager, true);
+            click(tab2, "4", "5", null,fragmentManager, false);
         }
 
         fragmentManager.beginTransaction().hide(active).show(newFragment).commit();
 
     }
 
-    private void click(Button button, final String current, final String goTo, final View nav, final FragmentManager fm) {
+    private void click(Button button, final String current, final String goTo, final View nav, final FragmentManager fm,
+                       boolean swipeLeft) {
+
+        final int enter;
+        final int exit;
+
+        if (!swipeLeft) {
+            enter = R.anim.enter_from_right;
+            exit = R.anim.exit_to_left;
+        }
+
+        else {
+            enter = R.anim.enter_from_left;
+            exit = R.anim.exit_to_right;
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment currentFrag = fm.findFragmentByTag(current);
                 Fragment goToFragment = fm.findFragmentByTag(goTo);
-                fm.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left).hide(currentFrag).show(goToFragment).commit();
-
-
-                Log.d("HERE", "here");
-//
-//                ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",0f,550f);
-//                textViewAnimator.setDuration(750);
-//                textViewAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-//
-//                AnimatorSet set = new AnimatorSet();
-//                set.play(textViewAnimator);
-//                set.start();
+                fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();
 
 
             }
