@@ -18,7 +18,6 @@ import android.widget.Button;
 
 
 public class HomeInvestFragment extends Fragment {
-    private Button investTab;
 
     public HomeInvestFragment() {
         // Required empty public constructor
@@ -38,27 +37,8 @@ public class HomeInvestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_invest, container, false);
 
 
-        investTab = getActivity().findViewById(R.id.tab_feed);
-
         final HomeFeedFragment homeFeedFragment = new HomeFeedFragment();
 
-
-        investTab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment s = getFragmentManager().findFragmentByTag("1");
-                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right).hide(HomeInvestFragment.this).show(s).commit();
-
-                View nav = getActivity().findViewById(R.id.navbar_line);
-
-                ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",550f,0f);
-                textViewAnimator.setDuration(750);
-                textViewAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-
-                AnimatorSet set = new AnimatorSet();
-                set.play(textViewAnimator);
-                set.start();}
-        });
 
         return view;
     }

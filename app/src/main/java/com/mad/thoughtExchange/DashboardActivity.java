@@ -37,6 +37,9 @@ public class DashboardActivity extends AppCompatActivity {
 
     final FragmentManager fm = getSupportFragmentManager();
 
+    Button tab1;
+    Button tab2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +55,40 @@ public class DashboardActivity extends AppCompatActivity {
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
         RelativeLayout tabHeader = findViewById(R.id.tab_header_and_line);
 
-        NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
-        navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader);
+        tab1 = findViewById(R.id.tab_feed);
+        tab2 = findViewById(R.id.tab_invest);
 
-        Button invest = findViewById(R.id.tab_invest);
+        NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
+        navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2);
+
+
 
 
     }
+
+
+//    private void click() {
+//
+//        investTabButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Fragment s = fm.findFragmentByTag("3");
+//                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left).hide().show(s).commit();
+//
+//                View nav = findViewById(R.id.navbar_line);
+//
+//                Log.d("HERE", "here");
+//
+//                ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",0f,550f);
+//                textViewAnimator.setDuration(750);
+//                textViewAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+//
+//                AnimatorSet set = new AnimatorSet();
+//                set.play(textViewAnimator);
+//                set.start();
+//
+//
+//            }
+//        });
+//    }
 }

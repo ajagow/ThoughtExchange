@@ -35,7 +35,6 @@ public class HomeFeedFragment extends Fragment {
     private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/24";
     private ImageView walletImage;
     private TextView currentFeedPost;
-    private Button investTabButton;
     private int currentPostId;
 
     public HomeFeedFragment() {
@@ -58,7 +57,6 @@ public class HomeFeedFragment extends Fragment {
 
 
         walletImage = view.findViewById(R.id.footer_wallet);
-        investTabButton = getActivity().findViewById(R.id.tab_invest);
         currentFeedPost = view.findViewById(R.id.current_feed_post);
         currentPostId = -1;
 
@@ -69,27 +67,6 @@ public class HomeFeedFragment extends Fragment {
         changeBackgroundOnClick(dislikeButton, R.drawable.dislike_button_clicked, R.drawable.dislike_button);
         getCurrentFeedPost();
 
-        investTabButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment s = getFragmentManager().findFragmentByTag("3");
-                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left).hide(HomeFeedFragment.this).show(s).commit();
-
-                    View nav = getActivity().findViewById(R.id.navbar_line);
-
-                    Log.d("HERE", "here");
-
-                    ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",0f,550f);
-                    textViewAnimator.setDuration(750);
-                    textViewAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-
-                    AnimatorSet set = new AnimatorSet();
-                    set.play(textViewAnimator);
-                    set.start();
-
-
-            }
-        });
 
         return view;
     }
