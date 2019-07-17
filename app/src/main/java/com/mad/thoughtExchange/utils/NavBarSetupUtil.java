@@ -25,10 +25,10 @@ public class NavBarSetupUtil {
 
     public void setupNavBar(Bundle savedInstanceState, final SpaceNavigationView spaceNavigationView,
                             final FragmentManager fragmentManager, final RelativeLayout tabHeader,
-                            final Button tab1, final Button tab2) {
+                            final Button tab1, final Button tab2, final View nav) {
 
-        click(tab1, "3", "1", null,fragmentManager, true);
-        click(tab2, "1", "3", null,fragmentManager, false);
+        click(tab1, "3", "1", null,fragmentManager, true, nav);
+        click(tab2, "1", "3", null,fragmentManager, false, nav);
 
         spaceNavigationView.showIconOnly();
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
@@ -47,13 +47,13 @@ public class NavBarSetupUtil {
 
             @Override
             public void onItemClick(int itemIndex, String itemName) {
-                onAnyItemClick(fragmentManager, itemName, tabHeader, tab1, tab2);
+                onAnyItemClick(fragmentManager, itemName, tabHeader, tab1, tab2, nav);
 
             }
 
             @Override
             public void onItemReselected(int itemIndex, String itemName) {
-                onAnyItemClick(fragmentManager, itemName, tabHeader, tab1, tab2);
+                onAnyItemClick(fragmentManager, itemName, tabHeader, tab1, tab2, nav);
 
             }
         });
@@ -71,22 +71,22 @@ public class NavBarSetupUtil {
     }
 
     private void onAnyItemClick(FragmentManager fragmentManager, String itemName, RelativeLayout tabHeader,
-                                Button tab1, Button tab2) {
+                                Button tab1, Button tab2, View nav) {
         Fragment active = getVisibleFragment(fragmentManager);
         tabHeader.setVisibility(View.VISIBLE);
         Fragment newFragment = null;
         if (itemName.equals("HOME")) {
             Log.d("CLICK", "SWITCH TO 1");
             newFragment = fragmentManager.findFragmentByTag("1");
-            click(tab1, "3", "1", null,fragmentManager, true);
-            click(tab2, "1", "3", null,fragmentManager, false);
+            click(tab1, "3", "1", null,fragmentManager, true, nav);
+            click(tab2, "1", "3", null,fragmentManager, false, nav);
 
         }
         else {
             Log.d("CLICK", "SWITCH TO 4");
             newFragment = fragmentManager.findFragmentByTag("4");
-            click(tab1, "5", "4", null,fragmentManager, true);
-            click(tab2, "4", "5", null,fragmentManager, false);
+            click(tab1, "5", "4", null,fragmentManager, true, nav);
+            click(tab2, "4", "5", null,fragmentManager, false, nav);
         }
 
         fragmentManager.beginTransaction().hide(active).show(newFragment).commit();
@@ -94,10 +94,12 @@ public class NavBarSetupUtil {
     }
 
     private void click(Button button, final String current, final String goTo, final View nav, final FragmentManager fm,
-                       boolean swipeLeft) {
+                       final boolean swipeLeft, final View navLine) {
 
         final int enter;
         final int exit;
+
+        Log.d("CLICK HERE", "kdfls");
 
         if (!swipeLeft) {
             enter = R.anim.enter_from_right;
@@ -116,9 +118,28 @@ public class NavBarSetupUtil {
                 Fragment goToFragment = fm.findFragmentByTag(goTo);
                 fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();
 
+                if (swipeLeft) {
+                    moveLine(navLine, 500f, 0f);
+                }
+
+                else {
+                    moveLine(navLine, 0f, 500f);
+
+                }
+
 
             }
         });
+    }
+
+    private void moveLine(View nav, float start, float end) {
+
+        ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",start, end);
+        textViewAnimator.setDuration(300);
+
+        AnimatorSet set = new AnimatorSet();
+        set.play(textViewAnimator);
+        set.start();
     }
 
 }

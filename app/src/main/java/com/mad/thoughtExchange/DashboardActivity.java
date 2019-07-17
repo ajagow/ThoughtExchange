@@ -39,6 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     Button tab1;
     Button tab2;
+    View navLine;
 
 
     @Override
@@ -58,37 +59,15 @@ public class DashboardActivity extends AppCompatActivity {
         tab1 = findViewById(R.id.tab_feed);
         tab2 = findViewById(R.id.tab_invest);
 
-        NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
-        navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2);
+        navLine = findViewById(R.id.navbar_line);
 
+
+
+        NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
+        navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
 
 
 
     }
 
-
-//    private void click() {
-//
-//        investTabButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Fragment s = fm.findFragmentByTag("3");
-//                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left).hide().show(s).commit();
-//
-//                View nav = findViewById(R.id.navbar_line);
-//
-//                Log.d("HERE", "here");
-//
-//                ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",0f,550f);
-//                textViewAnimator.setDuration(750);
-//                textViewAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-//
-//                AnimatorSet set = new AnimatorSet();
-//                set.play(textViewAnimator);
-//                set.start();
-//
-//
-//            }
-//        });
-//    }
 }
