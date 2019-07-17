@@ -16,10 +16,6 @@ import android.widget.TextView;
 
 public class WalletMyInvestmentsFragment extends Fragment {
 
-    private TextView textCounter;
-    private EditText newPostContent;
-    private Button submitBtn;
-
     public WalletMyInvestmentsFragment() {
         // Required empty public constructor
     }
@@ -31,18 +27,8 @@ public class WalletMyInvestmentsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_content, container, false);
+        View view = inflater.inflate(R.layout.fragment_wallet_my_investments, container, false);
 
-        newPostContent = view.findViewById(R.id.newpost_content);
-        textCounter = view.findViewById(R.id.text_counter);
-        submitBtn = view.findViewById(R.id.newpost_submit);
-
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         return view;
     }

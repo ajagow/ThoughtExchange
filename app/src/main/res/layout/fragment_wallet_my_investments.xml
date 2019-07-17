@@ -1,100 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WalletMyInvestmentsFragment">
+    tools:context=".WalletMyIdeasFragment">
 
-    <RelativeLayout
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/login_card_background"
-        android:padding="30dp"
-        android:layout_centerHorizontal="true">
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_marginTop="74dp">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/tab_feed"-->
+    <!--style="@style/homefeed_tab_unselected"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_weight="0.5"-->
+    <!--android:text="Feed" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/tab_invest"-->
+    <!--style="@style/homefeed_tab_selected"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_weight="0.5"-->
+    <!--android:text="Invest" />-->
+    <!--</LinearLayout>-->
+
+    <ScrollView
+        android:layout_width="340dp"
+        android:layout_height="440dp"
+        android:layout_centerHorizontal="true"
+        android:scrollbars="none"
+        android:layout_marginTop="130dp">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/NewPostH2"
-                android:text="New Post" />
-
-            <View
-                android:layout_width="100dp"
-                android:paddingBottom="-200dp"
-                android:layout_height="4dp"
-                android:layout_gravity="start"
-                android:background="@color/primaryTurquoise" />
-
-            <TextView
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/NewPostInputLabel"
-                android:text="Content" />
-
             <RelativeLayout
+                style="@style/homefeed_invest_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/NewPostInputLabelMedium"
-                    android:text="What would you like to post?" />
+                    android:text="Ending at 10:48am July 19 2019"/>
 
                 <TextView
-                    android:id="@+id/text_counter"
+                    style="@style/homefeed_invest_card_text"
+                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/NewPostInputLabelMedium"
-                    android:layout_alignParentEnd="true"
-                    android:text="200 characters left" />
+                    android:text="Ariel doesn't know what a fork is for, yet her dad wields a trident" />
 
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true">
+                    <ImageView
+                        style="card_icon_user"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/investor"
+                        android:baselineAlignBottom="true"
+                        />
+                    <TextView
+                        style="@style/card_small_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="94"/>
+                    <ImageView
+                        style="card_icon_coin"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/coin"
+                        android:baselineAlignBottom="true"
+                        />
+                    <TextView
+                        style="@style/card_small_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1,276"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/HeaderCoinWrapper">
+
+                        <TextView
+                            style="@style/HeaderCoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Personal Investment: " />
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/coin"/>
+
+                        <TextView
+                            android:id="@+id/coins"
+                            style="@style/HeaderCoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="200" />
+                    </LinearLayout>
+                </LinearLayout>
 
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/newpost_content"
-                style="@style/NewPostInput"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_alignStart="@+id/newpost_content"
-                android:gravity="top"
-                android:maxLength="200" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/NewPostInputLabel"
-                android:text="Initial Investment" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/NewPostInputLabelMedium"
-                android:text="How much are you willing to invest in this?" />
-
-            <EditText
-                android:id="@+id/newpost_initial_investment"
-                style="@style/NewPostInput"
-                android:layout_width="match_parent"
-                android:inputType="number" />
-
-            <Button
-                android:id="@+id/newpost_submit"
-                style="@style/BaseButton"
-                android:text="Post" />
-
-
         </LinearLayout>
-    </RelativeLayout>
 
-</FrameLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

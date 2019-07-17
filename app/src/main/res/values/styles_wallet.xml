@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Wallet Themes -->
+    <style name="card_small_text" parent="BaseSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingLeft">5dp</item>
+    </style>
+    <style name="card_icon_user">
+
+    </style>
+
+</resources>
