@@ -63,39 +63,39 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignup(View view) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        SignupResponse response = new SignupResponse();
+        response.setToken("lkdsjf");
+        onSuccessfulSignup(response);
 
-        JSONObject jsonBody = new JSONObject();
-
-        String nameVal = name.getText().toString();
-        String emailVal = email.getText().toString();
-        String passwordVal = password.getText().toString();
-
-        SignupModel signupModel = new SignupModel();
-        signupModel.setName(nameVal);
-        signupModel.setEmail(emailVal);
-        signupModel.setPassword(passwordVal);
-        
-        Response.Listener<SignupResponse> responseListener = new Response.Listener<SignupResponse>() {
-            @Override
-            public void onResponse(SignupResponse response) {
-                onSuccessfulSignup(response);
-                Log.d("OnResponse", response.getToken()); ///
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
-                Toast.makeText(getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        GsonRequest<SignupModel, SignupResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, signupModel, this,
-                SignupModel.class, SignupResponse.class, new HashMap<String, String>(), responseListener, errorListener);
-
-        gsonRequest.volley();
+//        String nameVal = name.getText().toString();
+//        String emailVal = email.getText().toString();
+//        String passwordVal = password.getText().toString();
+//
+//        SignupModel signupModel = new SignupModel();
+//        signupModel.setName(nameVal);
+//        signupModel.setEmail(emailVal);
+//        signupModel.setPassword(passwordVal);
+//
+//        Response.Listener<SignupResponse> responseListener = new Response.Listener<SignupResponse>() {
+//            @Override
+//            public void onResponse(SignupResponse response) {
+//                onSuccessfulSignup(response);
+//                Log.d("OnResponse", response.getToken()); ///
+//            }
+//        };
+//
+//        Response.ErrorListener errorListener = new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("ERROR", error.networkResponse.toString());
+//                Toast.makeText(getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//
+//        GsonRequest<SignupModel, SignupResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, signupModel, this,
+//                SignupModel.class, SignupResponse.class, new HashMap<String, String>(), responseListener, errorListener);
+//
+//        gsonRequest.volley();
     }
 
     // on successful sign up attempt, go to HomeActivity

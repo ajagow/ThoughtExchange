@@ -40,7 +40,9 @@ public class NewContentFragment extends Fragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment home = getFragmentManager().findFragmentByTag("1");
 
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_down, R.anim.fade_out).hide(NewContentFragment.this).show(home).commit();
             }
         });
 
