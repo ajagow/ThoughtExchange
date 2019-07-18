@@ -94,14 +94,13 @@ public class NewContentFragment extends Fragment {
         ThoughtModel thoughtModel = new ThoughtModel();
 
         // set values for POST request
-        // TODO: need to fetch owner id
-        // thoughtModel.setOwner_id(ownerVal);
-        thoughtModel.setContent(thought);
+        thoughtModel.setContents(thought);
         thoughtModel.setInitial_worth(initInvestment);
 
         Response.Listener<ThoughtResponse> responseListener = new Response.Listener<ThoughtResponse>() {
             @Override
             public void onResponse(ThoughtResponse response) {
+                Log.d("response","thoughtResponse");
                 onSuccessfulSubmit(response);
             }
         };
