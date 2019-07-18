@@ -1,23 +1,46 @@
 package com.mad.thoughtExchange;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.mad.thoughtExchange.models.GsonRequest;
+import com.mad.thoughtExchange.models.SignupModel;
+import com.mad.thoughtExchange.models.ThoughtModel;
+import com.mad.thoughtExchange.responses.SignupResponse;
+import com.mad.thoughtExchange.responses.ThoughtResponse;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class NewContentFragment extends Fragment {
 
+    private static String URL = "https://blog-api-tutorial1.herokuapp.com/";
+    private static String USERS_PATH = "api/v1/thoughts/";
+
     private TextView textCounter;
     private EditText newPostContent;
+    private EditText initialInvestment;
     private Button submitBtn;
 
     public NewContentFragment() {
@@ -34,13 +57,14 @@ public class NewContentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_content, container, false);
 
         newPostContent = view.findViewById(R.id.newpost_content);
+        initialInvestment = view.findViewById(R.id.newpost_initial_investment);
         textCounter = view.findViewById(R.id.text_counter);
         submitBtn = view.findViewById(R.id.newpost_submit);
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                onSubmit(view);
             }
         });
 
@@ -49,8 +73,56 @@ public class NewContentFragment extends Fragment {
         return view;
     }
 
+    public void onSubmit(View view) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity()); //////
 
+        JSONObject jsonBody = new JSONObject();
 
+        String thought = newPostContent.getText().toString();
+        String initInvestmentVal = initialInvestment.getText().toString(); //// need to check if input is integer
+        int initInvestment = 1;
+
+        // check if initial investment value is an positive integer
+        try {
+            initInvestment = Integer.parseInt(initInvestmentVal);
+        }
+        catch (NumberFormatException e) {
+            // print toast
+            Log.d("NumberFormatException", e.toString());
+        }
+
+        ThoughtModel thoughtModel = new ThoughtModel();
+
+        // set values for POST request
+        // TODO: need to fetch owner id
+        // thoughtModel.setOwner_id(ownerVal);
+        thoughtModel.setContent(thought);
+        thoughtModel.setInitial_worth(initInvestment);
+
+        Response.Listener<ThoughtResponse> responseListener = new Response.Listener<ThoughtResponse>() {
+            @Override
+            public void onResponse(ThoughtResponse response) {
+                onSuccessfulSubmit(response);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR", error.networkResponse.toString());
+                Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        String token = getActivity().getIntent().getStringExtra("jwtToken");
+        Map<String, String> headers = new HashMap<>();
+        headers.put("api-token", token);
+
+        GsonRequest<ThoughtModel, ThoughtResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, thoughtModel, getActivity(),
+                ThoughtModel.class, ThoughtResponse.class, headers, responseListener, errorListener);
+
+        gsonRequest.volley();
+    }
 
 
     private void setTextWatcherForPostCounter() {
@@ -59,7 +131,7 @@ public class NewContentFragment extends Fragment {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //This sets a textview to the current length
+                //Sets the textview to the current length
                 String newCount = 200 - s.length() + " characters left";
                 textCounter.setText(newCount);
             }
@@ -67,9 +139,14 @@ public class NewContentFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         };
-
         newPostContent.addTextChangedListener(mTextEditorWatcher);
     }
 
+
+    private void onSuccessfulSubmit(ThoughtResponse thoughtResponse) {
+        Intent explicitIntent = new Intent(getContext(), DashboardActivity.class);
+        //TODO: is any data necessary to go back to Dashboard?
+        startActivity(explicitIntent);
+    }
 
 }
