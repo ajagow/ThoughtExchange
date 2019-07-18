@@ -67,6 +67,8 @@ public class NewContentFragment extends Fragment {
                 Fragment home = getFragmentManager().findFragmentByTag("homeFeedFragment");
 
 //                Log.d("HERE", "frag " + home.getTag());
+
+                getActivity().findViewById(R.id.tab_header_and_line).setVisibility(View.VISIBLE);
                 Log.d("HERE", getFragmentManager().toString());
 
                 getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_down, R.anim.fade_out).hide(NewContentFragment.this).show(home).commit();
