@@ -2,11 +2,10 @@
 <resources>
     <!-- Wallet Themes -->
     <style name="card_small_text" parent="BaseSmall">
-        <item name="android:textSize">12sp</item>
-        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingLeft">3dp</item>
     </style>
-    <style name="card_icon_user">
-
+    <style name="card_eyebrow" parent="BaseSmall">
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>

@@ -23,7 +23,13 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         style="@style/HeaderCoinWrapper">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/coin"/>
 
         <TextView
             android:id="@+id/coins"
@@ -31,10 +37,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1999" />
-
-        <ImageView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:src="@drawable/coin"/>
     </LinearLayout>
 </LinearLayout>

@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     style="@style/NewPostInputLabelMedium"
                     android:layout_alignParentEnd="true"
-                    android:text="200 characters left" />
+                    android:text="100 characters left" />
 
 
             </RelativeLayout>

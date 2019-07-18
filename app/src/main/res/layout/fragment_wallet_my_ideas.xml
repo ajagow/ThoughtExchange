@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 style="@style/homefeed_invest_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,11 +48,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/card_eyebrow"
                     android:text="Posted 10:48am July 11 2019"/>
 
                 <TextView
                     style="@style/homefeed_invest_card_text"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ariel doesn't know what a fork is for, yet her dad wields a trident" />
@@ -60,8 +61,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true">
+                    android:layout_height="wrap_content">
                     <ImageView
                         style="card_icon_user"
                         android:layout_width="12dp"
@@ -89,7 +89,7 @@
                         android:text="1,276"/>
                 </LinearLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

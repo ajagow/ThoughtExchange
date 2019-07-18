@@ -60,7 +60,7 @@ public class NewContentFragment extends Fragment {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //This sets a textview to the current length
-                String newCount = 200 - s.length() + " characters left";
+                String newCount = 100 - s.length() + " characters left";
                 textCounter.setText(newCount);
             }
 

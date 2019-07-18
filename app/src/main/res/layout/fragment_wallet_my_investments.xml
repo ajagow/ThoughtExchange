@@ -31,78 +31,89 @@
         android:layout_width="340dp"
         android:layout_height="440dp"
         android:layout_centerHorizontal="true"
-        android:scrollbars="none"
-        android:layout_marginTop="130dp">
+        android:layout_marginTop="130dp"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 style="@style/homefeed_invest_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/card_eyebrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ending at 10:48am July 19 2019"/>
+                    android:text="Ending at 10:48am July 19 2019" />
 
                 <TextView
                     style="@style/homefeed_invest_card_text"
-                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:text="Ariel doesn't know what a fork is for, yet her dad wields a trident" />
 
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true">
-                    <ImageView
-                        style="card_icon_user"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/investor"
-                        android:baselineAlignBottom="true"
-                        />
-                    <TextView
-                        style="@style/card_small_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="94"/>
-                    <ImageView
-                        style="card_icon_coin"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:src="@drawable/coin"
-                        android:baselineAlignBottom="true"
-                        />
-                    <TextView
-                        style="@style/card_small_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1,276"/>
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/HeaderCoinWrapper">
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:layout_alignParentLeft="true">
+
+                        <ImageView
+                            style="card_icon_user"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:baselineAlignBottom="true"
+                            android:src="@drawable/investor" />
+
+                        <TextView
+                            style="@style/card_small_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="94" />
+
+                        <ImageView
+                            style="card_icon_coin"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:baselineAlignBottom="true"
+                            android:src="@drawable/coin" />
+
+                        <TextView
+                            style="@style/card_small_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1,276" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/HeaderCoinWrapper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true">
 
                         <TextView
                             style="@style/HeaderCoins"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Personal Investment: " />
+                            android:text="You invested: " />
 
                         <ImageView
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:src="@drawable/coin"/>
+                            android:src="@drawable/coin" />
 
                         <TextView
                             android:id="@+id/coins"
@@ -111,12 +122,11 @@
                             android:layout_height="wrap_content"
                             android:text="200" />
                     </LinearLayout>
-                </LinearLayout>
+                </RelativeLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
-
 
 
     </ScrollView>
