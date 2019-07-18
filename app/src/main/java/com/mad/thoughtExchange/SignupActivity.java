@@ -2,6 +2,8 @@ package com.mad.thoughtExchange;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +33,8 @@ public class SignupActivity extends AppCompatActivity {
     private TextView name;
     private TextView email;
     private TextView password;
+    private int passwordRequiredLength;
+    private TextView passwordValidLength;
     private Button signup_btn;
     private Button back_to_login_btn;
 
@@ -44,6 +48,8 @@ public class SignupActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         back_to_login_btn = findViewById(R.id.back_to_login_btn);
         signup_btn = findViewById(R.id.signup_btn);
+        passwordValidLength = findViewById(R.id.pass_validation);
+        passwordRequiredLength = 8;
 
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +65,8 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(explicitIntent);
             }
         });
+
+        setTextWatcherForPasswordCounter();
     }
 
     public void onSignup(View view) {
@@ -95,6 +103,31 @@ public class SignupActivity extends AppCompatActivity {
 //                SignupModel.class, SignupResponse.class, new HashMap<String, String>(), responseListener, errorListener);
 //
 //        gsonRequest.volley();
+    }
+
+    private void setTextWatcherForPasswordCounter() {
+        TextWatcher mTextEditorWatcher = new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // if password is longer than required length
+                if (s.length() >= passwordRequiredLength) {
+                    passwordValidLength.setText("Password meets requirements");
+                }
+                else {
+                    String passValidationText = "Your password needs "
+                            + (passwordRequiredLength - s.length())
+                            + " more characters";
+                    passwordValidLength.setText(passValidationText);
+                }
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        };
+        password.addTextChangedListener(mTextEditorWatcher);
     }
 
     // on successful sign up attempt, go to HomeActivity

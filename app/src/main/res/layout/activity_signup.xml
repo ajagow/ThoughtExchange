@@ -67,6 +67,7 @@
                 style="@style/SignupInputLabel"
                 android:text="Password" />
             <TextView
+                android:id="@+id/pass_validation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/SignupInputHelp"
