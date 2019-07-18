@@ -60,36 +60,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSubmit(View view) {
-        String emailVal = email.getText().toString();
-        String passwordVal = password.getText().toString();
-
-        LoginModel loginModel = new LoginModel();
-        loginModel.setEmail(emailVal);
-        loginModel.setPassword(passwordVal);
-
-        Response.Listener<LoginResponse> responseListener = new Response.Listener<LoginResponse>() {
-            @Override
-            public void onResponse(LoginResponse response) {
-                onSuccessfulLogin(response);
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                try {
-                    String body = new String(error.networkResponse.data,"UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        GsonRequest<LoginModel, LoginResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, loginModel, this,
-                LoginModel.class, LoginResponse.class, new HashMap<String, String>(), responseListener, errorListener);
-
-        gsonRequest.volley();
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken("sldkfj");
+        onSuccessfulLogin(loginResponse);
+//        String emailVal = email.getText().toString();
+//        String passwordVal = password.getText().toString();
+//
+//        LoginModel loginModel = new LoginModel();
+//        loginModel.setEmail(emailVal);
+//        loginModel.setPassword(passwordVal);
+//
+//        Response.Listener<LoginResponse> responseListener = new Response.Listener<LoginResponse>() {
+//            @Override
+//            public void onResponse(LoginResponse response) {
+//                onSuccessfulLogin(response);
+//            }
+//        };
+//
+//        Response.ErrorListener errorListener = new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                try {
+//                    String body = new String(error.networkResponse.data,"UTF-8");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+//                Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//
+//        GsonRequest<LoginModel, LoginResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, loginModel, this,
+//                LoginModel.class, LoginResponse.class, new HashMap<String, String>(), responseListener, errorListener);
+//
+//        gsonRequest.volley();
 
 }
 

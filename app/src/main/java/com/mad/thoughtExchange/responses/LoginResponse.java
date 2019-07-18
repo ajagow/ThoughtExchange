@@ -9,4 +9,8 @@ public class LoginResponse {
     public String getToken() {
         return token;
     }
+
+    public void setToken(String givenToken) {
+        this.token = givenToken;
+    }
 }

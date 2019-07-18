@@ -64,7 +64,13 @@ public class NewContentFragment extends Fragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onSubmit(view);
+                Fragment home = getFragmentManager().findFragmentByTag("homeFeedFragment");
+
+//                Log.d("HERE", "frag " + home.getTag());
+                Log.d("HERE", getFragmentManager().toString());
+
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_down, R.anim.fade_out).hide(NewContentFragment.this).show(home).commit();
+//                onSubmit(view);
             }
         });
 
@@ -74,9 +80,6 @@ public class NewContentFragment extends Fragment {
     }
 
     public void onSubmit(View view) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity()); //////
-
-        JSONObject jsonBody = new JSONObject();
 
         String thought = newPostContent.getText().toString();
         String initInvestmentVal = initialInvestment.getText().toString(); //// need to check if input is integer
@@ -131,7 +134,7 @@ public class NewContentFragment extends Fragment {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Sets the textview to the current length
-                String newCount = 200 - s.length() + " characters left";
+                String newCount = 100 - s.length() + " characters left";
                 textCounter.setText(newCount);
             }
 

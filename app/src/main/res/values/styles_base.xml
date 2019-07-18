@@ -26,11 +26,11 @@
     </style>
 
     <style name="BasePDark" parent="TextDark">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="BaseSmall" parent="TextDark">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <!-- COMPONENT STYLES-->
@@ -44,11 +44,11 @@
     </style>
 
     <style name="BaseTextInputLabelDark" parent="TextDark">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="BaseTextInputLabelMedium" parent="TextMedium">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="BaseButton" parent="@style/Widget.AppCompat.Button.Borderless">
@@ -61,6 +61,15 @@
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/primaryBlue</item>
         <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="BaseTag" parent="BaseSmall">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
     </style>
 
 </resources>

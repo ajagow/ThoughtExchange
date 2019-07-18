@@ -145,12 +145,16 @@ public class NavBarSetupUtil {
     }
 
     private void moveLine(View nav, float start, float end) {
-        ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",start, end);
-        textViewAnimator.setDuration(300);
+        if (Float.compare(nav.getTranslationX(), start) == 0 ) {
 
-        AnimatorSet set = new AnimatorSet();
-        set.play(textViewAnimator);
-        set.start();
+            ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",start, end);
+            textViewAnimator.setDuration(300);
+
+            AnimatorSet set = new AnimatorSet();
+            set.play(textViewAnimator);
+            set.start();
+        }
+
     }
 
 }
