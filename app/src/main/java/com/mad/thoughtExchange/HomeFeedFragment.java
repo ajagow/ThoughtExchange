@@ -1,5 +1,6 @@
 package com.mad.thoughtExchange;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.models.LikesModel;
 import com.mad.thoughtExchange.responses.FeedPostResponse;
 import com.mad.thoughtExchange.responses.LikeResponse;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import org.json.JSONObject;
 
@@ -34,9 +36,8 @@ import java.util.Map;
 
 public class HomeFeedFragment extends Fragment {
 
-    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/24";
-    private static final String LIKES_PATH = "api/v1/likes";
-    private ImageView walletImage;
+    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/2000";
+    private static final String LIKES_PATH = "api/v1/likes/";
     private TextView currentFeedPost;
     private Button likeButton;
     private Button dislikeButton;
@@ -57,22 +58,19 @@ public class HomeFeedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_feed, container, false);
 
-        Log.d("FEED", "log");
-
-
-        walletImage = view.findViewById(R.id.footer_wallet);
         currentFeedPost = view.findViewById(R.id.current_feed_post);
         currentPostId = -1;
         likeButton = view.findViewById(R.id.like_button);
         dislikeButton = view.findViewById(R.id.dislike_button);
 
-        changeBackgroundOnClick(likeButton, R.drawable.like_button_clicked, R.drawable.like_button);
-        changeBackgroundOnClick(dislikeButton, R.drawable.dislike_button_clicked, R.drawable.dislike_button);
+//        changeBackgroundOnClick(likeButton, R.drawable.like_button_clicked, R.drawable.like_button);
+//        changeBackgroundOnClick(dislikeButton, R.drawable.dislike_button_clicked, R.drawable.dislike_button);
         getCurrentFeedPost();
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("LIKE", "hello like");
                 onLike(view, currentPostId);
             }
         });
@@ -80,6 +78,7 @@ public class HomeFeedFragment extends Fragment {
         dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("DISLIKE", "hello dislike");
                 onDislike(view, currentPostId);
             }
         });
@@ -87,24 +86,26 @@ public class HomeFeedFragment extends Fragment {
     }
 
     private void onLike(View view, int postId) {
+        Log.d("LIKE", "you liked this");
         sendVote(view, postId, 1);
     }
 
     private void onDislike(View view, int postId) {
+        Log.d("LIKE", "you disliked this");
+
         sendVote(view, postId, 0); // TODO: is 0 downvoting?
     }
 
     private void sendVote(View view, int postId, int vote) {
         //vote meaning like/dislike
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity()); //////
-        JSONObject jsonBody = new JSONObject();
-
         LikesModel likesModel = new LikesModel();
 
         // set values for POST request
         likesModel.setPostId(postId);
         likesModel.setIsLike(vote);
+
+        Log.d("LIKES", "post id: " + postId +     "is like: " + vote);
 
         Response.Listener<LikeResponse> responseListener = new Response.Listener<LikeResponse>() {
             @Override
@@ -122,7 +123,7 @@ public class HomeFeedFragment extends Fragment {
             }
         };
 
-        String token = getActivity().getIntent().getStringExtra("jwtToken");
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
 
@@ -134,6 +135,7 @@ public class HomeFeedFragment extends Fragment {
 
     private void onSuccessfulLike(LikeResponse response) {
         // TODO: update view to show next thought
+        getCurrentFeedPost();
     }
 
 
@@ -178,7 +180,9 @@ public class HomeFeedFragment extends Fragment {
             }
         };
 
-        String token = getActivity().getIntent().getStringExtra("jwtToken");
+//        String token = getActivity().getIntent().getStringExtra("jwtToken");
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
         headers.put("Content-Type", "application/json");
@@ -198,14 +202,26 @@ public class HomeFeedFragment extends Fragment {
     private void getMarketPostData(List<FeedPostResponse> feedPostResponses) {
         if (feedPostResponses.size() == 0) {
             currentFeedPost.setText("no new posts");
+            likeButton.setVisibility(View.INVISIBLE);
+            dislikeButton.setVisibility(View.INVISIBLE);
         }
 
         else {
             FeedPostResponse feedPostResponse = feedPostResponses.get(0);
             String postContent = feedPostResponse.getContents();
 
+            likeButton.setVisibility(View.VISIBLE);
+            dislikeButton.setVisibility(View.VISIBLE);
+
             currentFeedPost.setText(postContent);
             currentPostId = feedPostResponse.getPost_id();
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            getCurrentFeedPost();
         }
     }
 }
