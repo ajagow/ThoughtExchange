@@ -11,7 +11,12 @@ import android.widget.TextView;
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
 
+import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class HomeInvestItemAdapter extends BaseAdapter {
 
@@ -24,9 +29,12 @@ public class HomeInvestItemAdapter extends BaseAdapter {
     // Receive the context from Main Activity
     private Context context;
 
+    //Use utils class
+    private GeneralUtils utils = new GeneralUtils();
+
 
     public HomeInvestItemAdapter(List<ThoughtResponse> thoughtResponses,
-                                      Context context) {
+                                 Context context) {
         this.thoughtResponses = thoughtResponses;
         this.context = context;
     }
@@ -77,9 +85,7 @@ public class HomeInvestItemAdapter extends BaseAdapter {
 
             // link view holder to my view
             view.setTag(viewHolder);
-        }
-
-        else {
+        } else {
             // If view already exists then restore view holder and I can access Image and Text View
             viewHolder = (ViewHolder) view.getTag();
 
@@ -90,7 +96,7 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         String investmentWorth = item.getInitialWorth() + "";
 
         viewHolder.numberOfInvestors.setText(numInvestors);
-        viewHolder.endsAt.setText(item.getCreatedAt().toString());
+        viewHolder.endsAt.setText("Closing in " + utils.getCountdown(item.getCreatedAt()));
         viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
 

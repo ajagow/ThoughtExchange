@@ -11,6 +11,17 @@
         <item name="android:background">@color/LightGreyFD</item>
     </style>
 
+    <!-- HOMEFEED List-->
+    <style name="invest_list_view">
+        <item name="android:layout_marginTop">135dp</item>
+        <item name="android:dividerHeight">20dp</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingBottom">50dp</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:scrollbars">none</item>
+    </style>
+
     <!--HOMEFEED CARD-->
     <style name="homefeed_card">
         <item name="android:layout_centerInParent">true</item>

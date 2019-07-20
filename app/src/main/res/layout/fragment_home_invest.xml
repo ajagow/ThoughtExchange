@@ -7,13 +7,9 @@
 
     <ListView
         android:id="@+id/myListView"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="100dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:dividerHeight="20dp">
+        style="@style/invest_list_view">
 
     </ListView>
 
