@@ -6,6 +6,7 @@
     style="@style/homefeed_invest_card">
 
     <TextView
+        android:id="@+id/investment_text"
         style="@style/homefeed_invest_card_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/investment_end_time"
                 style="@style/homefeed_invest_card_endtime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,6 +41,7 @@
                     android:src="@drawable/investor" />
 
                 <TextView
+                    android:id="@+id/num_of_investors"
                     style="@style/card_small_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,6 +56,7 @@
                     android:src="@drawable/coin" />
 
                 <TextView
+                    android:id="@+id/investment_worth"
                     style="@style/card_small_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -61,6 +65,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/make_investment_btn"
             style="@style/BaseButton"
             android:layout_alignParentRight="true"
             android:text="invest" />

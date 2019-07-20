@@ -1,52 +1,110 @@
 package com.mad.thoughtExchange.utils;
 
-public class HomeInvestItemAdapter {
+import android.content.Context;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.TextView;
 
-    String thought;
-    String endTime;
-    int numInvestors;
-    int numWorth;
+import com.mad.thoughtExchange.R;
+import com.mad.thoughtExchange.responses.ThoughtResponse;
 
-    public HomeInvestItemAdapter(String thought, String endTime, int numInvestors, int numWorth) {
-        this.thought = thought;
-        this.endTime = endTime;
-        this.numInvestors = numInvestors;
-        this.numWorth = numWorth;
+import java.util.List;
+
+public class HomeInvestItemAdapter extends BaseAdapter {
+
+    // Arraylist with the data points that are to populated on my items that I'm creating
+    private List<ThoughtResponse> thoughtResponses;
+
+    // Initialize the View holder
+    private ViewHolder viewHolder;
+
+    // Receive the context from Main Activity
+    private Context context;
+
+
+    public HomeInvestItemAdapter(List<ThoughtResponse> thoughtResponses,
+                                      Context context) {
+        this.thoughtResponses = thoughtResponses;
+        this.context = context;
     }
 
-
-
-    public String getThought() {
-        return thought;
+    @Override
+    public int getCount() {
+        return thoughtResponses.size();
     }
 
-    public String getEndTime() {
-        return endTime;
+    @Override
+    public Object getItem(int i) {
+        return null;
     }
 
-    public int getNumInvestors() {
-        return numInvestors;
+    @Override
+    public long getItemId(int i) {
+        return 0;
     }
 
-    public int getNumWorth() {
-        return numWorth;
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+
+        // we aren't attaching to root
+        // create and return the view
+
+        final ThoughtResponse item = thoughtResponses.get(i);
+
+        if (view == null) {
+            view = View.inflate(context, R.layout.fragment_home_invest_item, null);
+            Log.d("VIEWLOG", "new view created");
+
+
+            // create an object of view holder --> get hold of child view references
+            viewHolder = new ViewHolder();
+
+            viewHolder.numberOfInvestors = view.findViewById(R.id.num_of_investors);
+            viewHolder.content = view.findViewById(R.id.investment_text);
+            viewHolder.investmentWorth = view.findViewById(R.id.investment_worth);
+            viewHolder.endsAt = view.findViewById(R.id.investment_end_time);
+            viewHolder.investBtn = view.findViewById(R.id.make_investment_btn);
+
+            viewHolder.investBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("CLICK", "clicked" + item.getId());
+                }
+            });
+
+            // link view holder to my view
+            view.setTag(viewHolder);
+        }
+
+        else {
+            // If view already exists then restore view holder and I can access Image and Text View
+            viewHolder = (ViewHolder) view.getTag();
+
+        }
+
+
+        String numInvestors = item.getNumInvestors() + "";
+        String investmentWorth = item.getInitialWorth() + "";
+
+        viewHolder.numberOfInvestors.setText(numInvestors);
+        viewHolder.endsAt.setText(item.getCreatedAt().toString());
+        viewHolder.investmentWorth.setText(investmentWorth);
+        viewHolder.content.setText(item.getContents());
+
+        return view;
     }
 
-    public void setThought(String thought) {
-        this.thought = thought;
-    }
+    // class to hold my child view
+    static class ViewHolder {
+        TextView numberOfInvestors;
+        TextView content;
+        TextView endsAt;
+        TextView investmentWorth;
+        Button investBtn;
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
     }
-
-    public void setNumInvestors(int numInvestors) {
-        this.numInvestors = numInvestors;
-    }
-
-    public void setNumWorth(int numWorth) {
-        this.numWorth = numWorth;
-    }
-
 
 }

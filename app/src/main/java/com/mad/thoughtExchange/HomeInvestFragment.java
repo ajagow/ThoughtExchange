@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,6 +28,7 @@ import com.mad.thoughtExchange.models.LikesModel;
 import com.mad.thoughtExchange.responses.FeedPostResponse;
 import com.mad.thoughtExchange.responses.LikeResponse;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
+import com.mad.thoughtExchange.utils.HomeInvestItemAdapter;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
@@ -35,7 +38,9 @@ import java.util.Map;
 
 public class HomeInvestFragment extends Fragment {
 
-    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/9/900";
+    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/9/240";
+
+    private ListView listView;
 
     public HomeInvestFragment() {
         // Required empty public constructor
@@ -54,6 +59,7 @@ public class HomeInvestFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_invest, container, false);
 
+        listView = view.findViewById(R.id.myListView);
         getInvestments(view);
 
 
@@ -69,6 +75,10 @@ public class HomeInvestFragment extends Fragment {
                 for (ThoughtResponse response1 : response) {
                     Log.d("DF", response1.getCreatedAt().toString());
                 }
+
+                setInvestments(response);
+
+
             }
         };
 
@@ -90,6 +100,13 @@ public class HomeInvestFragment extends Fragment {
                 ThoughtResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();
+    }
+
+    private void setInvestments(List<ThoughtResponse> responses) {
+        HomeInvestItemAdapter adapter = new HomeInvestItemAdapter(responses, getContext());
+
+        listView.setAdapter(adapter);
+
     }
 
 
