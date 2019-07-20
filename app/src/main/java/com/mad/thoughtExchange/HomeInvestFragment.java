@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class HomeInvestFragment extends Fragment {
 
-    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/9/240";
+    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/9/24";
 
     private ListView listView;
 
@@ -73,7 +73,7 @@ public class HomeInvestFragment extends Fragment {
             @Override
             public void onResponse(List<ThoughtResponse> response) {
                 for (ThoughtResponse response1 : response) {
-                    Log.d("DF", response1.getCreatedAt().toString());
+                    Log.d("DF", response1.getId() + "");
                 }
 
                 setInvestments(response);
@@ -103,7 +103,7 @@ public class HomeInvestFragment extends Fragment {
     }
 
     private void setInvestments(List<ThoughtResponse> responses) {
-        HomeInvestItemAdapter adapter = new HomeInvestItemAdapter(responses, getContext());
+        HomeInvestItemAdapter adapter = new HomeInvestItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
 
         listView.setAdapter(adapter);
 

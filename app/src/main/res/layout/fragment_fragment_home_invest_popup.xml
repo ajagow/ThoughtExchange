@@ -16,7 +16,7 @@
         android:background="@drawable/login_card_background">
 
         <TextView
-            android:id="@+id/current_feed_post"
+            android:id="@+id/popup_content"
             style="@style/homefeed_card_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,9 +29,10 @@
             android:text="How much are you investing?" />
 
         <EditText
-            android:id="@+id/investment_amount"
+            android:id="@+id/popup_investment_amount"
             style="@style/LoginInput"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            android:inputType="number" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/end_time"
+                    android:id="@+id/popup_end_time"
                     style="@style/homefeed_invest_card_endtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,6 +63,7 @@
                         android:src="@drawable/investor" />
 
                     <TextView
+                        android:id="@+id/popup_num_of_investors"
                         style="@style/card_small_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -76,6 +78,7 @@
                         android:src="@drawable/coin" />
 
                     <TextView
+                        android:id="@+id/popu_investment_worth"
                         style="@style/card_small_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,6 +87,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/popup_invest_btn"
                 style="@style/BaseButton"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
