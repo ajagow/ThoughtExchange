@@ -7,11 +7,13 @@
     <color name="LightGray62">#626262</color>
     <color name="primaryDark">#000000</color>
     <color name="black">#000000</color>
+    <color name="popupBackground">#A6000000</color>
     <color name="primaryLapis">#2978A0</color>
+    <color name="primaryTiffany">#07BCA7</color>
+    <color name="primaryIndigo">#264653</color>
+    <color name="secondaryYellow">#FFD686</color>
     <color name="backgroundColor">#E3F5FF</color>
     <color name="tagRed">#FFD9D9</color>
+    <color name="testBottomLol">#1B4079</color>
     <!--<color name="primaryYellow">#cceff8</color>-->
-    <color name="primaryBlue">#0024B2</color>
-    <color name="primaryTurquoise">#0DE6E0</color>
-    <color name="secondaryTurquoise">#A4FFFC</color>
 </resources>

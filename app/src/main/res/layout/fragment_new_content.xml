@@ -30,7 +30,7 @@
                 android:paddingBottom="-200dp"
                 android:layout_height="4dp"
                 android:layout_gravity="start"
-                android:background="@color/primaryTurquoise" />
+                android:background="@color/primaryLapis" />
 
             <TextView
                 android:layout_marginTop="20dp"

@@ -59,7 +59,7 @@
                 android:layout_width="210dp"
                 android:layout_height="4dp"
                 android:layout_gravity="start"
-                android:background="@color/primaryBlue"
+                android:background="@color/primaryIndigo"
                 android:layout_below="@+id/tab_header"/>
         </RelativeLayout>
 
@@ -74,7 +74,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:space_background_color="@color/primaryBlue"
+        app:space_background_color="@color/testBottomLol"
         app:space_item_icon_only_size="@dimen/space_item_icon_only_size" />
 
     <!--<com.google.android.material.bottomnavigation.BottomNavigationView-->
