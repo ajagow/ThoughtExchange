@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+
+import com.mad.thoughtExchange.HomeInvestPopupFragment;
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
 
@@ -24,11 +27,14 @@ public class HomeInvestItemAdapter extends BaseAdapter {
     // Receive the context from Main Activity
     private Context context;
 
+    FragmentManager fragmentManager;
+
 
     public HomeInvestItemAdapter(List<ThoughtResponse> thoughtResponses,
-                                      Context context) {
+                                 Context context, FragmentManager fragmentManager) {
         this.thoughtResponses = thoughtResponses;
         this.context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -67,11 +73,14 @@ public class HomeInvestItemAdapter extends BaseAdapter {
             viewHolder.investmentWorth = view.findViewById(R.id.investment_worth);
             viewHolder.endsAt = view.findViewById(R.id.investment_end_time);
             viewHolder.investBtn = view.findViewById(R.id.make_investment_btn);
+            viewHolder.id = item.getId();
 
             viewHolder.investBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("CLICK", "clicked" + item.getId());
+
+                    HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(item.getContents(), item.getCreatedAt(), item.getNumInvestors(), item.getTotalWorth(), item.getId());
+                    homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
                 }
             });
 
@@ -94,6 +103,15 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
 
+        viewHolder.investBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(item.getContents(), item.getCreatedAt(), item.getNumInvestors(), item.getTotalWorth(), item.getId());
+                homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
+            }
+        });
+
         return view;
     }
 
@@ -103,6 +121,7 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         TextView content;
         TextView endsAt;
         TextView investmentWorth;
+        int id;
         Button investBtn;
 
     }
