@@ -15,9 +15,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.mad.thoughtExchange.models.GsonRequest;
+import com.mad.thoughtExchange.models.GsonRequestArray;
+import com.mad.thoughtExchange.models.LikesModel;
+import com.mad.thoughtExchange.responses.FeedPostResponse;
+import com.mad.thoughtExchange.responses.LikeResponse;
+import com.mad.thoughtExchange.responses.ThoughtResponse;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class HomeInvestFragment extends Fragment {
+
+    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/9/900";
 
     public HomeInvestFragment() {
         // Required empty public constructor
@@ -36,12 +54,44 @@ public class HomeInvestFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_invest, container, false);
 
-
-        final HomeFeedFragment homeFeedFragment = new HomeFeedFragment();
+        getInvestments(view);
 
 
         return view;
     }
+
+    private void getInvestments(View view) {
+        //vote meaning like/dislike
+
+        Response.Listener<List<ThoughtResponse>> resonseListener = new Response.Listener<List<ThoughtResponse>>() {
+            @Override
+            public void onResponse(List<ThoughtResponse> response) {
+                for (ThoughtResponse response1 : response) {
+                    Log.d("DF", response1.getCreatedAt().toString());
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR", error.networkResponse.toString());
+                Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("api-token", token);
+        headers.put("Content-Type", "application/json");
+
+        GsonRequestArray<String, ThoughtResponse> gsonRequest = new GsonRequestArray<String, ThoughtResponse>(MainActivity.URL + GET_INVESTMENTS_URL, getContext(),
+                ThoughtResponse.class, resonseListener, errorListener, headers);
+
+        gsonRequest.volley();
+    }
+
 
 
 }

@@ -36,7 +36,7 @@ import java.util.Map;
 
 public class HomeFeedFragment extends Fragment {
 
-    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/2000";
+    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/3/2000";
     private static final String LIKES_PATH = "api/v1/likes/";
     private TextView currentFeedPost;
     private Button likeButton;
