@@ -16,11 +16,13 @@
         <item name="android:layout_marginBottom">8dp</item>
     </style>
     <style name="LoginH1" parent="BaseH1Light">
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/lato_black</item>
     </style>
     <style name="LoginH2" parent="BaseH2Dark">
-        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:layout_marginBottom">30dp</item>
     </style>
 
 </resources>

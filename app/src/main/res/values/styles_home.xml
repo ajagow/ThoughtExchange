@@ -17,11 +17,11 @@
         <item name="android:layout_marginTop">40dp</item>
     </style>
     <style name="homefeed_card_text">
-        <item name="android:fontFamily">@font/merriweather</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/primaryDark</item>
         <item name="android:layout_marginBottom">25dp</item>
-        <item name="android:lineSpacingExtra">10sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
     </style>
     <style name="homefeed_likedislike_button" parent="BaseButtonLink">
         <item name="android:layout_width">65dp</item>

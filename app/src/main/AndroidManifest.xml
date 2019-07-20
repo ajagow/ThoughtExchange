@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".DashboardActivity"
-            android:label="homeactivity2"></activity>
+            android:label="homeactivity2"
+            android:screenOrientation="portrait"
+            android:theme="@style/noAnimTheme"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -27,7 +29,8 @@
         </activity>
         <activity
             android:name=".SignupActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/noAnimTheme"></activity>
     </application>
 
 </manifest>

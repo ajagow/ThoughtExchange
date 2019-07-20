@@ -3,5 +3,5 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/merriweather_reg" />
+        android:font="@font/roboto_light" />
 </font-family>

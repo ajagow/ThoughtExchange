@@ -5,9 +5,9 @@
     <color name="lightGreyED">#ededed</color>
     <color name="LightGreyFD">#fdfdfd</color>
     <color name="LightGray62">#626262</color>
-    <color name="primaryDark">#222222</color>
+    <color name="primaryDark">#000000</color>
     <color name="black">#000000</color>
-    <color name="primaryYellow">#ffbf00</color>
+    <color name="primaryLapis">#2978A0</color>
     <color name="backgroundColor">#E3F5FF</color>
     <color name="tagRed">#FFD9D9</color>
     <!--<color name="primaryYellow">#cceff8</color>-->
