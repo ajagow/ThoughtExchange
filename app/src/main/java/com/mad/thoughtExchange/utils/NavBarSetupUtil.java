@@ -14,6 +14,8 @@ import androidx.fragment.app.FragmentManager;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
+import com.mad.thoughtExchange.HomeFeedFragment;
+import com.mad.thoughtExchange.HomeInvestFragment;
 import com.mad.thoughtExchange.R;
 
 import java.util.List;
@@ -48,16 +50,17 @@ public class NavBarSetupUtil {
 
             @Override
             public void onItemClick(int itemIndex, String itemName) {
-                onAnyItemClick(fm, itemName, tabHeader, tab1, tab2, nav);
+                onAnyMenuItemClick(fm, itemName, tabHeader, tab1, tab2, nav);
             }
 
             @Override
             public void onItemReselected(int itemIndex, String itemName) {
-                onAnyItemClick(fm, itemName, tabHeader, tab1, tab2, nav);
+                onAnyMenuItemClick(fm, itemName, tabHeader, tab1, tab2, nav);
             }
         });
     }
 
+    // get the fragment that's currently visible
     private Fragment getVisibleFragment(FragmentManager fragmentManager){
         List<Fragment> fragments = fragmentManager.getFragments();
 
@@ -70,14 +73,17 @@ public class NavBarSetupUtil {
         return null;
     }
 
-    private void onAnyItemClick(FragmentManager fm,
-                                String itemName, RelativeLayout tabHeader,
-                                Button tab1, Button tab2, View nav) {
+    // When HOME button or WALLET button are clicked in nav bar, change tab names on top
+    // and which fragments are visible
+    private void onAnyMenuItemClick(FragmentManager fm,
+                                    String itemName, RelativeLayout tabHeader,
+                                    Button tab1, Button tab2, View nav) {
         tabHeader.setVisibility(View.VISIBLE);
         Fragment active = getVisibleFragment(fm);
         Fragment newFragment = null;
         if (itemName.equals("HOME")) {
             newFragment = fm.findFragmentByTag("homeFeedFragment");
+
             changeTabNames(tab1, tab2, true);
             click(tab1, "homeInvestFragment", "homeFeedFragment", null,fm, true, nav);
             click(tab2, "homeFeedFragment", "homeInvestFragment", null,fm, false, nav);
@@ -93,6 +99,7 @@ public class NavBarSetupUtil {
         fm.beginTransaction().hide(active).show(newFragment).commit();
     }
 
+    // change which fragments are visible based on click
     private void click(Button button, final String current,
                        final String goTo, final View nav, final FragmentManager fm,
                        final boolean swipeLeft, final View navLine) {
@@ -129,6 +136,7 @@ public class NavBarSetupUtil {
         });
     }
 
+    // change name of tabs on top depending on which button is clicked
     private void changeTabNames(Button tab1, Button tab2, boolean isHome) {
         if (isHome) {
             tab1.setText(R.string.feed);
@@ -140,10 +148,12 @@ public class NavBarSetupUtil {
         }
     }
 
+    // move line without animating
     private void moveLineNoAnimation(View nav) {
         nav.setTranslationX(0f);
     }
 
+    // move line with left position start and left position end
     private void moveLine(View nav, float start, float end) {
         if (Float.compare(nav.getTranslationX(), start) == 0 ) {
 

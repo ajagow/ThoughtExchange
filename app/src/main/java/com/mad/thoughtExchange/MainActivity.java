@@ -3,6 +3,7 @@ package com.mad.thoughtExchange;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,13 +16,14 @@ import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.LoginModel;
 import com.mad.thoughtExchange.responses.LoginResponse;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    static String URL = "https://blog-api-tutorial1.herokuapp.com/";
+    static String URL = "https://thought-exchange-api.herokuapp.com/";
     private static String USERS_PATH = "api/v1/users/login";
 
     private TextView email;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 onSignup(view);
             }
         });
+
     }
 
     public void onSignup(View view) {
@@ -60,46 +63,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSubmit(View view) {
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken("sldkfj");
-        onSuccessfulLogin(loginResponse);
-//        String emailVal = email.getText().toString();
-//        String passwordVal = password.getText().toString();
-//
-//        LoginModel loginModel = new LoginModel();
-//        loginModel.setEmail(emailVal);
-//        loginModel.setPassword(passwordVal);
-//
-//        Response.Listener<LoginResponse> responseListener = new Response.Listener<LoginResponse>() {
-//            @Override
-//            public void onResponse(LoginResponse response) {
-//                onSuccessfulLogin(response);
-//            }
-//        };
-//
-//        Response.ErrorListener errorListener = new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                try {
-//                    String body = new String(error.networkResponse.data,"UTF-8");
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-//                Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
-//            }
-//        };
-//
-//        GsonRequest<LoginModel, LoginResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, loginModel, this,
-//                LoginModel.class, LoginResponse.class, new HashMap<String, String>(), responseListener, errorListener);
-//
-//        gsonRequest.volley();
+
+        String emailVal = email.getText().toString();
+        String passwordVal = password.getText().toString();
+
+        LoginModel loginModel = new LoginModel();
+        loginModel.setEmail(emailVal);
+        loginModel.setPassword(passwordVal);
+
+        Response.Listener<LoginResponse> responseListener = new Response.Listener<LoginResponse>() {
+            @Override
+            public void onResponse(LoginResponse response) {
+                onSuccessfulLogin(response);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                try {
+                    String body = new String(error.networkResponse.data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        GsonRequest<LoginModel, LoginResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, loginModel, this,
+                LoginModel.class, LoginResponse.class, new HashMap<String, String>(), responseListener, errorListener);
+
+        gsonRequest.volley();
 
 }
 
     // on successful login attempt, go to HomeActivity
     private void onSuccessfulLogin(LoginResponse loginResponse) {
         Intent explicitIntent = new Intent(MainActivity.this, DashboardActivity.class);
-        explicitIntent.putExtra("jwtToken", loginResponse.getToken());
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, loginResponse.getToken());
+
+        // todo: replace with real call to api to get a user's value
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 1999);
         startActivity(explicitIntent);
     }
 

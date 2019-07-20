@@ -1,11 +1,13 @@
 package com.mad.thoughtExchange;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mad.thoughtExchange.utils.NavBarSetupUtil;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -38,6 +40,13 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
+
+        // remove after using real login
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Njg4MjU3MTksImlhdCI6MTU2MzY0MTcxOSwic3ViIjoyfQ.8yMMptQRI9w6ltgOmBM0827b4trzQ16WavXfB_aHKuQ";
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token);
+        // todo: replace with real call to api to get a user's value
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 1999);
 
         fm.beginTransaction().add(R.id.main_container, newContentFragment, "newContentFragment").hide(newContentFragment).commit();
         fm.beginTransaction().add(R.id.main_container, homeInvestFragment, "homeInvestFragment").hide(homeInvestFragment).commit();

@@ -1,5 +1,6 @@
 package com.mad.thoughtExchange;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ import com.mad.thoughtExchange.models.SignupModel;
 import com.mad.thoughtExchange.models.ThoughtModel;
 import com.mad.thoughtExchange.responses.SignupResponse;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import org.json.JSONObject;
 
@@ -35,7 +37,6 @@ import java.util.Map;
 
 public class NewContentFragment extends Fragment {
 
-    private static String URL = "https://blog-api-tutorial1.herokuapp.com/";
     private static String USERS_PATH = "api/v1/thoughts/";
 
     private TextView textCounter;
@@ -64,15 +65,8 @@ public class NewContentFragment extends Fragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment home = getFragmentManager().findFragmentByTag("homeFeedFragment");
+                onSubmit(view);
 
-//                Log.d("HERE", "frag " + home.getTag());
-
-                getActivity().findViewById(R.id.tab_header_and_line).setVisibility(View.VISIBLE);
-                Log.d("HERE", getFragmentManager().toString());
-
-                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_down, R.anim.fade_out).hide(NewContentFragment.this).show(home).commit();
-//                onSubmit(view);
             }
         });
 
@@ -96,6 +90,17 @@ public class NewContentFragment extends Fragment {
             Log.d("NumberFormatException", e.toString());
         }
 
+        if (userHasEnoughMoneyToInvest(initInvestment)) {
+            sendNewPost(thought, initInvestment);
+        }
+
+        else {
+            Toast.makeText(getActivity(), "You don't have enough coins. Please lower initial invesment amount.", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    private void sendNewPost(String thought, int initInvestment) {
         ThoughtModel thoughtModel = new ThoughtModel();
 
         // set values for POST request
@@ -118,11 +123,11 @@ public class NewContentFragment extends Fragment {
             }
         };
 
-        String token = getActivity().getIntent().getStringExtra("jwtToken");
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
 
-        GsonRequest<ThoughtModel, ThoughtResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, thoughtModel, getActivity(),
+        GsonRequest<ThoughtModel, ThoughtResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + USERS_PATH, thoughtModel, getActivity(),
                 ThoughtModel.class, ThoughtResponse.class, headers, responseListener, errorListener);
 
         gsonRequest.volley();
@@ -148,9 +153,20 @@ public class NewContentFragment extends Fragment {
 
 
     private void onSuccessfulSubmit(ThoughtResponse thoughtResponse) {
-        Intent explicitIntent = new Intent(getContext(), DashboardActivity.class);
-        //TODO: is any data necessary to go back to Dashboard?
-        startActivity(explicitIntent);
+        clearValues();
+        Fragment home = getFragmentManager().findFragmentByTag("homeFeedFragment");
+        getActivity().findViewById(R.id.tab_header_and_line).setVisibility(View.VISIBLE);
+        getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_down, R.anim.fade_out).hide(NewContentFragment.this).show(home).commit();
+    }
+
+    private void clearValues() {
+        newPostContent.setText("");
+        initialInvestment.setText("");
+    }
+
+    private boolean userHasEnoughMoneyToInvest(int investmentVal) {
+        int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.networth);
+        return investmentVal <= networth;
     }
 
 }
