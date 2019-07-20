@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DashboardActivity"
+            android:name=".MainActivity"
             android:label="homeactivity2"
             android:screenOrientation="portrait"
             android:theme="@style/noAnimTheme"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".DashboardActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/noAnimTheme">
