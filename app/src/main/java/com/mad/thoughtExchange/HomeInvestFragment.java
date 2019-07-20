@@ -60,13 +60,13 @@ public class HomeInvestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_invest, container, false);
 
         listView = view.findViewById(R.id.myListView);
-        getInvestments(view);
+        getInvestments();
 
 
         return view;
     }
 
-    private void getInvestments(View view) {
+    private void getInvestments() {
         //vote meaning like/dislike
 
         Response.Listener<List<ThoughtResponse>> resonseListener = new Response.Listener<List<ThoughtResponse>>() {
@@ -107,6 +107,13 @@ public class HomeInvestFragment extends Fragment {
 
         listView.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            getInvestments();
+        }
     }
 
 

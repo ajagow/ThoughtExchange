@@ -98,7 +98,7 @@ public class HomeInvestItemAdapter extends BaseAdapter {
 
 
         String numInvestors = item.getNumInvestors() + "";
-        String investmentWorth = item.getInitialWorth() + "";
+        String investmentWorth = item.getTotalWorth() + "";
 
         viewHolder.numberOfInvestors.setText(numInvestors);
         viewHolder.endsAt.setText("Closing in " + utils.getCountdown(item.getCreatedAt()));
