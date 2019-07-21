@@ -8,9 +8,9 @@
     android:layout_gravity="top">
 
     <ImageView
+        android:id="@+id/logout"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:id="@+id/logout"
         android:src="@drawable/setting_cog"/>
 
     <TextView

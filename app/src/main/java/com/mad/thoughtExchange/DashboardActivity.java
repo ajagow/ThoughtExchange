@@ -1,9 +1,8 @@
 package com.mad.thoughtExchange;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
 
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mad.thoughtExchange.utils.NavBarSetupUtil;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 public class DashboardActivity extends AppCompatActivity {
@@ -33,6 +33,7 @@ public class DashboardActivity extends AppCompatActivity {
     Button tab1;
     Button tab2;
     ImageView logout;
+    TextView coins;
     View navLine;
 
 
@@ -41,12 +42,19 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-        // remove after using real login
-        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Njg4MjU3MTksImlhdCI6MTU2MzY0MTcxOSwic3ViIjoyfQ.8yMMptQRI9w6ltgOmBM0827b4trzQ16WavXfB_aHKuQ";
-        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token);
-        // todo: replace with real call to api to get a user's value
-        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 1999);
+        tab1 = findViewById(R.id.tab_feed);
+        tab2 = findViewById(R.id.tab_invest);
+        logout = findViewById(R.id.logout);
+        coins = findViewById(R.id.coins);
+        navLine = findViewById(R.id.navbar_line);
+        RelativeLayout tabHeader = findViewById(R.id.tab_header_and_line);
+        SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
+
+        // uncomment only if starting app from dashboard activity
+        //String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Njg4MjU3MTksImlhdCI6MTU2MzY0MTcxOSwic3ViIjoyfQ.8yMMptQRI9w6ltgOmBM0827b4trzQ16WavXfB_aHKuQ";
+        //SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
+        //SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token);
+        //SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 5000);
 
         fm.beginTransaction().add(R.id.main_container, newContentFragment, "newContentFragment").hide(newContentFragment).commit();
         fm.beginTransaction().add(R.id.main_container, homeInvestFragment, "homeInvestFragment").hide(homeInvestFragment).commit();
@@ -54,19 +62,11 @@ public class DashboardActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.main_container, walletMyInvestmentsFragment, "walletMyInvestmentsFragment").hide(walletMyInvestmentsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, homeFeedFragment, "homeFeedFragment").commit();
 
-        SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
-        RelativeLayout tabHeader = findViewById(R.id.tab_header_and_line);
-
-        tab1 = findViewById(R.id.tab_feed);
-        tab2 = findViewById(R.id.tab_invest);
-
-        logout = findViewById(R.id.logout);
-
-        navLine = findViewById(R.id.navbar_line);
-
         spaceNavigationView.setCentreButtonIcon(R.drawable.plus_icon);
         spaceNavigationView.setInActiveCentreButtonIconColor(ContextCompat.getColor(this,R.color.white));
 
+        int netWorth = SharedPreferencesUtil.getIntFromSharedPreferences(getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.networth);
+        coins.setText(Integer.toString(netWorth));
 
         NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
         navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
@@ -78,8 +78,5 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(explicitIntent);
             }
         });
-
-
     }
-
 }
