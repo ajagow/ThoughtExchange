@@ -83,7 +83,12 @@ public class HomeInvestItemAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
 
-                    HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(item.getContents(), item.getCreatedAt(), item.getNumInvestors(), item.getTotalWorth(), item.getId());
+                    HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(
+                            item.getContents(),
+                            item.getCreatedAt(),
+                            item.getNumInvestors(),
+                            item.getTotalWorth(),
+                            item.getId());
                     homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
                 }
             });
@@ -101,7 +106,7 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         String investmentWorth = item.getTotalWorth() + "";
 
         viewHolder.numberOfInvestors.setText(numInvestors);
-        viewHolder.endsAt.setText("Closing in " + utils.getCountdown(item.getCreatedAt()));
+        viewHolder.endsAt.setText("Closing in " + utils.getCountdown(item.getCreatedAt(), 2));
         viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
 
