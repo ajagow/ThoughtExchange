@@ -24,6 +24,7 @@ import com.mad.thoughtExchange.responses.FeedPostResponse;
 import com.mad.thoughtExchange.responses.LikeResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +32,11 @@ import java.util.Map;
 
 public class HomeFeedFragment extends Fragment {
 
-    private static final String POSTS_PATH = "api/v1/thoughts/";
-    // private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/3/2000";
+    //private static final String POSTS_PATH = "api/v1/thoughts/";
+    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/2000";
     private static final String LIKES_PATH = "api/v1/likes/";
 
-    private List<FeedPostResponse> feedPostResponses;
+    private List<FeedPostResponse> feedPostResponses = new ArrayList<FeedPostResponse>();
 
     private TextView currentFeedPost;
     private Button likeButton;
