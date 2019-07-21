@@ -34,6 +34,7 @@ public class SignupActivity extends AppCompatActivity {
     private TextView email;
     private TextView password;
     private int passwordRequiredLength;
+    private boolean passwordIsValidLength;
     private TextView passwordValidLength;
     private Button signup_btn;
     private Button back_to_login_btn;
@@ -49,12 +50,18 @@ public class SignupActivity extends AppCompatActivity {
         back_to_login_btn = findViewById(R.id.back_to_login_btn);
         signup_btn = findViewById(R.id.signup_btn);
         passwordValidLength = findViewById(R.id.pass_validation);
+        passwordIsValidLength = false;
         passwordRequiredLength = 8;
 
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onSignup(view);
+                if (passwordIsValidLength && name.length() > 0 && email.length() > 0) {
+                    onSignup(view);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Check fields again", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -115,12 +122,14 @@ public class SignupActivity extends AppCompatActivity {
                 // if password is longer than required length
                 if (s.length() >= passwordRequiredLength) {
                     passwordValidLength.setText("Password meets requirements");
+                    passwordIsValidLength = true;
                 }
                 else {
                     String passValidationText = "Your password needs "
                             + (passwordRequiredLength - s.length())
                             + " more characters";
                     passwordValidLength.setText(passValidationText);
+                    passwordIsValidLength = false;
                 }
             }
 
