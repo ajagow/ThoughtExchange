@@ -58,7 +58,6 @@
                     android:layout_height="wrap_content"
                     android:text="Ariel doesn't know what a fork is for, yet her dad wields a trident" />
 
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -88,13 +87,7 @@
                         android:layout_height="wrap_content"
                         android:text="1,276"/>
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
-
-
     </ScrollView>
-
 </RelativeLayout>

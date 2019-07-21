@@ -8,20 +8,20 @@ Sell your thoughts
 - ---User must be able to create a new account---
 - ---User must be able to login with an existing account---
 - ---User must be able to view the homepage screen---
-- User must be able to navigate between pages (content might not be there yet)
+- ---User must be able to navigate between pages (content might not be there yet)---
 
 ### Should:
-- User should be able to logout
+- ---User should be able to logout---
 
 ### Could:
 - Have more in-depth authentication (i.e., password requirements, encryption, etc.)
 
 ## Checkpoint 3:
 ### Must:
-- User must be able to see ideas in feed to like or dislike
-- User must be able to like or dislike an idea 
-- User must be able to post an investment
-- User must be able to view what investment opportunities other users have posted
+- ---User must be able to see ideas in feed to like or dislike---
+- ---User must be able to like or dislike an idea--- 
+- ---User must be able to post an investment---
+- ---User must be able to view what investment opportunities other users have posted---
 - If should(s) not completed in Checkpoint 2, complete the should(s)
 ### Should:
 - Be able to track number of likes and investments an idea has (I.e., have a solid numerical value placed in app)
