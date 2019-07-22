@@ -22,7 +22,8 @@ import android.widget.TextView;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    final Fragment homeFeedFragment = new HomeFeedFragment();
+    //final Fragment homeFeedFragment = new HomeFeedFragment();
+    final Fragment homeFeedFragment = new HomeFeedSwipeFragment();
     final Fragment newContentFragment = new NewContentFragment();
     final Fragment homeInvestFragment = new HomeInvestFragment();
     final Fragment walletMyIdeasFragment = new WalletMyIdeasFragment();

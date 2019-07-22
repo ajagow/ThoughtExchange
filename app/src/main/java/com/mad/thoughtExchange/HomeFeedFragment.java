@@ -31,8 +31,6 @@ import java.util.Map;
 
 
 public class HomeFeedFragment extends Fragment {
-
-    //private static final String POSTS_PATH = "api/v1/thoughts/";
     private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/2000";
     private static final String LIKES_PATH = "api/v1/likes/";
 
@@ -93,7 +91,7 @@ public class HomeFeedFragment extends Fragment {
     private void onDislike(View view, int postId) {
         Log.d("LIKE", "you disliked this");
 
-        sendVote(view, postId, 0); // TODO: is 0 downvoting?
+        sendVote(view, postId, 0);
     }
 
     private void sendVote(View view, int postId, int vote) {
@@ -133,7 +131,7 @@ public class HomeFeedFragment extends Fragment {
         gsonRequest.volley();
     }
 
-    private void onSuccessfulVote(LikeResponse response) { ////////
+    private void onSuccessfulVote(LikeResponse response) {
         Log.d("onSuccessfulVote", response.toString());
         getMarketPostData();
     }
