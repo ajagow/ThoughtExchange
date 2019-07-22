@@ -107,4 +107,11 @@ public class HomeFeedSwipeFragment extends Fragment {
         adapter = new HomeFeedSwipeAdapter(feedPostResponses, getContext());
         cardStackView.setAdapter(adapter);
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            getCurrentFeedPost();
+        }
+    }
 }

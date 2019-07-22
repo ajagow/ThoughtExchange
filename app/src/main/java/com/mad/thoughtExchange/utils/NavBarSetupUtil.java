@@ -32,6 +32,7 @@ public class NavBarSetupUtil {
 
         click(tab1, "homeInvestFragment", "homeFeedFragment", null,fm, true, nav);
         click(tab2, "homeFeedFragment", "homeInvestFragment", null,fm, false, nav);
+        Log.d("NavBarSetup","set up tab1, tab2 clicks");
 
         spaceNavigationView.showIconOnly();
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
@@ -122,6 +123,7 @@ public class NavBarSetupUtil {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("onClick","current: "+current + " goTo: "+goTo);
                 Fragment currentFrag = fm.findFragmentByTag(current);
                 Fragment goToFragment = fm.findFragmentByTag(goTo);
                 fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();
