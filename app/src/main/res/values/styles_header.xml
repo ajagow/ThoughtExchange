@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Header" parent="BaseSmall">
-        <item name="android:padding">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
     </style>
 
     <style name="HeaderAppName" parent="BaseH2Dark">
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:color">@color/primaryDark</item>
     </style>
 
-    <style name="HeaderCoinWrapper">
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingBottom">5dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:background">@drawable/pill_background</item>
+    <style name="HeaderUserWrapper" parent="CardUserWrapper">
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingLeft">12dp</item>
     </style>
 
     <style name="HeaderCoins" parent="BaseSmall">

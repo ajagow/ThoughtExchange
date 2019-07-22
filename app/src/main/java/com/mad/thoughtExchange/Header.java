@@ -34,7 +34,7 @@ public class Header extends RelativeLayout {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.activity_header, this);
-        settings = findViewById(R.id.logout);
+//        settings = findViewById(R.id.logout);
         logo = findViewById(R.id.logo);
         coins = findViewById(R.id.coins);
     }

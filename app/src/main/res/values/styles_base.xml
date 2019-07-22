@@ -55,8 +55,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">35dp</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/base_button_background_primary</item>
+        <item name="android:textColor">@drawable/base_button_text</item>
+        <item name="android:background">@drawable/base_button_background</item>
     </style>
     <style name="BaseButtonLink" parent="BaseButton">
         <item name="android:background">@color/white</item>

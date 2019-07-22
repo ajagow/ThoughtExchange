@@ -60,7 +60,7 @@ public class DashboardActivity extends AppCompatActivity {
         tab1 = findViewById(R.id.tab_feed);
         tab2 = findViewById(R.id.tab_invest);
 
-        logout = findViewById(R.id.logout);
+//        logout = findViewById(R.id.logout);
 
         navLine = findViewById(R.id.navbar_line);
 
@@ -71,13 +71,13 @@ public class DashboardActivity extends AppCompatActivity {
         NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
         navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
 
-        logout.setOnClickListener(new View.OnClickListener() {
+        /*logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent explicitIntent = new Intent(DashboardActivity.this, MainActivity.class);
                 startActivity(explicitIntent);
             }
-        });
+        });*/
 
 
     }

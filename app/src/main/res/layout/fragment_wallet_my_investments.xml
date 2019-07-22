@@ -99,7 +99,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        style="@style/HeaderCoinWrapper"
+                        style="@style/CardUserWrapper"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -199,7 +199,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        style="@style/HeaderCoinWrapper"
+                        style="@style/CardUserWrapper"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

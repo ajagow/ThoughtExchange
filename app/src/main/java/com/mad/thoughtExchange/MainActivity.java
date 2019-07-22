@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 try {
                     String body = new String(error.networkResponse.data,"UTF-8");
+                    Log.d("HELP", body);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
