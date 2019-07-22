@@ -82,8 +82,8 @@ public class HomeInvestPopupFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_fragment_home_invest_popup, container, false);
 
         TextView numberOfInvestors = view.findViewById(R.id.popup_num_of_investors);
-        TextView content = view.findViewById(R.id.popup_content);;
-        TextView endsAt = view.findViewById(R.id.popup_end_time);;
+        TextView content = view.findViewById(R.id.popup_content);
+        TextView endsAt = view.findViewById(R.id.popup_end_time);
         TextView investmentWorth = view.findViewById(R.id.popu_investment_worth);
         final EditText investmentAmount = view.findViewById(R.id.popup_investment_amount);
         Button investBtn = view.findViewById(R.id.popup_invest_btn);

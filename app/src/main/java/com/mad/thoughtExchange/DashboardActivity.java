@@ -1,11 +1,16 @@
 package com.mad.thoughtExchange;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
 import com.luseen.spacenavigation.SpaceNavigationView;
+import com.mad.thoughtExchange.models.GsonRequest;
+import com.mad.thoughtExchange.responses.UserResponse;
 import com.mad.thoughtExchange.utils.NavBarSetupUtil;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
@@ -14,10 +19,16 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DashboardActivity extends AppCompatActivity {
@@ -28,12 +39,20 @@ public class DashboardActivity extends AppCompatActivity {
     final Fragment walletMyIdeasFragment = new WalletMyIdeasFragment();
     final Fragment walletMyInvestmentsFragment = new WalletMyInvestmentsFragment();
 
+
     final FragmentManager fm = getSupportFragmentManager();
 
     Button tab1;
     Button tab2;
     ImageView logout;
+    LinearLayout userDetail;
     View navLine;
+
+
+    private int worthVal;
+    private TextView uWorth;
+
+    private static String USERS_PATH = "api/v1/users/me";
 
 
     @Override
@@ -61,6 +80,7 @@ public class DashboardActivity extends AppCompatActivity {
         tab2 = findViewById(R.id.tab_invest);
 
 //        logout = findViewById(R.id.logout);
+        userDetail = findViewById(R.id.userDetailButton);
 
         navLine = findViewById(R.id.navbar_line);
 
@@ -71,6 +91,14 @@ public class DashboardActivity extends AppCompatActivity {
         NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
         navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
 
+        userDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserSettings userSettings = new UserSettings();
+                userSettings.show(fm, "fragment_user_settings");
+            }
+        });
+
         /*logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +106,41 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(explicitIntent);
             }
         });*/
+
+        uWorth = findViewById(R.id.worth);
+
+        Response.Listener<UserResponse> responseListener = new Response.Listener<UserResponse>() {
+            @Override
+            public void onResponse(UserResponse response) {
+                worthVal = response.getNetWorth();
+                Log.d("WORTHVAL", String.valueOf(worthVal));
+
+                uWorth.setText(String.valueOf(worthVal));
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR", "user settings error");
+            }
+        };
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("api-token", token);
+        headers.put("Content-Type", "application/json");
+
+        GsonRequest<String, UserResponse> gsonRequest = new GsonRequest<String, UserResponse>(
+                MainActivity.URL + USERS_PATH,
+                this,
+                UserResponse.class,
+                responseListener,
+                errorListener,
+                headers
+        );
+
+        gsonRequest.volley();
 
 
     }

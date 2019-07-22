@@ -28,13 +28,13 @@
         style="@style/HeaderUserWrapper">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_gravity="center"
             android:src="@drawable/user"/>
 
         <TextView
-            android:id="@+id/coins"
+            android:id="@+id/worth"
             style="@style/HeaderCoins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

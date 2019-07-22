@@ -13,7 +13,7 @@
 
     <!-- HOMEFEED List-->
     <style name="invest_list_view">
-        <item name="android:layout_marginTop">135dp</item>
+        <item name="android:layout_marginTop">145dp</item>
         <item name="android:dividerHeight">20dp</item>
         <item name="android:paddingRight">30dp</item>
         <item name="android:paddingLeft">30dp</item>

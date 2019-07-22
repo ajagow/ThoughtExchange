@@ -24,7 +24,7 @@
         android:fillType="evenOdd"
         android:strokeColor="#00000000">
       <aapt:attr name="android:fillColor">
-        <gradient 
+        <gradient
             android:startY="9.17108"
             android:startX="90.12654"
             android:endY="119"

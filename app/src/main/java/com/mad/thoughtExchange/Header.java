@@ -2,10 +2,20 @@ package com.mad.thoughtExchange;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.mad.thoughtExchange.models.GsonRequest;
+import com.mad.thoughtExchange.responses.UserResponse;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Header extends RelativeLayout {
     public static final String TAG = Header.class.getSimpleName();
@@ -13,6 +23,9 @@ public class Header extends RelativeLayout {
     private Button settings;
     protected TextView logo;
     private TextView coins;
+
+
+    private static String USERS_PATH = "api/v1/users/me";
 
     public Header(Context context) {
         super(context);
@@ -37,5 +50,6 @@ public class Header extends RelativeLayout {
 //        settings = findViewById(R.id.logout);
         logo = findViewById(R.id.logo);
         coins = findViewById(R.id.coins);
+
     }
 }

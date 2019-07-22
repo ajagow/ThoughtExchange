@@ -1,65 +1,84 @@
 package com.mad.thoughtExchange;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.mad.thoughtExchange.models.GsonRequest;
+import com.mad.thoughtExchange.responses.FeedPostResponse;
+import com.mad.thoughtExchange.responses.UserResponse;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link UserSettings.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link UserSettings#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class UserSettings extends DialogFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String USER_NAME = "name";
+    private static final String USER_EMAIL = "email";
+    private static final String USER_RANK = "rank";
+    private static final String USER_WORTH = "worth";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String nameVal;
+    private String emailVal;
+    private int rankVal;
+    public int worthVal;
 
-    private OnFragmentInteractionListener mListener;
+    private static String USERS_PATH = "api/v1/users/me";
 
     public UserSettings() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserSettings.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserSettings newInstance(String param1, String param2) {
-        UserSettings fragment = new UserSettings();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    /**
+//     * Use this factory method to create a new instance of
+//     * this fragment using the provided parameters.
+//     *
+//     * @return A new instance of fragment UserSettings.
+//     */
+//    // TODO: Rename and change types and number of parameters
+//    public static UserSettings newInstance() {
+////        String nameVal, String emailVal, int rankVal
+//
+//        UserSettings fragment = new UserSettings();
+//        Bundle args = new Bundle();
+//
+//        args.putString(USER_NAME, "mel");
+//        args.putString(USER_EMAIL, "maaaa");
+//        args.putInt(USER_RANK, 3);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            nameVal = getArguments().getString(USER_NAME);
+            emailVal = getArguments().getString(USER_EMAIL);
+            rankVal = getArguments().getInt(USER_RANK);
+            worthVal = getArguments().getInt(USER_WORTH);
         }
     }
 
@@ -67,45 +86,66 @@ public class UserSettings extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_settings, container, false);
-    }
+        View view =  inflater.inflate(R.layout.fragment_user_settings, container, false);
+        View headerView = inflater.inflate(R.layout.activity_header, container, false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+        final TextView uName = view.findViewById(R.id.user_popup_name);
+        final TextView uEmail = view.findViewById(R.id.user_popup_email);
+        final TextView uRank = view.findViewById(R.id.user_popup_rank);
+        final TextView uWorth = headerView.findViewById(R.id.worth);
+        Button logoutButton = view.findViewById(R.id.logout);
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent explicitIntent = new Intent(getActivity(), MainActivity.class);
+                startActivity(explicitIntent);
+            }
+        });
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        Response.Listener<UserResponse> responseListener = new Response.Listener<UserResponse>() {
+            @Override
+            public void onResponse(UserResponse response) {
+                nameVal = response.getName();
+                emailVal = response.getEmail();
+                //TODO: Update this number from database
+                rankVal = 3;
+                worthVal = response.getNetWorth();
+//                Log.d("WORTHVAL", String.valueOf(worthVal));
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+                uName.setText(nameVal);
+                uEmail.setText(emailVal);
+                uRank.setText(String.valueOf(rankVal));
+//                uWorth.setText(String.valueOf(worthVal));
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR", "user settings error");
+            }
+        };
+
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("api-token", token);
+        headers.put("Content-Type", "application/json");
+
+
+        GsonRequest<String, UserResponse> gsonRequest = new GsonRequest<String, UserResponse>(
+                MainActivity.URL + USERS_PATH,
+                getContext(),
+                UserResponse.class,
+                responseListener,
+                errorListener,
+                headers
+        );
+
+        gsonRequest.volley();
+
+        return view;
     }
 }

@@ -3,38 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserSettings"
-    android:background="@color/popupBackground">
+    android:background="@color/popupBackground"
+    tools:context=".UserSettings">
 
     <LinearLayout
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:padding="40dp"
+        android:background="@drawable/login_card_background"
         android:orientation="vertical"
-        android:background="@drawable/login_card_background">
+        android:padding="40dp">
 
         <TextView
-            android:id="@+id/popup_content"
+            android:id="@+id/user_popup_name"
             style="@style/BaseH2Dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Melvin Chen" />
+            android:text="" />
 
         <TextView
+            android:id="@+id/user_popup_email"
+            style="@style/Base.CardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Base.CardView"
             android:layout_marginTop="20dp"
-            android:text="myemail2@email.com" />
+            android:text="" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Base.CardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="You are rank: " />
+
+            <TextView
+                android:id="@+id/user_popup_rank"
+                style="@style/Base.CardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="" />
+        </LinearLayout>
 
         <Button
-            android:layout_width="match_parent"
-            style="@style/BaseButton"
-            android:layout_marginTop="40dp"
             android:id="@+id/logout"
-            android:text="Sign out"/>
+            style="@style/BaseButton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="40dp"
+            android:text="Sign out" />
 
     </LinearLayout>
 
