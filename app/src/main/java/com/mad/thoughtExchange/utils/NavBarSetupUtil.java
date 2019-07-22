@@ -81,6 +81,7 @@ public class NavBarSetupUtil {
         tabHeader.setVisibility(View.VISIBLE);
         Fragment active = getVisibleFragment(fm);
         Fragment newFragment = null;
+        Log.d("ITEMNAME", itemName);
         if (itemName.equals("HOME")) {
             newFragment = fm.findFragmentByTag("homeFeedFragment");
 
@@ -107,7 +108,7 @@ public class NavBarSetupUtil {
         final int enter;
         final int exit;
 
-        Log.d("CLICK HERE", "kdfls");
+        Log.d("CLICK HERE", "current: " + current + "    goto: " + goTo);
         moveLineNoAnimation(navLine);
 
         if (!swipeLeft) {
@@ -122,6 +123,7 @@ public class NavBarSetupUtil {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("d", "goto" + goTo);
                 Fragment currentFrag = fm.findFragmentByTag(current);
                 Fragment goToFragment = fm.findFragmentByTag(goTo);
                 fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();

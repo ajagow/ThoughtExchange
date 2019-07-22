@@ -90,6 +90,7 @@
                 android:id="@+id/popup_invest_btn"
                 style="@style/BaseButton"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="30dp"
                 android:layout_centerVertical="true"
                 android:text="invest" />
         </RelativeLayout>

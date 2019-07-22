@@ -60,6 +60,10 @@ public class HomeInvestItemAdapter extends BaseAdapter {
 
         final ThoughtResponse item = thoughtResponses.get(i);
 
+        String numInvestors = item.getNumInvestors() + "";
+        String investmentWorth = item.getTotalWorth() + "";
+        final String closingIn = "Closing in " + utils.getCountdown(item.getCreatedAt(), 24);
+
         if (view == null) {
             view = View.inflate(context, R.layout.fragment_home_invest_item, null);
             Log.d("VIEWLOG", "new view created");
@@ -75,14 +79,14 @@ public class HomeInvestItemAdapter extends BaseAdapter {
             viewHolder.investBtn = view.findViewById(R.id.make_investment_btn);
             viewHolder.id = item.getId();
 
-            viewHolder.investBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(item.getContents(), item.getCreatedAt(), item.getNumInvestors(), item.getTotalWorth(), item.getId());
+                    HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(
+                            item.getContents(),
+                            closingIn,
+                            item.getNumInvestors(),
+                            item.getTotalWorth(),
+                            item.getId());
                     homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
-                }
-            });
 
             // link view holder to my view
             view.setTag(viewHolder);
@@ -95,11 +99,10 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         }
 
 
-        String numInvestors = item.getNumInvestors() + "";
-        String investmentWorth = item.getInitialWorth() + "";
 
         viewHolder.numberOfInvestors.setText(numInvestors);
-        viewHolder.endsAt.setText(item.getCreatedAt().toString());
+   
+        viewHolder.endsAt.setText(closingIn);
         viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
 
@@ -107,10 +110,25 @@ public class HomeInvestItemAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(item.getContents(), item.getCreatedAt(), item.getNumInvestors(), item.getTotalWorth(), item.getId());
+                HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(item.getContents(), closingIn, item.getNumInvestors(), item.getTotalWorth(), item.getId());
                 homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
             }
         });
+
+        viewHolder.investBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(
+                        item.getContents(),
+                        closingIn,
+                        item.getNumInvestors(),
+                        item.getTotalWorth(),
+                        item.getId());
+                homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
+            }
+        });
+
 
         return view;
     }
