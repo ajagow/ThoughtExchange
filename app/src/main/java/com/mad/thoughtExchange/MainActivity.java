@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 try {
                     String body = new String(error.networkResponse.data,"UTF-8");
-                    Log.d("HELP", body);
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

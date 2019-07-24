@@ -60,7 +60,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
      * @return A new instance of fragment HomeInvestPopupFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeInvestPopupFragment newInstance(String content, Date expireDate, int numInvestors, int worth, int id) {
+    public static HomeInvestPopupFragment newInstance(String content, String expireDate, int numInvestors, int worth, int id) {
         HomeInvestPopupFragment fragment = new HomeInvestPopupFragment();
         Bundle args = new Bundle();
 
@@ -68,7 +68,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
         String worthVal = worth + "";
 
         args.putString(CONTENT, content);
-        args.putString(EXPIRE_DATE, expireDate.toString());
+        args.putString(EXPIRE_DATE, expireDate);
         args.putString(NUM_INVESTORS, numInvestorsVal);
         args.putString(WORTH, worthVal);
         args.putInt(ID, id);

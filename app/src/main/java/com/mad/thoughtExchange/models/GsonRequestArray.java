@@ -54,6 +54,7 @@ public class GsonRequestArray<T, U> {
                     responseClazz, listener, errorListener, headers);
         }
         this.requestQueue = Volley.newRequestQueue(context);
+        requestQueue.getCache().clear();
 
     }
 

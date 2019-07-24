@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class HomeInvestFragment extends Fragment {
 
-    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/10/24";
+    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/10/240";
 
     private ListView listView;
 

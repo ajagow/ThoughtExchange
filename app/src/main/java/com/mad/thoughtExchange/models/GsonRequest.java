@@ -54,6 +54,7 @@ public class GsonRequest<T, U> {
             jsonStringRequest = createNewPostJsonRequest(requestType, url, dataIn, clazz, responseClazz, listener, errorListener, headers);
         }
         this.requestQueue = Volley.newRequestQueue(context);
+        requestQueue.getCache().clear();
 
     }
 
