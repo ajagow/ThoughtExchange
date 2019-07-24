@@ -70,7 +70,7 @@ public class DashboardActivity extends AppCompatActivity {
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
 
         // uncomment only if starting app from dashboard activity
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Njg4MjU3MTksImlhdCI6MTU2MzY0MTcxOSwic3ViIjoyfQ.8yMMptQRI9w6ltgOmBM0827b4trzQ16WavXfB_aHKuQ";
+//        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Njg4MjU3MTksImlhdCI6MTU2MzY0MTcxOSwic3ViIjoyfQ.8yMMptQRI9w6ltgOmBM0827b4trzQ16WavXfB_aHKuQ";
         //SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
         //SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token);
         //SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 5000);
@@ -135,6 +135,7 @@ public class DashboardActivity extends AppCompatActivity {
         };
 
         Map<String, String> headers = new HashMap<>();
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         headers.put("api-token", token);
         headers.put("Content-Type", "application/json");
 
