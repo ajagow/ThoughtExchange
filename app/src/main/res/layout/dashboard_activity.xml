@@ -62,8 +62,6 @@
                 android:background="@color/primaryIndigo"
                 android:layout_below="@+id/tab_header"/>
         </RelativeLayout>
-
-
     </FrameLayout>
 
     <com.luseen.spacenavigation.SpaceNavigationView

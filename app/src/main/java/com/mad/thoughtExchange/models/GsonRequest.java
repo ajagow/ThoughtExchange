@@ -57,7 +57,6 @@ public class GsonRequest<T, U> {
 
     }
 
-
     /**
      * Make a GET request and return a parsed object from JSON.
      */
@@ -99,11 +98,14 @@ public class GsonRequest<T, U> {
         return jsonObjectRequest;
     }
 
-
     // helper to create a new volley POST request. Convert T object to JSON string and
     // response JSON string to object of type U
-    private JsonStringRequest createNewPostJsonRequest(int requestType, String url, T requestObject, Class<T> clazz, final Class<U> responseClazz, final Response.Listener<U> listener,
-                                                       final Response.ErrorListener errorListener, final Map<String, String> headers) {
+    private JsonStringRequest createNewPostJsonRequest(int requestType, String url,
+                                                       T requestObject, Class<T> clazz,
+                                                       final Class<U> responseClazz,
+                                                       final Response.Listener<U> listener,
+                                                       final Response.ErrorListener errorListener,
+                                                       final Map<String, String> headers) {
 
         String dataIn = gson.toJson(requestObject, clazz);
         Log.d("JSON Request", dataIn); //
@@ -125,13 +127,8 @@ public class GsonRequest<T, U> {
                 return headers;
             }
         };
-
         jsonObjectRequest.setShouldCache(false);
 
         return jsonObjectRequest;
     }
-
-
-
-
 }

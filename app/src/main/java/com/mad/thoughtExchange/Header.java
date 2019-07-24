@@ -1,10 +1,12 @@
 package com.mad.thoughtExchange;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,11 +18,14 @@ import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Header extends RelativeLayout {
     public static final String TAG = Header.class.getSimpleName();
 
-    private Button settings;
+    private ImageView settings;
     protected TextView logo;
     private TextView coins;
 

@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class HomeInvestFragment extends Fragment {
 
-    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/9/24";
+    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/10/24";
 
     private ListView listView;
 
@@ -52,16 +52,17 @@ public class HomeInvestFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("INVEST", "log");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_invest, container, false);
-
         listView = view.findViewById(R.id.myListView);
+
         getInvestments();
 
+        Log.d("INVEST", "log");
 
         return view;
     }
@@ -72,13 +73,12 @@ public class HomeInvestFragment extends Fragment {
         Response.Listener<List<ThoughtResponse>> resonseListener = new Response.Listener<List<ThoughtResponse>>() {
             @Override
             public void onResponse(List<ThoughtResponse> response) {
+                Log.d("getInvestments", "total response: "+response.toString());
+
                 for (ThoughtResponse response1 : response) {
-                    Log.d("DF", response1.getId() + "");
+                    Log.d("getInvestments", response1.getId() + "");
                 }
-
                 setInvestments(response);
-
-
             }
         };
 
@@ -91,10 +91,9 @@ public class HomeInvestFragment extends Fragment {
         };
 
         String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
-
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
-        headers.put("Content-Type", "application/json");
+        Log.d("sharedPreferences","retrieved token: "+token);
 
         GsonRequestArray<String, ThoughtResponse> gsonRequest = new GsonRequestArray<String, ThoughtResponse>(MainActivity.URL + GET_INVESTMENTS_URL, getContext(),
                 ThoughtResponse.class, resonseListener, errorListener, headers);
@@ -106,7 +105,7 @@ public class HomeInvestFragment extends Fragment {
         HomeInvestItemAdapter adapter = new HomeInvestItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
 
         listView.setAdapter(adapter);
-
+        //TODO: be able to invest from investment items
     }
 
     @Override
@@ -115,7 +114,4 @@ public class HomeInvestFragment extends Fragment {
             getInvestments();
         }
     }
-
-
-
 }

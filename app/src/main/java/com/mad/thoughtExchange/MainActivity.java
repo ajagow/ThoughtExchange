@@ -2,6 +2,7 @@ package com.mad.thoughtExchange;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -101,13 +102,23 @@ public class MainActivity extends AppCompatActivity {
 
     // on successful login attempt, go to HomeActivity
     private void onSuccessfulLogin(LoginResponse loginResponse) {
+        String token = loginResponse.getToken();
+        Log.d("loginResponseToken",token);
         Intent explicitIntent = new Intent(MainActivity.this, DashboardActivity.class);
+
         SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
-        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, loginResponse.getToken());
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token);
+        Log.d("sharedPreferences","saved token to shared preferences");
 
         // todo: replace with real call to api to get a user's value
-        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 1999);
+        //int netWorth = getNetWorth();
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 6000);
         startActivity(explicitIntent);
     }
 
+    private int getNetWorth() {
+        //int token = SharedPreferencesUtil.getIntFromSharedPreferences(getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+
+        return 6000;
+    }
 }

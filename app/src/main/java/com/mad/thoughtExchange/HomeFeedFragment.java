@@ -11,15 +11,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.models.LikesModel;
@@ -27,17 +24,18 @@ import com.mad.thoughtExchange.responses.FeedPostResponse;
 import com.mad.thoughtExchange.responses.LikeResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class HomeFeedFragment extends Fragment {
-
-    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/1/3/2000";
+    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/2000";
     private static final String LIKES_PATH = "api/v1/likes/";
+
+    private List<FeedPostResponse> feedPostResponses = new ArrayList<FeedPostResponse>();
+
     private TextView currentFeedPost;
     private Button likeButton;
     private Button dislikeButton;
@@ -93,7 +91,7 @@ public class HomeFeedFragment extends Fragment {
     private void onDislike(View view, int postId) {
         Log.d("LIKE", "you disliked this");
 
-        sendVote(view, postId, 0); // TODO: is 0 downvoting?
+        sendVote(view, postId, 0);
     }
 
     private void sendVote(View view, int postId, int vote) {
@@ -111,7 +109,7 @@ public class HomeFeedFragment extends Fragment {
             @Override
             public void onResponse(LikeResponse response) {
                 Log.d("response","likesResponse");
-                onSuccessfulLike(response);
+                onSuccessfulVote(response);
             }
         };
 
@@ -133,11 +131,10 @@ public class HomeFeedFragment extends Fragment {
         gsonRequest.volley();
     }
 
-    private void onSuccessfulLike(LikeResponse response) {
-        // TODO: update view to show next thought
-        getCurrentFeedPost();
+    private void onSuccessfulVote(LikeResponse response) {
+        Log.d("onSuccessfulVote", response.toString());
+        getMarketPostData();
     }
-
 
     /**
      * Change background image of specified component on click
@@ -165,14 +162,6 @@ public class HomeFeedFragment extends Fragment {
     }
 
     private void getCurrentFeedPost() {
-
-        Response.Listener<List<FeedPostResponse>> resonseListener = new Response.Listener<List<FeedPostResponse>>() {
-            @Override
-            public void onResponse(List<FeedPostResponse> response) {
-                getMarketPostData(response);
-            }
-        };
-
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -180,18 +169,23 @@ public class HomeFeedFragment extends Fragment {
             }
         };
 
-//        String token = getActivity().getIntent().getStringExtra("jwtToken");
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+        Response.Listener<List<FeedPostResponse>> resonseListener = new Response.Listener<List<FeedPostResponse>>() {
+            @Override
+            public void onResponse(List<FeedPostResponse> response) {
+                Log.d("getCurrenFeedPost",response.toString()); ///
+                feedPostResponses = response;
+                getMarketPostData();
+            }
+        };
 
         Map<String, String> headers = new HashMap<>();
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         headers.put("api-token", token);
-        headers.put("Content-Type", "application/json");
 
         GsonRequestArray<String, FeedPostResponse> gsonRequest = new GsonRequestArray<String, FeedPostResponse>(MainActivity.URL + POSTS_PATH, getContext(),
                 FeedPostResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();
-
     }
 
     private void onError(VolleyError error) {
@@ -199,22 +193,31 @@ public class HomeFeedFragment extends Fragment {
     }
 
     // update market feed post with information
-    private void getMarketPostData(List<FeedPostResponse> feedPostResponses) {
+    private void getMarketPostData() {
         if (feedPostResponses.size() == 0) {
             currentFeedPost.setText("no new posts");
-            likeButton.setVisibility(View.INVISIBLE);
-            dislikeButton.setVisibility(View.INVISIBLE);
+            setVoteButtonVisible(false);
         }
+        else { // there are posts to display on feed
+            FeedPostResponse post = feedPostResponses.remove(0);
+            String postContent = post.getContents();
 
-        else {
-            FeedPostResponse feedPostResponse = feedPostResponses.get(0);
-            String postContent = feedPostResponse.getContents();
+            setVoteButtonVisible(true);
+            currentFeedPost.setText(postContent);
+            currentPostId = post.getPost_id();
+        }
+    }
 
+    private void setVoteButtonVisible(boolean visible) {
+        if (visible) {
+            Log.d("setVoteButtonVisible", "set to VISIBLE");
             likeButton.setVisibility(View.VISIBLE);
             dislikeButton.setVisibility(View.VISIBLE);
-
-            currentFeedPost.setText(postContent);
-            currentPostId = feedPostResponse.getPost_id();
+        }
+        else {
+            Log.d("setVoteButtonVisible", "set to INVISIBLE");
+            likeButton.setVisibility(View.INVISIBLE);
+            dislikeButton.setVisibility(View.INVISIBLE);
         }
     }
 
