@@ -84,19 +84,18 @@ public class NewContentFragment extends Fragment {
         // check if initial investment value is an positive integer
         try {
             initInvestment = Integer.parseInt(initInvestmentVal);
-        }
-        catch (NumberFormatException e) {
+
+            if (initInvestment <= 0) {
+                Toast.makeText(getActivity(), "Enter an amount greater than 0", Toast.LENGTH_SHORT).show();
+            } else if (!userHasEnoughMoneyToInvest(initInvestment)) {
+                Toast.makeText(getActivity(), "You don't have enough coins. Enter a lower amount", Toast.LENGTH_SHORT).show();
+            } else {
+                sendNewPost(thought, initInvestment);
+            }
+        } catch (NumberFormatException e) {
             // print toast
-            Log.d("NumberFormatException", e.toString());
-        }
-
-        if (userHasEnoughMoneyToInvest(initInvestment)) {
-            sendNewPost(thought, initInvestment);
-        }
-
-        else {
-            Toast.makeText(getActivity(), "You don't have enough coins. Please lower initial invesment amount.", Toast.LENGTH_SHORT).show();
-
+            Log.d("NumberFormatException", String.valueOf(e));
+            Toast.makeText(getActivity(), "Invalid number, try again", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -110,7 +109,7 @@ public class NewContentFragment extends Fragment {
         Response.Listener<ThoughtResponse> responseListener = new Response.Listener<ThoughtResponse>() {
             @Override
             public void onResponse(ThoughtResponse response) {
-                Log.d("response","thoughtResponse");
+                Log.d("response", "thoughtResponse");
                 onSuccessfulSubmit(response);
             }
         };

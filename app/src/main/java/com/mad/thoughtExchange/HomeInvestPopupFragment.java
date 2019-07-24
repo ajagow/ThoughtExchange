@@ -14,8 +14,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.mad.thoughtExchange.models.GsonRequest;
+import com.mad.thoughtExchange.responses.UserResponse;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -34,6 +43,10 @@ public class HomeInvestPopupFragment extends DialogFragment {
     private String numInvestorsVal;
     private String worthVal;
     private int idVal;
+
+    private int uWorth;
+
+    private static String USERS_PATH = "api/v1/users/me";
 
 
     public HomeInvestPopupFragment() {
@@ -95,31 +108,75 @@ public class HomeInvestPopupFragment extends DialogFragment {
         endsAt.setText(expireDateVal);
         investmentWorth.setText(worthVal);
 
+        /*
+        Submit investment
+         */
         investBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String invesmentAmountStr = investmentAmount.getEditableText().toString();
+                int investmentAmountVal = 0;
 
                 if (!invesmentAmountStr.isEmpty()) {
-                    int investmentAmountVal = Integer.parseInt(investmentAmount.getEditableText().toString());
-                    Log.d("INVEST", investmentAmountVal + "   id: " + idVal);
-
+                    try {
+                        investmentAmountVal = Integer.parseInt(investmentAmount.getEditableText().toString());
+                        Log.d("INVEST", investmentAmountVal + "   id: " + idVal);
+                    } catch (NumberFormatException nfe) {
+                        Log.d("ERROR", String.valueOf(nfe));
+                    }
                 }
 
-                HomeInvestPopupFragment.this.dismiss();
-                getActivity().getSupportFragmentManager().beginTransaction().hide(HomeInvestPopupFragment.this);
+                Response.Listener<UserResponse> responseListener = new Response.Listener<UserResponse>() {
+                    @Override
+                    public void onResponse(UserResponse response) {
+                        uWorth = response.getNetWorth();
+                        Log.d("WORTHVAL", String.valueOf(worthVal));
+                    }
+                };
+
+                Response.ErrorListener errorListener = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("ERROR", "user settings error");
+                    }
+                };
+
+                String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+
+                Map<String, String> headers = new HashMap<>();
+                headers.put("api-token", token);
+                headers.put("Content-Type", "application/json");
+
+                GsonRequest<String, UserResponse> gsonRequest = new GsonRequest<String, UserResponse>(
+                        MainActivity.URL + USERS_PATH,
+                        getContext(),
+                        UserResponse.class,
+                        responseListener,
+                        errorListener,
+                        headers
+                );
+
+                gsonRequest.volley();
+
+                // case: user inputs 0
+                if (investmentAmountVal <= 0) {
+                    Toast.makeText(getActivity(), "Value must be greater than 0", Toast.LENGTH_SHORT).show();
+                }
+                // case: user has enough money
+                else if (uWorth > investmentAmountVal) {
+                    //TODO: subtract money from user via post to database
+                    HomeInvestPopupFragment.this.dismiss();
+                    getActivity().getSupportFragmentManager().beginTransaction().hide(HomeInvestPopupFragment.this);
+                }
+                // case: user inputs a stack overflow, not a number, or user doesn't have enough money
+                else {
+                    Toast.makeText(getActivity(), "Not enough money or not a number", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
-
-
         return view;
     }
-
-
-
-
-
 
 }

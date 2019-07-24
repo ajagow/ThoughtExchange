@@ -43,7 +43,7 @@ public class UserSettings extends DialogFragment {
     private String nameVal;
     private String emailVal;
     private int rankVal;
-    public int worthVal;
+    private int worthVal;
 
     private static String USERS_PATH = "api/v1/users/me";
 

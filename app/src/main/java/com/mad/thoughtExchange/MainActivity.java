@@ -25,7 +25,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    static String URL = "https://thought-exchange-api.herokuapp.com/";
+    public static final String URL = "https://thought-exchange-api.herokuapp.com/";
     private static String USERS_PATH = "api/v1/users/login";
 
     private TextView email;
