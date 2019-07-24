@@ -41,14 +41,17 @@ import butterknife.ButterKnife;
  */
 public class HomeFeedSwipeFragment extends Fragment implements CardStackListener {
 
-    private static final String POSTS_PATH = "api/v1/thoughts";
+//    private static final String POSTS_PATH = "api/v1/thoughts";
     private static final String LIKES_PATH = "api/v1/likes/";
-    //private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/2000";
+    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/4800";
 
     private RecyclerView.Adapter adapter;
     private CardStackView cardStackView;
 
     private List<FeedPostResponse> feedPostResponses = new ArrayList<FeedPostResponse>();
+
+    private CardStackLayoutManager manager;
+
 
 
     public HomeFeedSwipeFragment() {
@@ -71,7 +74,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         cardStackView = view.findViewById(R.id.home_feed_swipe);
         Log.d("carStackView", "found cardStackView");
 
-        CardStackLayoutManager manager = new CardStackLayoutManager(getActivity(), this);
+        manager = new CardStackLayoutManager(getActivity(), this);
         manager.setCanScrollHorizontal(true);
         manager.setCanScrollVertical(false);
         cardStackView.setLayoutManager(manager);
@@ -126,6 +129,11 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
     @Override
     public void onCardSwiped(Direction direction) {
         int currentPostID = -1; //TODO: pull actual post ID
+        int pos = manager.getTopPosition();
+        Log.d("SWIPE", pos + "");
+
+        currentPostID = feedPostResponses.get(pos-1).getPost_id();
+
         if (direction == Direction.Left) {
             onDislike(currentPostID);
         }
