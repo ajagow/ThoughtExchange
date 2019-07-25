@@ -6,6 +6,28 @@
     android:layout_marginTop="125dp"
     tools:context=".HomeFeedSwipeFragment">
 
+    <RelativeLayout
+        android:id="@+id/empty_feed"
+        android:visibility="invisible"
+        android:layout_marginTop="25dp"
+        android:layout_width="340dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:padding="40dp"
+        android:background="@drawable/login_card_background">
+
+        <TextView
+            android:id="@+id/current_feed_post"
+            style="@style/homefeed_card_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Sorry, no more posts. Check back later." />
+
+
+    </RelativeLayout>
+
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/home_feed_swipe"
         android:scrollbars="vertical"

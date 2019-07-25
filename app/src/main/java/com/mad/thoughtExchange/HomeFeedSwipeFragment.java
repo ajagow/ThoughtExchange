@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,7 +44,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
 
 //    private static final String POSTS_PATH = "api/v1/thoughts";
     private static final String LIKES_PATH = "api/v1/likes/";
-    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/4800";
+    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/48";
 
     private RecyclerView.Adapter adapter;
     private CardStackView cardStackView;
@@ -51,6 +52,8 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
     private List<FeedPostResponse> feedPostResponses = new ArrayList<FeedPostResponse>();
 
     private CardStackLayoutManager manager;
+
+    private RelativeLayout emptyFeed;
 
 
 
@@ -78,6 +81,8 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         manager.setCanScrollHorizontal(true);
         manager.setCanScrollVertical(false);
         cardStackView.setLayoutManager(manager);
+
+        emptyFeed = view.findViewById(R.id.empty_feed);
         Log.d("cardStackView", "setLayoutManager");
 
         getCurrentFeedPost();
@@ -98,6 +103,13 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
             public void onResponse(List<FeedPostResponse> response) {
                 Log.d("feed response",response.toString()); ///
                 feedPostResponses = response;
+                if (response.size() > 0) {
+                    emptyFeed.setVisibility(View.INVISIBLE);
+                }
+
+                if (response.size() == 0) {
+                    emptyFeed.setVisibility(View.VISIBLE);
+                }
                 onSuccessfulResponse();
             }
         };
@@ -117,6 +129,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
     }
 
     private void onSuccessfulResponse() {
+        Log.d("FETCHPOST", feedPostResponses.size() + "");
         adapter = new HomeFeedSwipeAdapter(feedPostResponses, getContext());
 
         cardStackView.setAdapter(adapter);
@@ -131,6 +144,10 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         int currentPostID = -1; //TODO: pull actual post ID
         int pos = manager.getTopPosition();
         Log.d("SWIPE", pos + "");
+
+        if ((pos - 1) == feedPostResponses.size()) {
+            emptyFeed.setVisibility(View.VISIBLE);
+        }
 
         currentPostID = feedPostResponses.get(pos-1).getPost_id();
 
@@ -207,8 +224,10 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
 
     @Override
     public void onHiddenChanged(boolean hidden) {
+        Log.d("HIDDEN", hidden + "");
         if (!hidden) {
             getCurrentFeedPost();
+
         }
     }
 }

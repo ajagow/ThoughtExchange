@@ -2,6 +2,7 @@ package com.mad.thoughtExchange;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -70,9 +71,9 @@ public class DashboardActivity extends AppCompatActivity {
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
 
         // uncomment only if starting app from dashboard activity
-//        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Njg4MjU3MTksImlhdCI6MTU2MzY0MTcxOSwic3ViIjoyfQ.8yMMptQRI9w6ltgOmBM0827b4trzQ16WavXfB_aHKuQ";
-        //SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
-        //SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token);
+        String token1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjkyNTIzNDYsImlhdCI6MTU2NDA2ODM0Niwic3ViIjoxfQ.hF3_Iyq9wxiA5kvpZkiuZCzzhCzld0keORhvtN7yNSM";
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token1);
         //SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 5000);
 
         fm.beginTransaction().add(R.id.main_container, newContentFragment, "newContentFragment").hide(newContentFragment).commit();

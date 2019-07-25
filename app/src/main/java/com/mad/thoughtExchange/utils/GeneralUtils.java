@@ -1,5 +1,6 @@
 package com.mad.thoughtExchange.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -21,5 +22,11 @@ public class GeneralUtils {
         long minutes = TimeUnit.MILLISECONDS.toMinutes(difference) - TimeUnit.HOURS.toMinutes(hours);
 
         return String.format("%d hrs %d min", hours, minutes);
+    }
+
+    String getPostedDate(Date created) {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MM-dd-yyyy");
+        String stringDate = sdf.format(created);
+        return stringDate;
     }
 }

@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.mad.thoughtExchange.models.GsonRequest;
+import com.mad.thoughtExchange.models.NewPostModel;
 import com.mad.thoughtExchange.models.SignupModel;
 import com.mad.thoughtExchange.models.ThoughtModel;
 import com.mad.thoughtExchange.responses.SignupResponse;
@@ -100,7 +101,7 @@ public class NewContentFragment extends Fragment {
     }
 
     private void sendNewPost(String thought, int initInvestment) {
-        ThoughtModel thoughtModel = new ThoughtModel();
+        NewPostModel thoughtModel = new NewPostModel();
 
         // set values for POST request
         thoughtModel.setContents(thought);
@@ -118,6 +119,9 @@ public class NewContentFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.networkResponse.toString());
+                String body = String.valueOf(error.networkResponse.data);
+
+
                 Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         };
@@ -126,8 +130,8 @@ public class NewContentFragment extends Fragment {
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
 
-        GsonRequest<ThoughtModel, ThoughtResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + USERS_PATH, thoughtModel, getActivity(),
-                ThoughtModel.class, ThoughtResponse.class, headers, responseListener, errorListener);
+        GsonRequest<NewPostModel, ThoughtResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + USERS_PATH, thoughtModel, getActivity(),
+                NewPostModel.class, ThoughtResponse.class, headers, responseListener, errorListener);
 
         gsonRequest.volley();
     }
