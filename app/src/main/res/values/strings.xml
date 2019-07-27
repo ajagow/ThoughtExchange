@@ -7,4 +7,14 @@
     <string name="my_investments">My Investments</string>
     <string name="feed">Feed</string>
     <string name="investments">Investments</string>
+
+    <string name="onboarding_title_welcome">Welcome to Thought Exchange</string>
+    <string name="onboarding_title_app_intro">Share and invest in thoughts</string>
+    <string name="onboarding_title_stages">so much fun</string>
+    <string name="onboarding_title_descrip">check it out</string>
+
+    <string name="onboarding_welcome">Thought Exchange is a application used to post and invest on thoughts</string>
+    <string name="onboarding_app_intro">Thought Exchange is a application used to post and invest on thoughts</string>
+    <string name="onboarding_stages">There are 2 stages to every thought: investment and market</string>
+    <string name="onboarding_descrip">An hour in investment stage and 24 hours in the market</string>
 </resources>
