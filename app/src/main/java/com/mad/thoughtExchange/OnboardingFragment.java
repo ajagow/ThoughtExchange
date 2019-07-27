@@ -97,9 +97,9 @@ public class OnboardingFragment extends OnboardingSupportFragment {
     @Override
     protected View onCreateForegroundView(LayoutInflater inflater, ViewGroup container) {
         Log.d("onboarding","onCreateForegroundView");
-//        View view = inflater.inflate(R.layout.fragment_onboarding, container, false);
-//        return view;
-        return null;
+        View view = inflater.inflate(R.layout.fragment_onboarding, container, false);
+        return view;
+        //return null;
     }
 
     @Override
