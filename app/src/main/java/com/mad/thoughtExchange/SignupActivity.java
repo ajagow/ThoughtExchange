@@ -56,7 +56,7 @@ public class SignupActivity extends AppCompatActivity {
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (passwordIsValidLength && name.length() > 0 && email.length() > 0) {
+                if (passwordIsValidLength && name.length() > 0 && email.length() > 0 && email.length() < 26) {
                     onSignup(view);
                 }
                 else {

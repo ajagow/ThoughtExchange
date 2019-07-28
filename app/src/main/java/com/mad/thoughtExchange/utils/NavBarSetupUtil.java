@@ -38,6 +38,8 @@ public class NavBarSetupUtil {
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
         spaceNavigationView.addSpaceItem(new SpaceItem("HOME", R.drawable.home));
         spaceNavigationView.addSpaceItem(new SpaceItem("WALLET", R.drawable.wallet));
+        spaceNavigationView.addSpaceItem(new SpaceItem("HISTORY", R.drawable.history));
+        spaceNavigationView.addSpaceItem(new SpaceItem("RANKING", R.drawable.ranking));
 
         spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
@@ -90,6 +92,13 @@ public class NavBarSetupUtil {
             click(tab1, "homeInvestFragment", "homeFeedFragment", null,fm, true, nav);
             click(tab2, "homeFeedFragment", "homeInvestFragment", null,fm, false, nav);
             Log.d("CLICK", "SWITCH TO homeFeedFragment");
+        } else if (itemName.equals("HISTORY")) {
+            tabHeader.setVisibility(View.INVISIBLE);
+            newFragment = fm.findFragmentByTag("historyFragment");
+
+        } else if (itemName.equals("RANKING")) {
+            tabHeader.setVisibility(View.INVISIBLE);
+            newFragment = fm.findFragmentByTag("rankingFragment");
         }
         else {
             changeTabNames(tab1, tab2, false);

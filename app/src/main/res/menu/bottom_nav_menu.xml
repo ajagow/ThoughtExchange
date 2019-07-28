@@ -9,15 +9,27 @@
         android:actionLayout="@layout/menu_new_post_item"/>
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="dashboard" />
-
-    <item
         android:id="@+id/navigation_notifications"
 
         android:iconTintMode="src_in"
         android:icon="@drawable/wallet"
         android:title="navigation" />
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="dashboard" />
+
+    <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/history"
+        android:title="history"
+        android:actionLayout="@layout/menu_new_post_item"/>
+
+    <item
+        android:id="@+id/navigation_ranking"
+        android:icon="@drawable/ranking"
+        android:title="ranking"
+        android:actionLayout="@layout/menu_new_post_item"/>
 
 </menu>

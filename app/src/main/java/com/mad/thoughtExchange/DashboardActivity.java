@@ -1,7 +1,6 @@
 package com.mad.thoughtExchange;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -38,6 +37,8 @@ public class DashboardActivity extends AppCompatActivity {
     final Fragment newContentFragment = new NewContentFragment();
     final Fragment homeInvestFragment = new HomeInvestFragment();
     final Fragment walletMyIdeasFragment = new WalletMyIdeasFragment();
+    final Fragment historyFragment = new HistoryFragment();
+    final Fragment rankingFragment = new RankingFragment();
     final Fragment walletMyInvestmentsFragment = new WalletMyInvestmentsFragment();
 
 
@@ -71,13 +72,15 @@ public class DashboardActivity extends AppCompatActivity {
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
 
         // uncomment only if starting app from dashboard activity
-        String token1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjkyNTIzNDYsImlhdCI6MTU2NDA2ODM0Niwic3ViIjoxfQ.hF3_Iyq9wxiA5kvpZkiuZCzzhCzld0keORhvtN7yNSM";
+//        String token1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjkyNTIzNDYsImlhdCI6MTU2NDA2ODM0Niwic3ViIjoxfQ.hF3_Iyq9wxiA5kvpZkiuZCzzhCzld0keORhvtN7yNSM";
         SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
-        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token1);
+//        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token1);
         //SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 5000);
 
         fm.beginTransaction().add(R.id.main_container, newContentFragment, "newContentFragment").hide(newContentFragment).commit();
         fm.beginTransaction().add(R.id.main_container, homeInvestFragment, "homeInvestFragment").hide(homeInvestFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, historyFragment, "historyFragment").hide(historyFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, rankingFragment, "rankingFragment").hide(rankingFragment).commit();
         fm.beginTransaction().add(R.id.main_container, walletMyIdeasFragment, "walletMyIdeasFragment").hide(walletMyIdeasFragment).commit();
         fm.beginTransaction().add(R.id.main_container, walletMyInvestmentsFragment, "walletMyInvestmentsFragment").hide(walletMyInvestmentsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, homeFeedFragment, "homeFeedFragment").commit();
@@ -122,8 +125,8 @@ public class DashboardActivity extends AppCompatActivity {
             public void onResponse(UserResponse response) {
                 worthVal = response.getNetWorth();
                 Log.d("WORTHVAL", String.valueOf(worthVal));
-
-                uWorth.setText(String.valueOf(worthVal));
+                SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, worthVal);
+                uWorth.setText(String.valueOf(SharedPreferencesUtil.getIntFromSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth)));
 
             }
         };
