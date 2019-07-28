@@ -5,18 +5,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.mad.thoughtExchange.HomeInvestPopupFragment;
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
 
 import java.util.List;
 
-public class WalletMyIdeasItemAdapter extends BaseAdapter {
+public class WalletMyVotesItemAdapter extends BaseAdapter {
 
     // Arraylist with the data points that are to populated on my items that I'm creating
     private List<ThoughtResponse> thoughtResponses;
@@ -33,7 +32,7 @@ public class WalletMyIdeasItemAdapter extends BaseAdapter {
     private GeneralUtils utils = new GeneralUtils();
 
 
-    public WalletMyIdeasItemAdapter(List<ThoughtResponse> thoughtResponses,
+    public WalletMyVotesItemAdapter(List<ThoughtResponse> thoughtResponses,
                                     Context context, FragmentManager fragmentManager) {
         this.thoughtResponses = thoughtResponses;
         this.context = context;
@@ -63,24 +62,20 @@ public class WalletMyIdeasItemAdapter extends BaseAdapter {
 
         final ThoughtResponse item = thoughtResponses.get(i);
 
-        String numInvestors = item.getNumInvestors() + "";
-        String investmentWorth = item.getTotalWorth() + "";
+        //String numInvestors = item.getNumInvestors() + "";
+        //String investmentWorth = item.getTotalWorth() + "";
         final String closingIn = "Posted on " + utils.getPostedDate(item.getCreatedAt());
 
         if (view == null) {
-            view = View.inflate(context, R.layout.fragment_wallet_my_ideas_item, null);
+            view = View.inflate(context, R.layout.fragment_wallet_my_votes, null);
             Log.d("VIEWLOG", "new view created");
-
 
             // create an object of view holder --> get hold of child view references
             viewHolder = new ViewHolder();
 
-            viewHolder.numberOfInvestors = view.findViewById(R.id.my_ideas_investors);
-            viewHolder.content = view.findViewById(R.id.my_ideas_content);
-            viewHolder.investmentWorth = view.findViewById(R.id.my_ideas_value);
-            viewHolder.endsAt = view.findViewById(R.id.my_ideas_date_posted);
+            viewHolder.content = view.findViewById(R.id.votes_content);
+            //viewHolder.endsAt = view.findViewById(R.id.my_ideas_date_posted);
             viewHolder.id = item.getId();
-
 
             // link view holder to my view
             view.setTag(viewHolder);
@@ -90,27 +85,18 @@ public class WalletMyIdeasItemAdapter extends BaseAdapter {
 
         }
 
-
-
-        viewHolder.numberOfInvestors.setText(numInvestors);
-
         viewHolder.endsAt.setText(closingIn);
-        viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
-
-
 
         return view;
     }
 
     // class to hold my child view
     static class ViewHolder {
-        TextView numberOfInvestors;
+        ImageView voteValue;
         TextView content;
         TextView endsAt;
         TextView investmentWorth;
         int id;
-
     }
-
 }
