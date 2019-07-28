@@ -39,28 +39,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TESTING ONBOARDING TODO: remove to after signup
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        if(!sharedPreferences.getBoolean(OnboardingFragment.COMPLETED_ONBOARDING, false)) {
-//            // This is the first time running the app, let's go to onboarding
-//            startActivity(new Intent(this, OnboardingActivity.class));
-//        }
-
         //  Declare a new thread to do a preference check
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 //  Initialize SharedPreferences
-                SharedPreferences getPrefs = PreferenceManager
-                        .getDefaultSharedPreferences(getBaseContext());
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                boolean isFirstStart = preferences.getBoolean("need_onboarding", true);
 
-                //  Create a new boolean and preference and set it to true
-                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
-
-                //  If the activity has never started before...
                 if (isFirstStart) {
-
-                    //  Launch app intro
                     final Intent i = new Intent(MainActivity.this, OnboardingActivity.class);
 
                     runOnUiThread(new Runnable() {
@@ -69,21 +56,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                    //  Make a new preferences editor
-                    SharedPreferences.Editor e = getPrefs.edit();
-
-                    //  Edit preference to make it false because we don't want this to run again
-                    e.putBoolean("firstStart", false);
-
-                    //  Apply changes
+                    SharedPreferences.Editor e = preferences.edit();
+                    e.putBoolean("need_onboarding", isFirstStart);
                     e.apply();
                 }
             }
         });
 
-        // Start the thread
         t.start();
-        /////////////////////
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);

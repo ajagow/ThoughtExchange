@@ -32,6 +32,8 @@ public class OnboardingActivity extends AppIntro {
         page1.setDescription("thought exchange is an application...");
         page1.setImageDrawable(R.drawable.google_logo);
         page1.setBgColor(Color.parseColor("#4284F5"));
+        page1.setTitleTypefaceFontRes(R.font.lato_bold);
+        page1.setDescTypefaceFontRes(R.font.roboto_light);
         addSlide(AppIntroFragment.newInstance(page1));
 
         SliderPage page2 = new SliderPage();
@@ -39,6 +41,8 @@ public class OnboardingActivity extends AppIntro {
         page2.setDescription("Once posted, a thought goes into the investment stage for 1 hour, then moves to the market to stay for another 24 hours");
         page2.setImageDrawable(R.drawable.random1);
         page2.setBgColor(Color.parseColor("#E37542"));
+        page1.setTitleTypefaceFontRes(R.font.lato_bold);
+        page1.setDescTypefaceFontRes(R.font.roboto_light);
         addSlide(AppIntroFragment.newInstance(page2));
 
         SliderPage page3 = new SliderPage();
@@ -46,6 +50,8 @@ public class OnboardingActivity extends AppIntro {
         page3.setDescription("Once posted, a thought goes into the investment stage for 1 hour, then moves to the market to stay for another 24 hours");
         page3.setImageDrawable(R.drawable.random1);
         page3.setBgColor(Color.parseColor("#fc033d"));
+        page1.setTitleTypefaceFontRes(R.font.lato_bold);
+        page1.setDescTypefaceFontRes(R.font.roboto_light);
         addSlide(AppIntroFragment.newInstance(page3));
 
         setBarColor(Color.parseColor("#3F51B5"));
@@ -82,10 +88,13 @@ public class OnboardingActivity extends AppIntro {
     }
 
     private void onOnboardingCompletion() {
-        SharedPreferences.Editor sharedPreferencesEditor =
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-        sharedPreferencesEditor.putBoolean("onboarding_complete", true);
-        sharedPreferencesEditor.apply();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        SharedPreferences.Editor e = preferences.edit();
+        e.putBoolean("need_onboarding", false);
+
+        //  Apply changes
+        e.apply();
         // go back to the MainActivity
         Intent toMain = new Intent(this, MainActivity.class);
         startActivity(toMain);
