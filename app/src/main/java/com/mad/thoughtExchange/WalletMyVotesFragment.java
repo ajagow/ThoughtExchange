@@ -20,8 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
+import com.mad.thoughtExchange.responses.VoteResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 import com.mad.thoughtExchange.utils.WalletMyIdeasItemAdapter;
+import com.mad.thoughtExchange.utils.WalletMyVotesItemAdapter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,13 +57,13 @@ public class WalletMyVotesFragment extends Fragment {
 
     private void getVotingHistory() {
 
-        Response.Listener<List<ThoughtResponse>> resonseListener = new Response.Listener<List<ThoughtResponse>>() {
+        Response.Listener<List<VoteResponse>> resonseListener = new Response.Listener<List<VoteResponse>>() {
             @Override
-            public void onResponse(List<ThoughtResponse> response) {
+            public void onResponse(List<VoteResponse> response) {
                 Log.d("getVotingHistory", "total response: "+response.toString());
 
-                for (ThoughtResponse response1 : response) {
-                    Log.d("getVotingHistory", response1.getId() + "");
+                for (VoteResponse response1 : response) {
+                    Log.d("getVotingHistory", response1.getIsLike() + " LIKE");
                 }
                 setVotingHistory(response);
             }
@@ -80,14 +82,14 @@ public class WalletMyVotesFragment extends Fragment {
         headers.put("api-token", token);
         Log.d("sharedPreferences","retrieved token: "+token);
 
-        GsonRequestArray<String, ThoughtResponse> gsonRequest = new GsonRequestArray<String, ThoughtResponse>(MainActivity.URL + GET_MY_VOTING_HISTORY, getContext(),
-                ThoughtResponse.class, resonseListener, errorListener, headers);
+        GsonRequestArray<String, VoteResponse> gsonRequest = new GsonRequestArray<String, VoteResponse>(MainActivity.URL + GET_MY_VOTING_HISTORY, getContext(),
+                VoteResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();
     }
 
-    private void setVotingHistory(List<ThoughtResponse> responses) {
-        WalletMyIdeasItemAdapter adapter = new WalletMyIdeasItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
+    private void setVotingHistory(List<VoteResponse> responses) {
+        WalletMyVotesItemAdapter adapter = new WalletMyVotesItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
 
         listView.setAdapter(adapter);
     }

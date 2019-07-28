@@ -12,36 +12,30 @@ import androidx.fragment.app.FragmentManager;
 
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
+import com.mad.thoughtExchange.responses.VoteResponse;
 
 import java.util.List;
 
 public class WalletMyVotesItemAdapter extends BaseAdapter {
 
-    // Arraylist with the data points that are to populated on my items that I'm creating
-    private List<ThoughtResponse> thoughtResponses;
-
-    // Initialize the View holder
+    private List<VoteResponse> voteResponses;
+    private Context context;
+    private FragmentManager fragmentManager;
     private ViewHolder viewHolder;
 
-    // Receive the context from Main Activity
-    private Context context;
-
-    private FragmentManager fragmentManager;
-
-    //Use utils class
     private GeneralUtils utils = new GeneralUtils();
 
 
-    public WalletMyVotesItemAdapter(List<ThoughtResponse> thoughtResponses,
+    public WalletMyVotesItemAdapter(List<VoteResponse> voteResponses,
                                     Context context, FragmentManager fragmentManager) {
-        this.thoughtResponses = thoughtResponses;
+        this.voteResponses = voteResponses;
         this.context = context;
         this.fragmentManager = fragmentManager;
     }
 
     @Override
     public int getCount() {
-        return thoughtResponses.size();
+        return voteResponses.size();
     }
 
     @Override
@@ -57,14 +51,9 @@ public class WalletMyVotesItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        // we aren't attaching to root
-        // create and return the view
+        final VoteResponse item = voteResponses.get(i);
 
-        final ThoughtResponse item = thoughtResponses.get(i);
-
-        //String numInvestors = item.getNumInvestors() + "";
-        //String investmentWorth = item.getTotalWorth() + "";
-        final String closingIn = "Posted on " + utils.getPostedDate(item.getCreatedAt());
+        final boolean voteValue = item.getIsLikeBoolean();
 
         if (view == null) {
             view = View.inflate(context, R.layout.fragment_wallet_my_votes, null);
@@ -74,8 +63,7 @@ public class WalletMyVotesItemAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
 
             viewHolder.content = view.findViewById(R.id.votes_content);
-            //viewHolder.endsAt = view.findViewById(R.id.my_ideas_date_posted);
-            viewHolder.id = item.getId();
+            viewHolder.id = item.getPostId();
 
             // link view holder to my view
             view.setTag(viewHolder);
@@ -85,18 +73,24 @@ public class WalletMyVotesItemAdapter extends BaseAdapter {
 
         }
 
-        viewHolder.endsAt.setText(closingIn);
         viewHolder.content.setText(item.getContents());
+        setVoteValueImage(viewHolder, voteValue);
 
         return view;
     }
 
-    // class to hold my child view
+    private void setVoteValueImage(ViewHolder viewHolder, boolean is_like) {
+        if(is_like){
+            viewHolder.voteValue.setImageResource(R.drawable.like_button_clicked);
+        } else {
+            viewHolder.voteValue.setImageResource(R.drawable.dislike_button_clicked);
+        }
+    }
+
     static class ViewHolder {
         ImageView voteValue;
         TextView content;
         TextView endsAt;
-        TextView investmentWorth;
         int id;
     }
 }
