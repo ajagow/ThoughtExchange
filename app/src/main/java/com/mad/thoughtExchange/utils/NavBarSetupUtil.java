@@ -93,6 +93,7 @@ public class NavBarSetupUtil {
             click(tab2, "homeFeedFragment", "homeInvestFragment", null,fm, false, nav);
             Log.d("CLICK", "SWITCH TO homeFeedFragment");
         } else if (itemName.equals("HISTORY")) {
+            Log.d("NAVBAR", "itemName.equals(HISTORY)");
             tabHeader.setVisibility(View.INVISIBLE);
             newFragment = fm.findFragmentByTag("historyFragment");
 
@@ -176,7 +177,5 @@ public class NavBarSetupUtil {
             set.play(textViewAnimator);
             set.start();
         }
-
     }
-
 }

@@ -48,8 +48,9 @@ public class WalletMyVotesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("votes","in onCreateView");
         View view = inflater.inflate(R.layout.fragment_wallet_my_votes, container, false);
-
+        Log.d("votes","inflated fragment_wallet_my_votes");
         listView = view.findViewById(R.id.my_votes_list_view);
 
         return view;
@@ -59,13 +60,13 @@ public class WalletMyVotesFragment extends Fragment {
 
         Response.Listener<List<VoteResponse>> resonseListener = new Response.Listener<List<VoteResponse>>() {
             @Override
-            public void onResponse(List<VoteResponse> response) {
-                Log.d("getVotingHistory", "total response: "+response.toString());
+            public void onResponse(List<VoteResponse> responses) {
+                Log.d("getVotingHistory", "total response: "+responses.toString());
 
-                for (VoteResponse response1 : response) {
-                    Log.d("getVotingHistory", response1.getIsLike() + " LIKE");
+                for (VoteResponse response1 : responses) {
+                    Log.d("getVotingHistory", response1.isLike() + " LIKE");
                 }
-                setVotingHistory(response);
+                setVotingHistory(responses);
             }
         };
 

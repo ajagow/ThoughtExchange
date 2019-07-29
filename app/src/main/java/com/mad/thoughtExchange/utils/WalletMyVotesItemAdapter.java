@@ -53,27 +53,31 @@ public class WalletMyVotesItemAdapter extends BaseAdapter {
 
         final VoteResponse item = voteResponses.get(i);
 
-        final boolean voteValue = item.getIsLikeBoolean();
+        final String closingIn = "Posted on " + utils.getPostedDate(item.getCreatedAt());
+        final boolean voteValue = item.isLike();
 
         if (view == null) {
-            view = View.inflate(context, R.layout.fragment_wallet_my_votes, null);
+            Log.d("votes, getView", "view == null");
+            view = View.inflate(context, R.layout.my_votes_item, null);
             Log.d("VIEWLOG", "new view created");
 
-            // create an object of view holder --> get hold of child view references
             viewHolder = new ViewHolder();
 
+            viewHolder.id = item.getId();
             viewHolder.content = view.findViewById(R.id.votes_content);
-            viewHolder.id = item.getPostId();
+            viewHolder.postedAt = view.findViewById(R.id.votes_date_posted);
+            viewHolder.voteValue = view.findViewById(R.id.votes_value);
 
             // link view holder to my view
             view.setTag(viewHolder);
         } else {
+            Log.d("votes, getView", "view != null");
             // If view already exists then restore view holder and I can access Image and Text View
             viewHolder = (ViewHolder) view.getTag();
-
         }
 
         viewHolder.content.setText(item.getContents());
+        viewHolder.postedAt.setText(closingIn);
         setVoteValueImage(viewHolder, voteValue);
 
         return view;
@@ -88,9 +92,9 @@ public class WalletMyVotesItemAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        ImageView voteValue;
-        TextView content;
-        TextView endsAt;
         int id;
+        TextView content;
+        TextView postedAt;
+        ImageView voteValue;
     }
 }

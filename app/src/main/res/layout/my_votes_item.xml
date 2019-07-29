@@ -6,7 +6,7 @@
     style="@style/homefeed_invest_card">
 
     <TextView
-        android:id="@+id/my_ideas_date_posted"
+        android:id="@+id/votes_date_posted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/card_eyebrow"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/vote_value"
+            android:id="@+id/votes_value"
             style="card_icon_user"
             android:layout_width="12dp"
             android:layout_height="12dp"

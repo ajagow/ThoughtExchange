@@ -37,7 +37,7 @@ public class DashboardActivity extends AppCompatActivity {
     final Fragment newContentFragment = new NewContentFragment();
     final Fragment homeInvestFragment = new HomeInvestFragment();
     final Fragment walletMyIdeasFragment = new WalletMyIdeasFragment();
-    final Fragment historyFragment = new HistoryFragment();
+    final Fragment historyFragment = new WalletMyVotesFragment();
     final Fragment rankingFragment = new RankingFragment();
     final Fragment walletMyInvestmentsFragment = new WalletMyInvestmentsFragment();
 

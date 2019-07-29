@@ -93,9 +93,12 @@ public class OnboardingActivity extends AppIntro {
         SharedPreferences.Editor e = preferences.edit();
         e.putBoolean("need_onboarding", false);
 
+        boolean isFirstStart = preferences.getBoolean("need_onboarding", true); //
+        Log.d("isFirstStart", Boolean.toString(isFirstStart)); //
+
         //  Apply changes
         e.apply();
-        // go back to the MainActivity
+        // go back to the MainActivity TODO: move from signup to Dashboard
         Intent toMain = new Intent(this, MainActivity.class);
         startActivity(toMain);
     }

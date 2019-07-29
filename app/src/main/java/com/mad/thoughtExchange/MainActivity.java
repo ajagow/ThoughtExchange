@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 //  Initialize SharedPreferences
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 boolean isFirstStart = preferences.getBoolean("need_onboarding", true);
+                Log.d("isFirstStart", Boolean.toString(isFirstStart));
+
 
                 if (isFirstStart) {
                     final Intent i = new Intent(MainActivity.this, OnboardingActivity.class);

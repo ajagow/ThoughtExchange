@@ -2,15 +2,16 @@ package com.mad.thoughtExchange.responses;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class VoteResponse {
 
-
-    public int getVoteId() {
-        return voteId;
+    public int getId() {
+        return id;
     }
 
-    public void setVoteId(int voteId) {
-        this.voteId = voteId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getContents() {
@@ -21,47 +22,86 @@ public class VoteResponse {
         this.contents = contents;
     }
 
-    public int getIsLike() {
+    public boolean isLike() {
         return isLike;
     }
 
-    public boolean getIsLikeBoolean() {
-        return isLike == 1;
+    public void setLike(boolean like) {
+        isLike = like;
     }
 
-    public void setIsLike(int isLike) {
-        this.isLike = isLike;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public int getPostId() {
-        return postId;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public int getInitialWorth() {
+        return initialWorth;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setInitialWorth(int initialWorth) {
+        this.initialWorth = initialWorth;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public boolean getInvestmentActive() {
+        return investmentActive;
+    }
+
+    public void setInvestmentActive(boolean investmentActive) {
+        this.investmentActive = investmentActive;
+    }
+
+    public boolean getMarketActive() {
+        return marketActive;
+    }
+
+    public void setMarketActive(boolean marketActive) {
+        this.marketActive = marketActive;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @SerializedName("id")
-    private int voteId;
+    private int id;
 
     @SerializedName("contents")
     private String contents;
 
     @SerializedName("is_like")
-    private int isLike;
+    private boolean isLike;
 
-    @SerializedName("post_id")
-    private int postId;
+    @SerializedName("owner_id")
+    private int ownerId;
 
-    @SerializedName("user_id")
-    private int userId;
+    @SerializedName("initial_worth")
+    private int initialWorth;
 
+    @SerializedName("investment_active")
+    private boolean investmentActive;
+
+    @SerializedName("market_active")
+    private boolean marketActive;
+
+    @SerializedName("modified_at")
+    private Date modifiedAt;
+
+    @SerializedName("created_at")
+    private Date createdAt;
 }
