@@ -29,4 +29,22 @@ public class GeneralUtils {
         String stringDate = sdf.format(created);
         return stringDate;
     }
+
+    boolean isFinishedOnMarket(Date createDate) {
+        Calendar inputCal = Calendar.getInstance();
+        inputCal.setTime(createDate);
+        Calendar currentCal = Calendar.getInstance();
+
+
+        long countdownHourInMillis = TimeUnit.HOURS.toMillis(48);
+        long inputCalMillisValue = inputCal.getTimeInMillis() + countdownHourInMillis;
+        long currentCalMillisValue = currentCal.getTimeInMillis();
+
+        long difference = currentCalMillisValue - inputCalMillisValue;
+
+        long hours = TimeUnit.MILLISECONDS.toHours(difference);
+
+        return hours > 48;
+
+    }
 }

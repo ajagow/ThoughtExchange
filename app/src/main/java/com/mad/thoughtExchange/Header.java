@@ -54,7 +54,7 @@ public class Header extends RelativeLayout {
         inflater.inflate(R.layout.activity_header, this);
 //        settings = findViewById(R.id.logout);
         logo = findViewById(R.id.logo);
-        coins = findViewById(R.id.coins);
+        coins = findViewById(R.id.worth);
 
     }
 }
