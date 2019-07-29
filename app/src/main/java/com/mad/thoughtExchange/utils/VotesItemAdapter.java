@@ -16,7 +16,7 @@ import com.mad.thoughtExchange.responses.VoteResponse;
 
 import java.util.List;
 
-public class WalletMyVotesItemAdapter extends BaseAdapter {
+public class VotesItemAdapter extends BaseAdapter {
 
     private List<VoteResponse> voteResponses;
     private Context context;
@@ -26,8 +26,8 @@ public class WalletMyVotesItemAdapter extends BaseAdapter {
     private GeneralUtils utils = new GeneralUtils();
 
 
-    public WalletMyVotesItemAdapter(List<VoteResponse> voteResponses,
-                                    Context context, FragmentManager fragmentManager) {
+    public VotesItemAdapter(List<VoteResponse> voteResponses,
+                            Context context, FragmentManager fragmentManager) {
         this.voteResponses = voteResponses;
         this.context = context;
         this.fragmentManager = fragmentManager;

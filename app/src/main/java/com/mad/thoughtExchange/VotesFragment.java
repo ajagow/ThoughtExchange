@@ -19,25 +19,23 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequestArray;
-import com.mad.thoughtExchange.responses.ThoughtResponse;
 import com.mad.thoughtExchange.responses.VoteResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
-import com.mad.thoughtExchange.utils.WalletMyIdeasItemAdapter;
-import com.mad.thoughtExchange.utils.WalletMyVotesItemAdapter;
+import com.mad.thoughtExchange.utils.VotesItemAdapter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class WalletMyVotesFragment extends Fragment {
+public class VotesFragment extends Fragment {
 
     private ListView listView;
     private static String GET_MY_VOTING_HISTORY = "/api/v1/users/me/votes";
 
 
 
-    public WalletMyVotesFragment() {
+    public VotesFragment() {
         // Required empty public constructor
     }
 
@@ -49,8 +47,8 @@ public class WalletMyVotesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("votes","in onCreateView");
-        View view = inflater.inflate(R.layout.fragment_wallet_my_votes, container, false);
-        Log.d("votes","inflated fragment_wallet_my_votes");
+        View view = inflater.inflate(R.layout.fragment_votes, container, false);
+        Log.d("votes","inflated fragment_votes");
         listView = view.findViewById(R.id.my_votes_list_view);
 
         return view;
@@ -90,7 +88,7 @@ public class WalletMyVotesFragment extends Fragment {
     }
 
     private void setVotingHistory(List<VoteResponse> responses) {
-        WalletMyVotesItemAdapter adapter = new WalletMyVotesItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
+        VotesItemAdapter adapter = new VotesItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
 
         listView.setAdapter(adapter);
     }
