@@ -66,7 +66,7 @@ public class DashboardActivity extends AppCompatActivity {
         tab1 = findViewById(R.id.tab_feed);
         tab2 = findViewById(R.id.tab_invest);
 //        logout = findViewById(R.id.logout);
-        coins = findViewById(R.id.coins);
+        coins = findViewById(R.id.worth);
         navLine = findViewById(R.id.navbar_line);
         RelativeLayout tabHeader = findViewById(R.id.tab_header_and_line);
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
