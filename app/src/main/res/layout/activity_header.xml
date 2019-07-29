@@ -24,8 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:id="@+id/userDetailButton"
-        style="@style/HeaderUserWrapper">
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+        android:id="@+id/userDetailButton">
 
         <ImageView
             android:layout_width="25dp"
@@ -40,6 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingLeft="5dp"
-            android:text="1999" />
+            android:text="0" />
     </LinearLayout>
 </RelativeLayout>

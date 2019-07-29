@@ -64,6 +64,11 @@
         <item name="android:padding">0dp</item>
     </style>
 
+    <style name="BaseButtonLinkClose" parent="BaseButtonLink">
+        <item name="android:background">@drawable/base_button_background_cancel</item>
+        <item name="android:textColor">@color/closeRed</item>
+    </style>
+
     <style name="BaseTag" parent="BaseSmall">
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">10sp</item>

@@ -9,6 +9,7 @@
         android:id="@+id/my_votes_list_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         style="@style/invest_list_view">
     </ListView>
 

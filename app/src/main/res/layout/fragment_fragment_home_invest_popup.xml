@@ -34,9 +34,6 @@
             android:layout_width="match_parent"
             android:inputType="number" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -90,10 +87,17 @@
                 android:id="@+id/popup_invest_btn"
                 style="@style/BaseButton"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
                 android:layout_centerVertical="true"
-                android:text="invest" />
-        </RelativeLayout>
+                android:text="Confirm Investment" />
+
+        <Button
+            android:id="@+id/popup_close_btn"
+            style="@style/BaseButtonLinkClose"
+            android:layout_marginTop="20dp"
+            android:text="Cancel" />
 
     </LinearLayout>
 
