@@ -100,6 +100,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
         TextView investmentWorth = view.findViewById(R.id.popu_investment_worth);
         final EditText investmentAmount = view.findViewById(R.id.popup_investment_amount);
         Button investBtn = view.findViewById(R.id.popup_invest_btn);
+        Button closeBtn = view.findViewById(R.id.popup_close_btn);
 
 
 
@@ -176,7 +177,22 @@ public class HomeInvestPopupFragment extends DialogFragment {
 
             }
         });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeInvestPopupFragment.this.dismiss();
+            }
+        });
+
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+    }
 }

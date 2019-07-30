@@ -8,11 +8,11 @@
     </solid>
 
     <stroke
-        android:color="@color/closeRed"
+        android:color="@color/tagRed"
         android:width="2dp">
     </stroke>
     <corners
-        android:radius="2dp"   >
+        android:radius="2dp">
     </corners>
 
 </shape>

@@ -5,14 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 
 import com.github.paolorotolo.appintro.AppIntro;
+import com.github.paolorotolo.appintro.AppIntroBaseFragment;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
@@ -27,32 +31,31 @@ public class OnboardingActivity extends AppIntro {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SliderPage page1 = new SliderPage();
-        page1.setTitle("welcome!");
-        page1.setDescription("thought exchange is an application...");
-        page1.setImageDrawable(R.drawable.google_logo);
-        page1.setBgColor(Color.parseColor("#4284F5"));
-        page1.setTitleTypefaceFontRes(R.font.lato_bold);
-        page1.setDescTypefaceFontRes(R.font.roboto_light);
-        addSlide(AppIntroFragment.newInstance(page1));
+        addSlide(createBasePage(
+                "Welcome",
+                "Thought Exchange is a stock market for your thoughts…",
+                R.drawable.ic_onboarding_img_1)
+        );
 
-        SliderPage page2 = new SliderPage();
-        page2.setTitle("Application to post and invest in thoughts");
-        page2.setDescription("Once posted, a thought goes into the investment stage for 1 hour, then moves to the market to stay for another 24 hours");
-        page2.setImageDrawable(R.drawable.random1);
-        page2.setBgColor(Color.parseColor("#E37542"));
-        page1.setTitleTypefaceFontRes(R.font.lato_bold);
-        page1.setDescTypefaceFontRes(R.font.roboto_light);
-        addSlide(AppIntroFragment.newInstance(page2));
+        addSlide(createBasePage(
+                "Share your ideas",
+                "Have a really good thought? Write it out and set an initial investment on it",
+                R.drawable.ic_onboarding_img_1)
+        );
 
-        SliderPage page3 = new SliderPage();
-        page3.setTitle("Application to post and invest in thoughts");
-        page3.setDescription("Once posted, a thought goes into the investment stage for 1 hour, then moves to the market to stay for another 24 hours");
-        page3.setImageDrawable(R.drawable.random1);
-        page3.setBgColor(Color.parseColor("#fc033d"));
-        page1.setTitleTypefaceFontRes(R.font.lato_bold);
-        page1.setDescTypefaceFontRes(R.font.roboto_light);
-        addSlide(AppIntroFragment.newInstance(page3));
+        addSlide(createBasePage(
+                "Invest",
+                "Don\'t know what to post? Invest in other people\'s thoughts and get a"
+                +" return if it gets more likes than dislikes",
+                R.drawable.ic_onboarding_img_1)
+        );
+
+        addSlide(createBasePage(
+                "Watch out!",
+                "If you invest in a thought that gets more dislikes than likes, you\'ll "
+                + "lose your investment",
+                R.drawable.ic_onboarding_img_1)
+        );
 
         setBarColor(Color.parseColor("#3F51B5"));
         //setSeparatorColor(Color.parseColor("#2196F3"));
@@ -62,6 +65,28 @@ public class OnboardingActivity extends AppIntro {
         setProgressButtonEnabled(true);
 
         setFadeAnimation();
+    }
+
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(parent, name, context, attrs);
+    }
+
+    // Private method to set background color, text color, fonts, and base sizing for all pages
+    private Fragment createBasePage(String titleText, String descText, int image) {
+        SliderPage page = new SliderPage();
+
+        page.setTitle(titleText);
+        page.setDescription(descText);
+        page.setImageDrawable(image);
+        page.setBgColor(Color.parseColor("#FFFFFF"));
+        page.setDescColor(Color.parseColor("#2978A0"));
+        page.setTitleColor(Color.parseColor("#2978A0"));
+        page.setTitleTypefaceFontRes(R.font.roboto_light);
+        page.setDescTypefaceFontRes(R.font.roboto_light);
+
+
+        return AppIntroFragment.newInstance(page);
     }
 
     @Override
