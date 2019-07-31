@@ -5,16 +5,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.RankingResponse;
-import com.mad.thoughtExchange.responses.VoteResponse;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -60,10 +56,7 @@ public class RankingItemAdapter extends BaseAdapter {
             view = View.inflate(context, R.layout.ranking_item, null);
             Log.d("VIEWLOG", "new view created");
 
-            viewHolder = new ViewHolder();
-            viewHolder.rank = view.findViewById(R.id.rankingRank);
-            viewHolder.username = view.findViewById(R.id.rankingUsername);
-            viewHolder.netWorth = view.findViewById(R.id.rankingNetWorth);
+            viewHolder = bindNewViewHolder(view);
 
             // link view holder to my view
             view.setTag(viewHolder);
@@ -73,11 +66,24 @@ public class RankingItemAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
+        setItemToViewHolder(item);
+
+        return view;
+    }
+
+    private void setItemToViewHolder(RankingResponse item) {
         viewHolder.rank.setText(Integer.toString(item.getRank()));
         viewHolder.username.setText(item.getName());
         viewHolder.netWorth.setText(Integer.toString(item.getNetWorth()));
+    }
 
-        return view;
+    private ViewHolder bindNewViewHolder(View view) {
+        ViewHolder viewHolder = new ViewHolder();
+        viewHolder.rank = view.findViewById(R.id.rankingRank);
+        viewHolder.username = view.findViewById(R.id.rankingUsername);
+        viewHolder.netWorth = view.findViewById(R.id.rankingNetWorth);
+
+        return viewHolder;
     }
 
     static class ViewHolder {

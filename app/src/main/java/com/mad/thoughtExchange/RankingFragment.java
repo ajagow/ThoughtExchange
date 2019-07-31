@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ import java.util.Map;
 
 
 /**
- *
+ * Fragment displaying leaderboard
  */
 public class RankingFragment extends Fragment {
 
@@ -40,13 +39,11 @@ public class RankingFragment extends Fragment {
     private static String GET_RANKING = MainActivity.URL + "/api/v1/users/rankings";
     private static String GET_ME = MainActivity.URL + "/api/v1/users/me";
 
-    String token;
-
-    TextView leaderboardtitle; // "Global Top _"
-    TextView username;
-    TextView rank;
-    TextView netWorth;
-    ListView leaderboardListview;
+    private TextView leaderboardtitle; // "Global Top _"
+    private TextView username;
+    private TextView rank;
+    private TextView netWorth;
+    private ListView leaderboardListview;
 
 
     @Override
@@ -58,14 +55,7 @@ public class RankingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
 
-        leaderboardtitle = view.findViewById(R.id.leaderboardTitle);
-        username = view.findViewById(R.id.currentUserUsername);
-        rank = view.findViewById(R.id.currentUserRank);
-        netWorth = view.findViewById(R.id.currentUserNetWorth);
-        leaderboardListview = view.findViewById(R.id.leaderboardListView);
-
-        SharedPreferences sPreferences = getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE);
-        token = SharedPreferencesUtil.getStringFromSharedPreferences(sPreferences, SharedPreferencesUtil.token);
+        findViews(view);
 
         return view;
     }
@@ -89,15 +79,13 @@ public class RankingFragment extends Fragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
-                String message = "Error: " + error.networkResponse.toString() + error.getLocalizedMessage();
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                showVolleyErrorToast(error);
             }
         };
 
-        // update headers
+        // update api-token to headers
         Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", token);
+        headers.put("api-token", retrieveToken());
 
         GsonRequestArray<String, RankingResponse> gsonRequest = new GsonRequestArray<String, RankingResponse>(GET_RANKING,
             getContext(), RankingResponse.class, resonseListener, errorListener, headers);
@@ -105,6 +93,27 @@ public class RankingFragment extends Fragment {
         gsonRequest.volley();
     }
 
+    /**
+     * Set top n rankings and leaderboard title
+     *
+     * @param responses top n ranking responses
+     */
+    private void setRankings(List<RankingResponse> responses) {
+        setLeaderboardTitle();
+
+        // set adapter to leader board list view
+        List<RankingResponse> topRankings = pullTopRankings(responses);
+        RankingItemAdapter adapter = new RankingItemAdapter(topRankings, getContext(),
+            getActivity().getSupportFragmentManager());
+        leaderboardListview.setAdapter(adapter);
+    }
+
+    /**
+     * Filter top n rankings from all rankings
+     *
+     * @param responses all ranking responses from API
+     * @return filtered list of top n rankings
+     */
     private List<RankingResponse> pullTopRankings(List<RankingResponse> responses) {
         List<RankingResponse> topRankings = new ArrayList<RankingResponse>();
 
@@ -116,19 +125,13 @@ public class RankingFragment extends Fragment {
         return topRankings;
     }
 
-    private void setRankings(List<RankingResponse> responses) {
-        // set leader board title
-        String placeholderTitle = getResources().getString(R.string.leaderboardTitle);
-        String title = String.format(placeholderTitle, Integer.toString(RANKING_LIMIT));
-        leaderboardtitle.setText(title);
-
-        // set adapter to leader board list view
-        List<RankingResponse> topRankings = pullTopRankings(responses);
-        RankingItemAdapter adapter = new RankingItemAdapter(topRankings, getContext(),
-            getActivity().getSupportFragmentManager());
-        leaderboardListview.setAdapter(adapter);
-    }
-
+    /**\
+     * Set current user information to leaderboard fragment
+     * User information: Username, rank and net worth
+     *
+     * @param response current user information from API
+     * @param rankings all ranking responses from API
+     */
     private void setMe(UserResponse response, List<RankingResponse> rankings) {
         username.setText(response.getName());
         netWorth.setText(Integer.toString(response.getNetWorth()));
@@ -140,8 +143,12 @@ public class RankingFragment extends Fragment {
         }
     }
 
+    /**
+     * Retrieve current user information from API
+     *
+     * @param rankings all ranking responses to find current user from
+     */
     private void getMe(List<RankingResponse> rankings) {
-
         Response.Listener<UserResponse> resonseListener = new Response.Listener<UserResponse>() {
             @Override
             public void onResponse(UserResponse response) {
@@ -152,18 +159,40 @@ public class RankingFragment extends Fragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
-                String message = "Error: " + error.networkResponse.toString() + error.getLocalizedMessage();
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                showVolleyErrorToast(error);
             }
         };
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", token);
+        headers.put("api-token", retrieveToken());
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         GsonRequest<UserResponse> gsonRequest = new GsonRequest<UserResponse>(GET_ME,
             UserResponse.class, headers, resonseListener, errorListener);
         queue.add(gsonRequest);
+    }
+
+    private void setLeaderboardTitle() {
+        String placeholderTitle = getResources().getString(R.string.leaderboardTitle);
+        String title = String.format(placeholderTitle, Integer.toString(RANKING_LIMIT));
+        leaderboardtitle.setText(title);
+    }
+
+    private void findViews(View view) {
+        leaderboardtitle = view.findViewById(R.id.leaderboardTitle);
+        username = view.findViewById(R.id.currentUserUsername);
+        rank = view.findViewById(R.id.currentUserRank);
+        netWorth = view.findViewById(R.id.currentUserNetWorth);
+        leaderboardListview = view.findViewById(R.id.leaderboardListView);
+    }
+
+    private String retrieveToken() {
+        SharedPreferences sPreferences = getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE);
+        return SharedPreferencesUtil.getStringFromSharedPreferences(sPreferences, SharedPreferencesUtil.token);
+    }
+
+    private void showVolleyErrorToast(VolleyError error) {
+        String message = "Error: " + error.networkResponse.toString() + error.getLocalizedMessage();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

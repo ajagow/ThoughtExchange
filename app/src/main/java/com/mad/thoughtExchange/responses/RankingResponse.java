@@ -2,6 +2,9 @@ package com.mad.thoughtExchange.responses;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Response to api/v1/ranking API endpoint
+ */
 public class RankingResponse {
 
     public int getId() {

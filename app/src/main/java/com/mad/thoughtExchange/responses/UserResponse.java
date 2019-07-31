@@ -2,6 +2,9 @@ package com.mad.thoughtExchange.responses;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Response object to /api/v1/users and /api/v1/me API endpoint
+ */
 public class UserResponse {
 
     public String getEmail() {

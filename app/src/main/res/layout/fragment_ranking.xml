@@ -87,9 +87,7 @@
                         style="@style/BaseSmall"
                         android:layout_marginLeft="2dp"
                         android:text="102031" />
-
                 </LinearLayout>
-
             </LinearLayout>
 
             <TextView
@@ -113,138 +111,7 @@
                     android:layout_height="wrap_content"
                     android:divider="@null"
                     android:dividerHeight="0dp"></ListView>
-
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--style="@style/RankingListItem">-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--style="@style/BaseSmall"-->
-                        <!--android:layout_alignParentLeft="true"-->
-                        <!--android:text="1" />-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/rank1Username"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--style="@style/BaseSmall"-->
-                        <!--android:layout_alignParentLeft="true"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:text="SuperLongNameBecauseWhyNot" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:gravity="center">-->
-
-                        <!--<ImageView-->
-                            <!--android:layout_width="10dp"-->
-                            <!--android:layout_height="10dp"-->
-                            <!--android:src="@drawable/coin" />-->
-
-                        <!--<TextView-->
-                            <!--android:id="@+id/rank1NetWorth"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--style="@style/BaseSmall"-->
-                            <!--android:layout_marginLeft="2dp"-->
-                            <!--android:text="102031" />-->
-
-                    <!--</LinearLayout>-->
-                <!--</RelativeLayout>-->
-
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--style="@style/RankingListItem">-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--style="@style/BaseSmall"-->
-                        <!--android:layout_alignParentLeft="true"-->
-                        <!--android:text="2" />-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/rank2Username"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--style="@style/BaseSmall"-->
-                        <!--android:layout_alignParentLeft="true"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:text="SuperLongNameBecauseWhyNot" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:gravity="center">-->
-
-                        <!--<ImageView-->
-                            <!--android:layout_width="10dp"-->
-                            <!--android:layout_height="10dp"-->
-                            <!--android:src="@drawable/coin" />-->
-
-                        <!--<TextView-->
-                            <!--android:id="@+id/rank2NetWorth"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--style="@style/BaseSmall"-->
-                            <!--android:layout_marginLeft="2dp"-->
-                            <!--android:text="102031" />-->
-
-                    <!--</LinearLayout>-->
-                <!--</RelativeLayout>-->
-
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--style="@style/RankingListItem">-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--style="@style/BaseSmall"-->
-                        <!--android:layout_alignParentLeft="true"-->
-                        <!--android:text="3" />-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/rank3Username"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--style="@style/BaseSmall"-->
-                        <!--android:layout_alignParentLeft="true"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:text="SuperLongNameBecauseWhyNot" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:gravity="center">-->
-
-                        <!--<ImageView-->
-                            <!--android:layout_width="10dp"-->
-                            <!--android:layout_height="10dp"-->
-                            <!--android:src="@drawable/coin" />-->
-
-                        <!--<TextView-->
-                            <!--android:id="@+id/rank3NetWorth"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--style="@style/BaseSmall"-->
-                            <!--android:layout_marginLeft="2dp"-->
-                            <!--android:text="102031" />-->
-
-                    <!--</LinearLayout>-->
-                <!--</RelativeLayout>-->
             </LinearLayout>
-
         </LinearLayout>
     </RelativeLayout>
-
 </FrameLayout>
