@@ -179,7 +179,6 @@ public class NewContentFragment extends Fragment {
 
     private boolean userHasEnoughMoneyToInvest(int investmentVal) {
         int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
-        Log.d("networth", Integer.toString(networth));
         return investmentVal <= networth;
     }
 

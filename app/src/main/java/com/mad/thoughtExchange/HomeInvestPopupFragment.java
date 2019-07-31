@@ -30,6 +30,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,7 +107,6 @@ public class HomeInvestPopupFragment extends DialogFragment {
         Button closeBtn = view.findViewById(R.id.popup_close_btn);
 
 
-
         numberOfInvestors.setText(numInvestorsVal);
         content.setText(contentVal);
         endsAt.setText(expireDateVal);
@@ -117,6 +118,10 @@ public class HomeInvestPopupFragment extends DialogFragment {
         investBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                int uWorth = SharedPreferencesUtil.getIntFromSharedPreferences(
+                        getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE),
+                        SharedPreferencesUtil.networth);
 
                 String invesmentAmountStr = investmentAmount.getEditableText().toString();
                 int investmentAmountVal = 0;
@@ -131,16 +136,14 @@ public class HomeInvestPopupFragment extends DialogFragment {
                     }
                 }
 
-
                 // case: user inputs 0
                 if (investmentAmountVal <= 0) {
                     Toast.makeText(getActivity(), "Value must be greater than 0", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
+                } else if (investmentAmountVal > uWorth) {
+                    Toast.makeText(getActivity(), "You don\'t have enough coins", Toast.LENGTH_SHORT).show();
+                } else {
                     sendInvestmentRequest(investmentAmountVal, idVal);
                 }
-
             }
         });
 
@@ -171,6 +174,13 @@ public class HomeInvestPopupFragment extends DialogFragment {
                 Fragment fragment = getFragmentManager().findFragmentByTag("homeInvestFragment");
                 getFragmentManager().beginTransaction().hide(fragment).show(fragment).commit();
 
+                // todo: also probably a bad solution
+                int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
+                int newWorth = networth - initInvestment;
+                SharedPreferencesUtil.saveToSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth, newWorth);
+                TextView uWorth = getActivity().findViewById(R.id.worth);
+                uWorth.setText(String.valueOf(newWorth));
+
             }
         };
 
@@ -179,7 +189,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
             public void onErrorResponse(VolleyError error) {
                 String body = null;
                 try {
-                    body = new String(error.networkResponse.data,"UTF-8");
+                    body = new String(error.networkResponse.data, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -188,9 +198,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
 
                 if (error.networkResponse.statusCode == 400) {
                     Toast.makeText(getActivity(), "You don't have enough coins. Please enter a lower amount.", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
+                } else {
                     Toast.makeText(getActivity(), "Please try again. There was a network error.", Toast.LENGTH_SHORT).show();
 
                 }
