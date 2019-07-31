@@ -13,6 +13,7 @@ import android.content.Context;
 
 import android.util.Log;
 
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import java.util.Map;
 public class VotesFragment extends Fragment {
 
     private ListView listView;
+    private LinearLayout noHistory;
     private static String GET_MY_VOTING_HISTORY = "/api/v1/users/me/votes";
 
 
@@ -50,6 +52,7 @@ public class VotesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_votes, container, false);
         Log.d("votes","inflated fragment_votes");
         listView = view.findViewById(R.id.my_votes_list_view);
+        noHistory = view.findViewById(R.id.votes_no_history);
 
         return view;
     }
@@ -72,7 +75,14 @@ public class VotesFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.networkResponse.toString());
-                Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                if (error.networkResponse.statusCode == 404) {
+
+                    noHistory.setVisibility(View.VISIBLE);
+                }
+                else {
+                    Toast.makeText(getActivity(), "Please try again.", Toast.LENGTH_SHORT).show();
+
+                }
             }
         };
 
@@ -80,6 +90,9 @@ public class VotesFragment extends Fragment {
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
         Log.d("sharedPreferences","retrieved token: "+token);
+
+        noHistory.setVisibility(View.INVISIBLE);
+
 
         GsonRequestArray<String, VoteResponse> gsonRequest = new GsonRequestArray<String, VoteResponse>(MainActivity.URL + GET_MY_VOTING_HISTORY, getContext(),
                 VoteResponse.class, resonseListener, errorListener, headers);

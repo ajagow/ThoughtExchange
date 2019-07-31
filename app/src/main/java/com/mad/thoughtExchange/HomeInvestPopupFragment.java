@@ -16,12 +16,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequest;
+import com.mad.thoughtExchange.models.InvestmentModel;
+import com.mad.thoughtExchange.responses.NewInvestmentResponse;
 import com.mad.thoughtExchange.responses.UserResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,9 +48,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
     private String worthVal;
     private int idVal;
 
-    private int uWorth;
-
-    private static String USERS_PATH = "api/v1/users/me";
+    private static String INVESTMENT_PATH = "api/v1/investments/";
 
 
     public HomeInvestPopupFragment() {
@@ -119,6 +121,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
                 String invesmentAmountStr = investmentAmount.getEditableText().toString();
                 int investmentAmountVal = 0;
 
+
                 if (!invesmentAmountStr.isEmpty()) {
                     try {
                         investmentAmountVal = Integer.parseInt(investmentAmount.getEditableText().toString());
@@ -128,51 +131,14 @@ public class HomeInvestPopupFragment extends DialogFragment {
                     }
                 }
 
-                Response.Listener<UserResponse> responseListener = new Response.Listener<UserResponse>() {
-                    @Override
-                    public void onResponse(UserResponse response) {
-                        uWorth = response.getNetWorth();
-                        Log.d("WORTHVAL", String.valueOf(worthVal));
-                    }
-                };
-
-                Response.ErrorListener errorListener = new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("ERROR", "user settings error");
-                    }
-                };
-
-                String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
-
-                Map<String, String> headers = new HashMap<>();
-                headers.put("api-token", token);
-                headers.put("Content-Type", "application/json");
-
-                GsonRequest<String, UserResponse> gsonRequest = new GsonRequest<String, UserResponse>(
-                        MainActivity.URL + USERS_PATH,
-                        getContext(),
-                        UserResponse.class,
-                        responseListener,
-                        errorListener,
-                        headers
-                );
-
-                gsonRequest.volley();
 
                 // case: user inputs 0
                 if (investmentAmountVal <= 0) {
                     Toast.makeText(getActivity(), "Value must be greater than 0", Toast.LENGTH_SHORT).show();
                 }
-                // case: user has enough money
-                else if (uWorth > investmentAmountVal) {
-                    //TODO: subtract money from user via post to database
-                    HomeInvestPopupFragment.this.dismiss();
-                    getActivity().getSupportFragmentManager().beginTransaction().hide(HomeInvestPopupFragment.this);
-                }
-                // case: user inputs a stack overflow, not a number, or user doesn't have enough money
+
                 else {
-                    Toast.makeText(getActivity(), "Not enough money or not a number", Toast.LENGTH_SHORT).show();
+                    sendInvestmentRequest(investmentAmountVal, idVal);
                 }
 
             }
@@ -186,6 +152,59 @@ public class HomeInvestPopupFragment extends DialogFragment {
         });
 
         return view;
+    }
+
+    private void sendInvestmentRequest(int initInvestment, int postId) {
+        InvestmentModel investmentModel = new InvestmentModel();
+
+        // set values for POST request
+        investmentModel.setInitialInvestment(initInvestment);
+        investmentModel.setPostId(postId);
+
+        Response.Listener<NewInvestmentResponse> responseListener = new Response.Listener<NewInvestmentResponse>() {
+            @Override
+            public void onResponse(NewInvestmentResponse response) {
+                Log.d("response", "thoughtResponse");
+
+                // todo: terrible solution
+                HomeInvestPopupFragment.this.dismiss();
+                Fragment fragment = getFragmentManager().findFragmentByTag("homeInvestFragment");
+                getFragmentManager().beginTransaction().hide(fragment).show(fragment).commit();
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String body = null;
+                try {
+                    body = new String(error.networkResponse.data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                Log.d("INVEST", body);
+
+                if (error.networkResponse.statusCode == 400) {
+                    Toast.makeText(getActivity(), "You don't have enough coins. Please enter a lower amount.", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    Toast.makeText(getActivity(), "Please try again. There was a network error.", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        };
+
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("api-token", token);
+
+        GsonRequest<InvestmentModel, NewInvestmentResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + INVESTMENT_PATH, investmentModel, getActivity(),
+                InvestmentModel.class, NewInvestmentResponse.class, headers, responseListener, errorListener);
+
+        gsonRequest.volley();
     }
 
     @Override

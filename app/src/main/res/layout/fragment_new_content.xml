@@ -85,6 +85,7 @@
             <EditText
                 android:id="@+id/newpost_initial_investment"
                 style="@style/NewPostInput"
+                android:maxLength="7"
                 android:layout_width="match_parent"
                 android:inputType="number" />
 

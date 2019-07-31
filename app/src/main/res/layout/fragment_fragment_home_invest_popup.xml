@@ -32,6 +32,7 @@
             android:id="@+id/popup_investment_amount"
             style="@style/LoginInput"
             android:layout_width="match_parent"
+            android:maxLength="7"
             android:inputType="number" />
 
 

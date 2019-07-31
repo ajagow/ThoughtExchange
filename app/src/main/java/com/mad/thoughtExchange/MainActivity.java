@@ -113,8 +113,10 @@ public class MainActivity extends AppCompatActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("EROR_LOGIN", "dlkfj");
                 try {
                     String body = new String(error.networkResponse.data,"UTF-8");
+                    Log.d("LOGIN", body);
 
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         GsonRequest<LoginModel, LoginResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, loginModel, this,
                 LoginModel.class, LoginResponse.class, new HashMap<String, String>(), responseListener, errorListener);
 
+        Log.d("Submit reaud", "here");
         gsonRequest.volley();
 
 }

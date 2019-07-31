@@ -132,7 +132,9 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         Log.d("FETCHPOST", feedPostResponses.size() + "");
         adapter = new HomeFeedSwipeAdapter(feedPostResponses, getContext());
 
+
         cardStackView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     @Override
     public void onCardDragging(Direction direction, float ratio) {
@@ -145,7 +147,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         int pos = manager.getTopPosition();
         Log.d("SWIPE", pos + "");
 
-        if ((pos - 1) == feedPostResponses.size()) {
+        if (pos == feedPostResponses.size()) {
             emptyFeed.setVisibility(View.VISIBLE);
         }
 

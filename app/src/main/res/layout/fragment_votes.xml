@@ -13,4 +13,24 @@
         style="@style/invest_list_view">
     </ListView>
 
+    <LinearLayout
+        android:id="@+id/votes_no_history"
+        style="@style/homefeed_invest_card"
+        android:layout_marginTop="145dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            style="@style/homefeed_card_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="You don't have a voting history yet." />
+
+    </LinearLayout>
+
 </RelativeLayout>

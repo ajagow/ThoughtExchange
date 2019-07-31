@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class HomeInvestFragment extends Fragment {
     private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/10/24";
 
     private ListView listView;
+    private LinearLayout noNewInvestments;
 
     public HomeInvestFragment() {
         // Required empty public constructor
@@ -59,6 +61,7 @@ public class HomeInvestFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_invest, container, false);
         listView = view.findViewById(R.id.myListView);
+        noNewInvestments = view.findViewById(R.id.investments_feed_none);
 
         getInvestments();
 
@@ -75,10 +78,14 @@ public class HomeInvestFragment extends Fragment {
             public void onResponse(List<ThoughtResponse> response) {
                 Log.d("getInvestments", "total response: "+response.toString());
 
-                for (ThoughtResponse response1 : response) {
-                    Log.d("getInvestments", response1.getId() + "");
+                if (response.size() == 0) {
+                    noNewInvestments.setVisibility(View.VISIBLE);
                 }
-                setInvestments(response);
+
+                else {
+                    setInvestments(response);
+                    noNewInvestments.setVisibility(View.INVISIBLE);
+                }
             }
         };
 
