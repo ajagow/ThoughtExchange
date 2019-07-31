@@ -17,4 +17,6 @@
     <string name="onboarding_app_intro">Thought Exchange is a application used to post and invest on thoughts</string>
     <string name="onboarding_stages">There are 2 stages to every thought: investment and market</string>
     <string name="onboarding_descrip">An hour in investment stage and 24 hours in the market</string>
+
+    <string name="leaderboardTitle">Global Top %1$s</string>
 </resources>

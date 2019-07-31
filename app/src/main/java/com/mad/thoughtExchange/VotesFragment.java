@@ -99,10 +99,5 @@ public class VotesFragment extends Fragment {
             getVotingHistory();
         }
     }
-
-
-
-
-
 }
 

@@ -161,8 +161,4 @@ public class GsonRequestArray<T, U> {
 
         return jsonObjectRequest;
     }
-
-
-
-
 }
