@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
+import com.yuyakaido.android.cardstackview.Duration;
+import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +57,21 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
     private CardStackLayoutManager manager;
 
     private RelativeLayout emptyFeed;
+
+    private Button likeButton;
+    private Button dislikeButton;
+
+    // swipe animation
+    SwipeAnimationSetting dislikeAnimationSetting = new SwipeAnimationSetting.Builder()
+            .setDirection(Direction.Left)
+            .setDuration(Duration.Normal.duration)
+            .build();
+
+    SwipeAnimationSetting likeAnimationSetting = new SwipeAnimationSetting.Builder()
+            .setDirection(Direction.Right)
+            .setDuration(Duration.Normal.duration)
+            .build();
+
 
 
 
@@ -86,7 +104,46 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         Log.d("cardStackView", "setLayoutManager");
 
         getCurrentFeedPost();
+
+        likeButton = view.findViewById(R.id.like_button);
+        dislikeButton = view.findViewById(R.id.dislike_button);
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("LIKE", "hello like");
+
+                manager.setSwipeAnimationSetting(likeAnimationSetting);
+
+                cardStackView.swipe();
+
+            }
+        });
+
+        dislikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("DISLIKE", "hello dislike");
+
+                manager.setSwipeAnimationSetting(dislikeAnimationSetting);
+                cardStackView.swipe();
+
+            }
+        });
         return view;
+    }
+
+    private void setVoteButtonVisible(boolean visible) {
+        if (visible) {
+            Log.d("setVoteButtonVisible", "set to VISIBLE");
+            likeButton.setVisibility(View.VISIBLE);
+            dislikeButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            Log.d("setVoteButtonVisible", "set to INVISIBLE");
+            likeButton.setVisibility(View.INVISIBLE);
+            dislikeButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void getCurrentFeedPost() {
@@ -104,10 +161,12 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
                 feedPostResponses = response;
                 if (response.size() > 0) {
                     emptyFeed.setVisibility(View.INVISIBLE);
+                    setVoteButtonVisible(true);
                 }
 
                 if (response.size() == 0) {
                     emptyFeed.setVisibility(View.VISIBLE);
+                    setVoteButtonVisible(false);
                 }
                 onSuccessfulResponse();
             }
@@ -149,6 +208,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
 
         if (pos == feedPostResponses.size()) {
             emptyFeed.setVisibility(View.VISIBLE);
+            setVoteButtonVisible(false);
         }
 
         currentPostID = feedPostResponses.get(pos-1).getPost_id();

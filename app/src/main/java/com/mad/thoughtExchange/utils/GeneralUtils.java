@@ -31,20 +31,17 @@ public class GeneralUtils {
     }
 
     boolean isFinishedOnMarket(Date createDate) {
-        Calendar inputCal = Calendar.getInstance();
-        inputCal.setTime(createDate);
-        Calendar currentCal = Calendar.getInstance();
+        Date current = new Date();
 
+        int differenceFloor = hourDifference(current, createDate);
 
-        long countdownHourInMillis = TimeUnit.HOURS.toMillis(48);
-        long inputCalMillisValue = inputCal.getTimeInMillis() + countdownHourInMillis;
-        long currentCalMillisValue = currentCal.getTimeInMillis();
+        return differenceFloor > 48;
 
-        long difference = currentCalMillisValue - inputCalMillisValue;
+    }
 
-        long hours = TimeUnit.MILLISECONDS.toHours(difference);
+    private static int hourDifference(Date date1, Date date2) {
 
-        return hours > 48;
-
+        final int MILLI_TO_HOUR = 1000 * 60 * 60;
+        return (int) (date1.getTime() - date2.getTime()) / MILLI_TO_HOUR;
     }
 }

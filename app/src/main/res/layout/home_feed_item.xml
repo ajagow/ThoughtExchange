@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="340dp"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:padding="40dp"
@@ -21,21 +21,6 @@
             android:layout_alignParentTop="true"
             android:text="Every toothbrush is recommended by dentists because they just want us to brush our teeth to brush our teeth" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
-
-            <Button
-                android:id="@+id/dislike_button"
-                style="@style/homefeed_dislike"
-                android:background="@drawable/dislike_button" />
-
-            <Button
-                android:id="@+id/like_button"
-                style="@style/homefeed_like"
-                android:background="@drawable/like_button" />
-        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -43,7 +28,7 @@
     <FrameLayout
         android:id="@+id/left_overlay"
         android:layout_width="340dp"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         android:layout_centerHorizontal="true">
 
         <ImageView
@@ -56,7 +41,7 @@
     <FrameLayout
         android:id="@+id/right_overlay"
         android:layout_width="340dp"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         android:layout_centerHorizontal="true">
 
         <ImageView

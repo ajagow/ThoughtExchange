@@ -130,6 +130,27 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
         viewHolder.earnings.setText(earnings);
         viewHolder.initialInvestment.setText(myInitialInvestment);
 
+        if (utils.isFinishedOnMarket(item.getCreatedAt())) {
+            viewHolder.indicator.setVisibility(View.VISIBLE);
+            viewHolder.earnings.setVisibility(View.VISIBLE);
+            viewHolder.earningsView.setVisibility(View.VISIBLE);
+            viewHolder.gainOrLost.setVisibility(View.VISIBLE);
+
+        }
+
+        if (!utils.isFinishedOnMarket(item.getCreatedAt())) {
+            viewHolder.indicator.setVisibility(View.INVISIBLE);
+            viewHolder.earnings.setVisibility(View.INVISIBLE);
+            viewHolder.earningsView.setVisibility(View.INVISIBLE);
+            viewHolder.gainOrLost.setVisibility(View.INVISIBLE);
+
+        }
+
+        if (item.getEarnings() < 0) {
+            viewHolder.gainOrLost.setText("You lost: ");
+
+        }
+
 
 
         return view;

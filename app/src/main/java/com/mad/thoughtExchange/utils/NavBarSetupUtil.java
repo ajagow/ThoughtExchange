@@ -45,7 +45,7 @@ public class NavBarSetupUtil {
             @Override
             public void onCentreButtonClick() {
                 tabHeader.setVisibility(View.INVISIBLE);
-                Fragment active = getVisibleFragment(fm);
+                Fragment active = FragmentUtil.getVisibleFragment(fm);
                 Fragment centerFragment = fm.findFragmentByTag("newContentFragment");
                 fm.beginTransaction().setCustomAnimations(R.anim.slide_up, R.anim.fade_out).hide(active).show(centerFragment).commit();
                 Log.d("CLICK",  "  activetag: " + active.getTag());
@@ -63,26 +63,14 @@ public class NavBarSetupUtil {
         });
     }
 
-    // get the fragment that's currently visible
-    private Fragment getVisibleFragment(FragmentManager fragmentManager){
-        List<Fragment> fragments = fragmentManager.getFragments();
-
-        if(fragments != null){
-            for(Fragment fragment : fragments){
-                if(fragment != null && fragment.isVisible())
-                    return fragment;
-            }
-        }
-        return null;
-    }
 
     // When HOME button or WALLET button are clicked in nav bar, change tab names on top
     // and which fragments are visible
-    private void onAnyMenuItemClick(FragmentManager fm,
+    public static void onAnyMenuItemClick(FragmentManager fm,
                                     String itemName, RelativeLayout tabHeader,
                                     Button tab1, Button tab2, View nav) {
         tabHeader.setVisibility(View.VISIBLE);
-        Fragment active = getVisibleFragment(fm);
+        Fragment active = FragmentUtil.getVisibleFragment(fm);
         Fragment newFragment = null;
         Log.d("ITEMNAME", itemName);
         if (itemName.equals("HOME")) {
@@ -112,7 +100,7 @@ public class NavBarSetupUtil {
     }
 
     // change which fragments are visible based on click
-    private void click(Button button, final String current,
+    private static void click(Button button, final String current,
                        final String goTo, final View nav, final FragmentManager fm,
                        final boolean swipeLeft, final View navLine) {
 
@@ -150,7 +138,7 @@ public class NavBarSetupUtil {
     }
 
     // change name of tabs on top depending on which button is clicked
-    private void changeTabNames(Button tab1, Button tab2, boolean isHome) {
+    private static void changeTabNames(Button tab1, Button tab2, boolean isHome) {
         if (isHome) {
             tab1.setText(R.string.vote);
             tab2.setText(R.string.investments);
@@ -162,12 +150,12 @@ public class NavBarSetupUtil {
     }
 
     // move line without animating
-    private void moveLineNoAnimation(View nav) {
+    private static void moveLineNoAnimation(View nav) {
         nav.setTranslationX(0f);
     }
 
     // move line with left position start and left position end
-    private void moveLine(View nav, float start, float end) {
+    private static void moveLine(View nav, float start, float end) {
         if (Float.compare(nav.getTranslationX(), start) == 0 ) {
 
             ObjectAnimator textViewAnimator = ObjectAnimator.ofFloat(nav, "translationX",start, end);

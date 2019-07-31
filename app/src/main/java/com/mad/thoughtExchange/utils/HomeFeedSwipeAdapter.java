@@ -60,8 +60,6 @@ public class HomeFeedSwipeAdapter extends RecyclerView.Adapter<HomeFeedSwipeAdap
 
     public class HomeFeedViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.current_feed_post) TextView current_feed_post;
-        @BindView(R.id.dislike_button) Button dislike_button;
-        @BindView(R.id.like_button) Button like_button;
 
         private Context context;
 

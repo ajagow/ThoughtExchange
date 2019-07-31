@@ -24,12 +24,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.NewPostModel;
 import com.mad.thoughtExchange.models.SignupModel;
 import com.mad.thoughtExchange.models.ThoughtModel;
 import com.mad.thoughtExchange.responses.SignupResponse;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
+import com.mad.thoughtExchange.utils.FragmentUtil;
+import com.mad.thoughtExchange.utils.NavBarSetupUtil;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import org.json.JSONObject;
@@ -158,17 +161,26 @@ public class NewContentFragment extends Fragment {
         newPostContent.addTextChangedListener(mTextEditorWatcher);
     }
 
-
     private void onSuccessfulSubmit(ThoughtResponse thoughtResponse, int initInvestment) {
         clearValues();
-        Fragment home = getFragmentManager().findFragmentByTag("homeFeedFragment");
-        getActivity().findViewById(R.id.tab_header_and_line).setVisibility(View.VISIBLE);
-        getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_down, R.anim.fade_out).hide(NewContentFragment.this).show(home).commit();
+
         int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
         int newWorth = networth - initInvestment;
         SharedPreferencesUtil.saveToSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth, newWorth);
         TextView uWorth = getActivity().findViewById(R.id.worth);
         uWorth.setText(String.valueOf(newWorth));
+
+        // todo: this is bad
+        NavBarSetupUtil.onAnyMenuItemClick(getFragmentManager(),
+                "HOME",
+                getActivity().findViewById(R.id.tab_header_and_line),
+                getActivity().findViewById(R.id.tab_feed),
+                getActivity().findViewById(R.id.tab_invest),
+                getActivity().findViewById(R.id.space));
+        SpaceNavigationView spaceNavigationView= getActivity().findViewById(R.id.space);
+        spaceNavigationView.changeCurrentItem(0);
+
+
     }
 
     private void clearValues() {
@@ -179,6 +191,11 @@ public class NewContentFragment extends Fragment {
     private boolean userHasEnoughMoneyToInvest(int investmentVal) {
         int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
         return investmentVal <= networth;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        clearValues();
     }
 
 }
