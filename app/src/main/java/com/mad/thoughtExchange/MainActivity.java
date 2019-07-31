@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("isFirstStart", Boolean.toString(isFirstStart));
 
                 // TODO: debugging onboarding Remove isFirstStart declaration later
-//                isFirstStart = true;
+                //isFirstStart = true;
                 if (isFirstStart) {
                     final Intent i = new Intent(MainActivity.this, OnboardingActivity.class);
 

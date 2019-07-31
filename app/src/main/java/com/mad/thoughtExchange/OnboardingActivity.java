@@ -38,30 +38,35 @@ public class OnboardingActivity extends AppIntro {
         );
 
         addSlide(createBasePage(
-                "Share your ideas",
-                "Have a really good thought? Write it out and set an initial investment on it",
-                R.drawable.ic_onboarding_img_1)
+                "Share your thoughts",
+                "Write out your thoughts and set an initial investment",
+                R.drawable.ic_onboarding_img_2)
         );
 
         addSlide(createBasePage(
                 "Invest",
-                "Don\'t know what to post? Invest in other people\'s thoughts and get a"
-                +" return if it gets more likes than dislikes",
-                R.drawable.ic_onboarding_img_1)
+                "After you post, other users are able to invest in your idea for 24 hours"
+                +"\n\nIf the post has more likes than dislikes, you and the investors will gain coins",
+                R.drawable.ic_onboarding_img_3)
         );
 
         addSlide(createBasePage(
                 "Watch out!",
                 "If you invest in a thought that gets more dislikes than likes, you\'ll "
-                + "lose your investment",
-                R.drawable.ic_onboarding_img_1)
+                        + "lose your investment",
+                R.drawable.ic_onboarding_img_4)
         );
 
-        setBarColor(Color.parseColor("#3F51B5"));
+        setBarColor(Color.parseColor("#FFFFFF"));
+        setSeparatorColor(Color.parseColor("#FFFFFF"));
+        setIndicatorColor(Color.parseColor("#A8A8A8"),
+                Color.parseColor("#A0A0A0"));
+        setColorDoneText(Color.parseColor("#2978A0"));
+        setNextArrowColor(Color.parseColor("#A8A8A8"));
         //setSeparatorColor(Color.parseColor("#2196F3"));
 
         // Hide Skip/Done button.
-        showSkipButton(true);
+        showSkipButton(false);
         setProgressButtonEnabled(true);
 
         setFadeAnimation();
@@ -80,10 +85,10 @@ public class OnboardingActivity extends AppIntro {
         page.setDescription(descText);
         page.setImageDrawable(image);
         page.setBgColor(Color.parseColor("#FFFFFF"));
-        page.setDescColor(Color.parseColor("#2978A0"));
-        page.setTitleColor(Color.parseColor("#2978A0"));
-        page.setTitleTypefaceFontRes(R.font.roboto_light);
-        page.setDescTypefaceFontRes(R.font.roboto_light);
+        page.setDescColor(Color.parseColor("#333333"));
+        page.setTitleColor(Color.parseColor("#333333"));
+        page.setTitleTypefaceFontRes(R.font.lato_reg);
+        page.setDescTypefaceFontRes(R.font.lato_reg);
 
 
         return AppIntroFragment.newInstance(page);
@@ -91,7 +96,7 @@ public class OnboardingActivity extends AppIntro {
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
-        Log.d("onboarding","onSkipPressed");
+        Log.d("onboarding", "onSkipPressed");
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
         // Update the shared preferences
@@ -100,14 +105,14 @@ public class OnboardingActivity extends AppIntro {
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
-        Log.d("onboarding","onDonePressed");
+        Log.d("onboarding", "onDonePressed");
         super.onDonePressed(currentFragment);
         onOnboardingCompletion();
     }
 
     @Override
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
-        Log.d("onboarding","onSlideChanged");
+        Log.d("onboarding", "onSlideChanged");
         super.onSlideChanged(oldFragment, newFragment);
         // Do something when the slide changes.
     }

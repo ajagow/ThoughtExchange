@@ -1,7 +1,9 @@
 package com.mad.thoughtExchange;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -35,6 +37,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class NewContentFragment extends Fragment {
 
@@ -51,6 +55,7 @@ public class NewContentFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+//        Log.d("hello", String.valueOf(getacti));
         super.onCreate(savedInstanceState);
     }
 
@@ -111,7 +116,7 @@ public class NewContentFragment extends Fragment {
             @Override
             public void onResponse(ThoughtResponse response) {
                 Log.d("response", "thoughtResponse");
-                onSuccessfulSubmit(response);
+                onSuccessfulSubmit(response, initInvestment);
             }
         };
 
@@ -126,7 +131,7 @@ public class NewContentFragment extends Fragment {
             }
         };
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
 
@@ -155,11 +160,16 @@ public class NewContentFragment extends Fragment {
     }
 
 
-    private void onSuccessfulSubmit(ThoughtResponse thoughtResponse) {
+    private void onSuccessfulSubmit(ThoughtResponse thoughtResponse, int initInvestment) {
         clearValues();
         Fragment home = getFragmentManager().findFragmentByTag("homeFeedFragment");
         getActivity().findViewById(R.id.tab_header_and_line).setVisibility(View.VISIBLE);
         getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_down, R.anim.fade_out).hide(NewContentFragment.this).show(home).commit();
+        int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
+        int newWorth = networth - initInvestment;
+        SharedPreferencesUtil.saveToSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth, newWorth);
+        TextView uWorth = getActivity().findViewById(R.id.worth);
+        uWorth.setText(String.valueOf(newWorth));
     }
 
     private void clearValues() {
@@ -168,7 +178,7 @@ public class NewContentFragment extends Fragment {
     }
 
     private boolean userHasEnoughMoneyToInvest(int investmentVal) {
-        int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.networth);
+        int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
         Log.d("networth", Integer.toString(networth));
         return investmentVal <= networth;
     }
