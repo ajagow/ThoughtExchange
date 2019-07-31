@@ -40,6 +40,7 @@
                 android:src="@drawable/ic_user" />
 
             <TextView
+                android:id="@+id/currentUserUsername"
                 style="@style/BaseSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,6 +62,7 @@
                     android:text="Rank: " />
 
                 <TextView
+                    android:id="@+id/currentUserRank"
                     style="@style/BaseSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,6 +81,7 @@
                         android:src="@drawable/coin"/>
 
                     <TextView
+                        android:id="@+id/currentUserNetWorth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/BaseSmall"
@@ -90,6 +93,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/leaderboardTitle"
                 style="@style/BaseSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,128 +107,141 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <ListView
+                    android:id="@+id/leaderboardListView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/RankingListItem">
+                    android:divider="@null"
+                    android:dividerHeight="0dp"></ListView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/BaseSmall"
-                        android:layout_alignParentLeft="true"
-                        android:text="1" />
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--style="@style/RankingListItem">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/BaseSmall"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="20dp"
-                        android:text="SuperLongNameBecauseWhyNot" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/BaseSmall"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:text="1" />-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center">
+                    <!--<TextView-->
+                        <!--android:id="@+id/rank1Username"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/BaseSmall"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:text="SuperLongNameBecauseWhyNot" />-->
 
-                        <ImageView
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:src="@drawable/coin" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:gravity="center">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/BaseSmall"
-                            android:layout_marginLeft="2dp"
-                            android:text="102031" />
+                        <!--<ImageView-->
+                            <!--android:layout_width="10dp"-->
+                            <!--android:layout_height="10dp"-->
+                            <!--android:src="@drawable/coin" />-->
 
-                    </LinearLayout>
-                </RelativeLayout>
+                        <!--<TextView-->
+                            <!--android:id="@+id/rank1NetWorth"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--style="@style/BaseSmall"-->
+                            <!--android:layout_marginLeft="2dp"-->
+                            <!--android:text="102031" />-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/RankingListItem">
+                    <!--</LinearLayout>-->
+                <!--</RelativeLayout>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/BaseSmall"
-                        android:layout_alignParentLeft="true"
-                        android:text="2" />
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--style="@style/RankingListItem">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/BaseSmall"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="20dp"
-                        android:text="SuperLongNameBecauseWhyNot" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/BaseSmall"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:text="2" />-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center">
+                    <!--<TextView-->
+                        <!--android:id="@+id/rank2Username"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/BaseSmall"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:text="SuperLongNameBecauseWhyNot" />-->
 
-                        <ImageView
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:src="@drawable/coin" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:gravity="center">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/BaseSmall"
-                            android:layout_marginLeft="2dp"
-                            android:text="102031" />
+                        <!--<ImageView-->
+                            <!--android:layout_width="10dp"-->
+                            <!--android:layout_height="10dp"-->
+                            <!--android:src="@drawable/coin" />-->
 
-                    </LinearLayout>
-                </RelativeLayout>
+                        <!--<TextView-->
+                            <!--android:id="@+id/rank2NetWorth"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--style="@style/BaseSmall"-->
+                            <!--android:layout_marginLeft="2dp"-->
+                            <!--android:text="102031" />-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/RankingListItem">
+                    <!--</LinearLayout>-->
+                <!--</RelativeLayout>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/BaseSmall"
-                        android:layout_alignParentLeft="true"
-                        android:text="3" />
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--style="@style/RankingListItem">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/BaseSmall"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="20dp"
-                        android:text="SuperLongNameBecauseWhyNot" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/BaseSmall"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:text="3" />-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center">
+                    <!--<TextView-->
+                        <!--android:id="@+id/rank3Username"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--style="@style/BaseSmall"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:text="SuperLongNameBecauseWhyNot" />-->
 
-                        <ImageView
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:src="@drawable/coin" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:gravity="center">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/BaseSmall"
-                            android:layout_marginLeft="2dp"
-                            android:text="102031" />
+                        <!--<ImageView-->
+                            <!--android:layout_width="10dp"-->
+                            <!--android:layout_height="10dp"-->
+                            <!--android:src="@drawable/coin" />-->
 
-                    </LinearLayout>
-                </RelativeLayout>
+                        <!--<TextView-->
+                            <!--android:id="@+id/rank3NetWorth"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--style="@style/BaseSmall"-->
+                            <!--android:layout_marginLeft="2dp"-->
+                            <!--android:text="102031" />-->
+
+                    <!--</LinearLayout>-->
+                <!--</RelativeLayout>-->
             </LinearLayout>
 
         </LinearLayout>
