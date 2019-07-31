@@ -33,6 +33,8 @@ public class VotesFragment extends Fragment {
 
     private ListView listView;
     private LinearLayout noHistory;
+    private VotesItemAdapter adapter;
+
     private static String GET_MY_VOTING_HISTORY = "/api/v1/users/me/votes";
 
 
@@ -76,8 +78,9 @@ public class VotesFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.networkResponse.toString());
                 if (error.networkResponse.statusCode == 404) {
-
                     noHistory.setVisibility(View.VISIBLE);
+                    listView.setAdapter(null);
+
                 }
                 else {
                     Toast.makeText(getActivity(), "Please try again.", Toast.LENGTH_SHORT).show();
@@ -101,9 +104,10 @@ public class VotesFragment extends Fragment {
     }
 
     private void setVotingHistory(List<VoteResponse> responses) {
-        VotesItemAdapter adapter = new VotesItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
+        adapter = new VotesItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
 
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
