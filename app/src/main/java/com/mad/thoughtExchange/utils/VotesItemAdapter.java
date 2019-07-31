@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.mad.thoughtExchange.R;
@@ -77,10 +78,11 @@ public class VotesItemAdapter extends BaseAdapter {
 
     private void setVoteValueImage(ViewHolder viewHolder, boolean is_like) {
         if(is_like){
-            viewHolder.voteValue.setImageResource(R.drawable.like_button_clicked);
+            //viewHolder.voteValue.setImageResource(R.drawable.like_button_clicked);
+            viewHolder.voteValue.setBackground(ContextCompat.getDrawable(context, R.drawable.voting_background_liked));
             viewHolder.voteValueText.setText("liked");
         } else {
-            viewHolder.voteValue.setImageResource(R.drawable.dislike_button_clicked);
+//            viewHolder.voteValue.setImageResource(R.drawable.dislike_button_clicked);
             viewHolder.voteValueText.setText("disliked");
         }
     }
@@ -90,7 +92,7 @@ public class VotesItemAdapter extends BaseAdapter {
 
         viewHolder.content = view.findViewById(R.id.votes_content);
         viewHolder.postedAt = view.findViewById(R.id.votes_date_posted);
-        viewHolder.voteValue = view.findViewById(R.id.votes_value);
+        viewHolder.voteValue = view.findViewById(R.id.voteAdapterContainer);
         viewHolder.voteValueText = view.findViewById(R.id.votes_text_value);
 
         return viewHolder;

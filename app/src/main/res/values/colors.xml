@@ -15,6 +15,8 @@
     <color name="backgroundColor">#E3F5FF</color>
     <color name="tagRed">#FFD9D9</color>
     <color name="closeRed">#990000</color>
+    <color name="votingGreen">#2F6B00</color>
+    <color name="votingRed">#9C0000</color>
     <color name="testBottomLol">#1B4079</color>
     <color name="intro1">#4284F5</color>
     <color name="intro2">#E37542</color>

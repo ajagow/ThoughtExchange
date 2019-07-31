@@ -152,7 +152,7 @@ public class NavBarSetupUtil {
     // change name of tabs on top depending on which button is clicked
     private void changeTabNames(Button tab1, Button tab2, boolean isHome) {
         if (isHome) {
-            tab1.setText(R.string.feed);
+            tab1.setText(R.string.vote);
             tab2.setText(R.string.investments);
         }
         else {

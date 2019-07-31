@@ -55,7 +55,6 @@ public class NewContentFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        Log.d("hello", String.valueOf(getacti));
         super.onCreate(savedInstanceState);
     }
 

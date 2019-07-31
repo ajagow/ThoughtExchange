@@ -86,7 +86,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         Log.d("cardStackView", "setLayoutManager");
 
         getCurrentFeedPost();
-
         return view;
     }
 
@@ -136,6 +135,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         cardStackView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
+
     @Override
     public void onCardDragging(Direction direction, float ratio) {
         CardStackListener.DEFAULT.onCardDragging(direction, ratio);

@@ -1,43 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/homefeed_invest_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    style="@style/homefeed_invest_card">
+    android:id="@+id/voteAdapterContainer"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/votes_date_posted"
+        style="@style/card_eyebrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/card_eyebrow"
-        android:text="Posted 10:48am July 11 2019"/>
+        android:text="Posted 10:48am July 11 2019" />
 
     <TextView
         android:id="@+id/votes_content"
         style="@style/homefeed_invest_card_text"
-        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         android:text="Ariel doesn't know what a fork is for, yet her dad wields a trident" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/votes_text_value"
+        style="@style/BaseSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/votes_value"
-            style="card_icon_user"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:src="@drawable/like_button"
-            android:baselineAlignBottom="true" />
-        <TextView
-            android:id="@+id/votes_text_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            style="@style/BaseSmall"
-            android:text="liked"
-            android:baselineAlignBottom="true"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:baselineAlignBottom="true"
+        android:text="liked" />
+
 
 </LinearLayout>

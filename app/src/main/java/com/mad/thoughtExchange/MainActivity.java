@@ -143,15 +143,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token);
         Log.d("sharedPreferences","saved token to shared preferences");
 
-        // todo: replace with real call to api to get a user's value
-        //int netWorth = getNetWorth();
         SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 6000);
         startActivity(explicitIntent);
-    }
-
-    private int getNetWorth() {
-        //int token = SharedPreferencesUtil.getIntFromSharedPreferences(getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
-
-        return 6000;
     }
 }

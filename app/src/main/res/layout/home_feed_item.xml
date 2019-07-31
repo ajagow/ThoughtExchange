@@ -39,4 +39,31 @@
 
     </RelativeLayout>
 
+
+    <FrameLayout
+        android:id="@+id/left_overlay"
+        android:layout_width="340dp"
+        android:layout_height="400dp"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_dislike_overlay"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/right_overlay"
+        android:layout_width="340dp"
+        android:layout_height="400dp"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_like_overlay"/>
+
+    </FrameLayout>
+
 </RelativeLayout>

@@ -5,7 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_ideas">My Ideas</string>
     <string name="my_investments">My Investments</string>
-    <string name="feed">Feed</string>
+    <string name="vote">Vote</string>
     <string name="investments">Investments</string>
 
     <string name="onboarding_title_welcome">Welcome to Thought Exchange</string>
