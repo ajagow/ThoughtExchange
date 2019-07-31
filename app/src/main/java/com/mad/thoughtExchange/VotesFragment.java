@@ -38,7 +38,6 @@ public class VotesFragment extends Fragment {
     private static String GET_MY_VOTING_HISTORY = "/api/v1/users/me/votes";
 
 
-
     public VotesFragment() {
         // Required empty public constructor
     }
@@ -92,10 +91,8 @@ public class VotesFragment extends Fragment {
         String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
-        Log.d("sharedPreferences","retrieved token: "+token);
 
         noHistory.setVisibility(View.INVISIBLE);
-
 
         GsonRequestArray<String, VoteResponse> gsonRequest = new GsonRequestArray<String, VoteResponse>(MainActivity.URL + GET_MY_VOTING_HISTORY, getContext(),
                 VoteResponse.class, resonseListener, errorListener, headers);

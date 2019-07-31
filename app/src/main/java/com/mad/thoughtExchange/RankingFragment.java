@@ -1,7 +1,7 @@
 package com.mad.thoughtExchange;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,10 +22,8 @@ import com.android.volley.toolbox.Volley;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.RankingResponse;
 import com.mad.thoughtExchange.responses.UserResponse;
-import com.mad.thoughtExchange.responses.VoteResponse;
 import com.mad.thoughtExchange.utils.RankingItemAdapter;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
-import com.mad.thoughtExchange.utils.VotesItemAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,8 +37,10 @@ import java.util.Map;
 public class RankingFragment extends Fragment {
 
     private static int RANKING_LIMIT = 3;
-    private static String GET_RANKING = "/api/v1/users/rankings";
-    private static String GET_ME = "/api/v1/users/me";
+    private static String GET_RANKING = MainActivity.URL + "/api/v1/users/rankings";
+    private static String GET_ME = MainActivity.URL + "/api/v1/users/me";
+
+    String token;
 
     TextView leaderboardtitle; // "Global Top _"
     TextView username;
@@ -64,16 +64,24 @@ public class RankingFragment extends Fragment {
         netWorth = view.findViewById(R.id.currentUserNetWorth);
         leaderboardListview = view.findViewById(R.id.leaderboardListView);
 
+        SharedPreferences sPreferences = getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE);
+        token = SharedPreferencesUtil.getStringFromSharedPreferences(sPreferences, SharedPreferencesUtil.token);
+
         return view;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            getRankings();
+        }
     }
 
     private void getRankings() {
         Response.Listener<List<RankingResponse>> resonseListener = new Response.Listener<List<RankingResponse>>() {
             @Override
             public void onResponse(List<RankingResponse> responses) {
-                //TODO: before moving to listview, have to set current user ranking info in fragment
                 setRankings(responses);
-                // pull current user response, set rank
                 getMe(responses);
             }
         };
@@ -82,17 +90,17 @@ public class RankingFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.networkResponse.toString());
-                Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                String message = "Error: " + error.networkResponse.toString() + error.getLocalizedMessage();
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
             }
         };
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+        // update headers
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
-        Log.d("sharedPreferences","retrieved token: "+token);
 
-        GsonRequestArray<String, RankingResponse> gsonRequest = new GsonRequestArray<String, RankingResponse>(MainActivity.URL + GET_RANKING, getContext(),
-                RankingResponse.class, resonseListener, errorListener, headers);
+        GsonRequestArray<String, RankingResponse> gsonRequest = new GsonRequestArray<String, RankingResponse>(GET_RANKING,
+            getContext(), RankingResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();
     }
@@ -101,7 +109,6 @@ public class RankingFragment extends Fragment {
         List<RankingResponse> topRankings = new ArrayList<RankingResponse>();
 
         for (RankingResponse response : responses) {
-            // loop and pull out top rankings
             if (response.getRank() <= RANKING_LIMIT) {
                 topRankings.add(response);
             }
@@ -110,23 +117,16 @@ public class RankingFragment extends Fragment {
     }
 
     private void setRankings(List<RankingResponse> responses) {
-
         // set leader board title
-        String title = String.format(getResources().getString(R.string.leaderboardTitle), Integer.toString(RANKING_LIMIT));
+        String placeholderTitle = getResources().getString(R.string.leaderboardTitle);
+        String title = String.format(placeholderTitle, Integer.toString(RANKING_LIMIT));
         leaderboardtitle.setText(title);
 
         // set adapter to leader board list view
         List<RankingResponse> topRankings = pullTopRankings(responses);
-        RankingItemAdapter adapter = new RankingItemAdapter(topRankings, getContext(), getActivity().getSupportFragmentManager());
+        RankingItemAdapter adapter = new RankingItemAdapter(topRankings, getContext(),
+            getActivity().getSupportFragmentManager());
         leaderboardListview.setAdapter(adapter);
-    }
-        //TODO: need to add the current user too
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (!hidden) {
-            getRankings();
-        }
     }
 
     private void setMe(UserResponse response, List<RankingResponse> rankings) {
@@ -145,9 +145,6 @@ public class RankingFragment extends Fragment {
         Response.Listener<UserResponse> resonseListener = new Response.Listener<UserResponse>() {
             @Override
             public void onResponse(UserResponse response) {
-                Log.d("getVotingHistory", "total response: "+response.toString());
-                Log.d("getME", response.getEmail() + " EMAIL");
-
                 setMe(response, rankings);
             }
         };
@@ -156,17 +153,17 @@ public class RankingFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.networkResponse.toString());
-                Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                String message = "Error: " + error.networkResponse.toString() + error.getLocalizedMessage();
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
             }
         };
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
-        Log.d("sharedPreferences","retrieved token: "+token);
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        GsonRequest<UserResponse> gsonRequest = new GsonRequest<UserResponse>(MainActivity.URL + GET_ME, UserResponse.class, headers, resonseListener, errorListener);
+        GsonRequest<UserResponse> gsonRequest = new GsonRequest<UserResponse>(GET_ME,
+            UserResponse.class, headers, resonseListener, errorListener);
         queue.add(gsonRequest);
     }
 }

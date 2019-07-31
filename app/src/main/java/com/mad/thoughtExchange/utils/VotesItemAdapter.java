@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentManager;
 
 import com.mad.thoughtExchange.R;
-import com.mad.thoughtExchange.responses.ThoughtResponse;
 import com.mad.thoughtExchange.responses.VoteResponse;
 
 import java.util.List;
