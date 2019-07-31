@@ -67,6 +67,7 @@ public class VotesItemAdapter extends BaseAdapter {
             viewHolder.content = view.findViewById(R.id.votes_content);
             viewHolder.postedAt = view.findViewById(R.id.votes_date_posted);
             viewHolder.voteValue = view.findViewById(R.id.votes_value);
+            viewHolder.voteValueText = view.findViewById(R.id.votes_text_value);
 
             // link view holder to my view
             view.setTag(viewHolder);
@@ -86,8 +87,10 @@ public class VotesItemAdapter extends BaseAdapter {
     private void setVoteValueImage(ViewHolder viewHolder, boolean is_like) {
         if(is_like){
             viewHolder.voteValue.setImageResource(R.drawable.like_button_clicked);
+            viewHolder.voteValueText.setText("liked");
         } else {
             viewHolder.voteValue.setImageResource(R.drawable.dislike_button_clicked);
+            viewHolder.voteValueText.setText("disliked");
         }
     }
 
@@ -96,5 +99,6 @@ public class VotesItemAdapter extends BaseAdapter {
         TextView content;
         TextView postedAt;
         ImageView voteValue;
+        TextView voteValueText;
     }
 }

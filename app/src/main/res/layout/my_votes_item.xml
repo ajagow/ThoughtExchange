@@ -29,8 +29,15 @@
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:src="@drawable/like_button"
-            android:baselineAlignBottom="true"
-            />
+            android:baselineAlignBottom="true" />
+        <TextView
+            android:id="@+id/votes_text_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            style="@style/BaseSmall"
+            android:text="liked"
+            android:baselineAlignBottom="true"/>
     </LinearLayout>
 
 </LinearLayout>

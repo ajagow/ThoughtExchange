@@ -110,7 +110,6 @@ public class RankingFragment extends Fragment {
     }
 
     private void setRankings(List<RankingResponse> responses) {
-        // set ranking response data to view
 
         // set leader board title
         String title = String.format(getResources().getString(R.string.leaderboardTitle), Integer.toString(RANKING_LIMIT));
@@ -131,7 +130,6 @@ public class RankingFragment extends Fragment {
     }
 
     private void setMe(UserResponse response, List<RankingResponse> rankings) {
-        Log.d("setME", "in setme");
         username.setText(response.getName());
         netWorth.setText(Integer.toString(response.getNetWorth()));
 
@@ -140,7 +138,6 @@ public class RankingFragment extends Fragment {
                 rank.setText(Integer.toString(user.getRank()));
             }
         }
-        // TODO: set rank
     }
 
     private void getMe(List<RankingResponse> rankings) {
