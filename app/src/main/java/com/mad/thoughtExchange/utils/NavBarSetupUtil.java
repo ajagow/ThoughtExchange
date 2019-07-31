@@ -140,10 +140,10 @@ public class NavBarSetupUtil {
                 fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();
 
                 if (swipeLeft) {
-                    moveLine(navLine, 500f, 0f);
+                    moveLine(navLine, 550f, 0f);
                 }
                 else {
-                    moveLine(navLine, 0f, 500f);
+                    moveLine(navLine, 0f, 550f);
                 }
             }
         });
