@@ -66,7 +66,7 @@
                 style="@style/NewPostInput"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_alignStart="@+id/newpost_content"
+                android:inputType="text"
                 android:gravity="top"
                 android:maxLength="100" />
 

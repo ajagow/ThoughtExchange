@@ -70,6 +70,9 @@ public class NewContentFragment extends Fragment {
         textCounter = view.findViewById(R.id.text_counter);
         submitBtn = view.findViewById(R.id.newpost_submit);
 
+        newPostContent.setHorizontallyScrolling(false);
+        newPostContent.setMaxLines(Integer.MAX_VALUE);
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,13 +90,15 @@ public class NewContentFragment extends Fragment {
 
         String thought = newPostContent.getText().toString();
         String initInvestmentVal = initialInvestment.getText().toString(); //// need to check if input is integer
-        int initInvestment = 1;
+        int initInvestment;
 
         // check if initial investment value is an positive integer
         try {
             initInvestment = Integer.parseInt(initInvestmentVal);
-
-            if (initInvestment <= 0) {
+            if (thought.equals("")) {
+                Toast.makeText(getActivity(), "Please enter in a valid thought", Toast.LENGTH_SHORT).show();
+            }
+            else if (initInvestment <= 0) {
                 Toast.makeText(getActivity(), "Enter an amount greater than 0", Toast.LENGTH_SHORT).show();
             } else if (!userHasEnoughMoneyToInvest(initInvestment)) {
                 Toast.makeText(getActivity(), "You don't have enough coins. Enter a lower amount", Toast.LENGTH_SHORT).show();
