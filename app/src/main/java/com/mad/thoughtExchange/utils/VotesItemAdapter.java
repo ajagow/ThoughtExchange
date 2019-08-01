@@ -80,16 +80,9 @@ public class VotesItemAdapter extends BaseAdapter {
 
     private void setVoteValueImage(ViewHolder viewHolder, boolean is_like) {
         if(is_like){
-            //viewHolder.voteValue.setImageResource(R.drawable.like_button_clicked);
-//            viewHolder.voteValue.setBackground(ContextCompat.getDrawable(context, R.drawable.voting_background_liked));
-//            viewHolder.voteValue.setPadding(30, 25, 30, 25);
             viewHolder.voteValueText.setBackground(ContextCompat.getDrawable(context, R.drawable.tag_background_green));
             viewHolder.voteValueText.setText("LIKED");
         } else {
-//            viewHolder.voteValue.setImageResource(R.drawable.dislike_button_clicked);
-//            viewHolder.voteValue.setBackground(ContextCompat.getDrawable(context, R.drawable.voting_background_disliked));
-//            viewHolder.voteValue.setPadding(30, 25, 30, 25);
-
             viewHolder.voteValueText.setBackground(ContextCompat.getDrawable(context, R.drawable.tag_background_red));
             viewHolder.voteValueText.setText("DISLIKED");
         }

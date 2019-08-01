@@ -98,6 +98,7 @@ public class NewContentFragment extends Fragment {
             } else if (!userHasEnoughMoneyToInvest(initInvestment)) {
                 Toast.makeText(getActivity(), "You don't have enough coins. Enter a lower amount", Toast.LENGTH_SHORT).show();
             } else {
+                onSuccessfulSubmit(initInvestment);
                 sendNewPost(thought, initInvestment);
             }
         } catch (NumberFormatException e) {
@@ -118,7 +119,6 @@ public class NewContentFragment extends Fragment {
             @Override
             public void onResponse(ThoughtResponse response) {
                 Log.d("response", "thoughtResponse");
-                onSuccessfulSubmit(response, initInvestment);
             }
         };
 
@@ -161,7 +161,7 @@ public class NewContentFragment extends Fragment {
         newPostContent.addTextChangedListener(mTextEditorWatcher);
     }
 
-    private void onSuccessfulSubmit(ThoughtResponse thoughtResponse, int initInvestment) {
+    private void onSuccessfulSubmit(int initInvestment) {
         clearValues();
 
         int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);

@@ -37,14 +37,9 @@ import java.util.Map;
 public class UserSettings extends DialogFragment {
     private static final String USER_NAME = "name";
     private static final String USER_EMAIL = "email";
-    private static final String USER_RANK = "rank";
-    private static final String USER_WORTH = "worth";
 
     private String nameVal;
     private String emailVal;
-    private int rankVal;
-    private int worthVal;
-
     private static String USERS_PATH = "api/v1/users/me";
 
     public UserSettings() {
@@ -77,8 +72,6 @@ public class UserSettings extends DialogFragment {
         if (getArguments() != null) {
             nameVal = getArguments().getString(USER_NAME);
             emailVal = getArguments().getString(USER_EMAIL);
-            rankVal = getArguments().getInt(USER_RANK);
-            worthVal = getArguments().getInt(USER_WORTH);
         }
     }
 
@@ -91,7 +84,6 @@ public class UserSettings extends DialogFragment {
 
         final TextView uName = view.findViewById(R.id.user_popup_name);
         final TextView uEmail = view.findViewById(R.id.user_popup_email);
-        final TextView uRank = view.findViewById(R.id.user_popup_rank);
         final TextView uWorth = headerView.findViewById(R.id.worth);
         Button logoutButton = view.findViewById(R.id.logout);
 
@@ -108,15 +100,9 @@ public class UserSettings extends DialogFragment {
             public void onResponse(UserResponse response) {
                 nameVal = response.getName();
                 emailVal = response.getEmail();
-                //TODO: Update this number from database
-                rankVal = 3;
-                worthVal = response.getNetWorth();
-//                Log.d("WORTHVAL", String.valueOf(worthVal));
 
                 uName.setText(nameVal);
                 uEmail.setText(emailVal);
-                uRank.setText(String.valueOf(rankVal));
-//                uWorth.setText(String.valueOf(worthVal));
 
             }
         };

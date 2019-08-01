@@ -30,26 +30,6 @@
             android:layout_marginTop="20dp"
             android:text="" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/Base.CardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="You are rank: " />
-
-            <TextView
-                android:id="@+id/user_popup_rank"
-                style="@style/Base.CardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="" />
-        </LinearLayout>
-
         <Button
             android:id="@+id/logout"
             style="@style/BaseButton"

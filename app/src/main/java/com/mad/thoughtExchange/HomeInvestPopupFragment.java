@@ -142,6 +142,19 @@ public class HomeInvestPopupFragment extends DialogFragment {
                 } else if (investmentAmountVal > uWorth) {
                     Toast.makeText(getActivity(), "You don\'t have enough coins", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    // todo: terrible solution
+                    HomeInvestPopupFragment.this.dismiss();
+                    Fragment fragment = getFragmentManager().findFragmentByTag("homeInvestFragment");
+                    getFragmentManager().beginTransaction().hide(fragment).show(fragment).commit();
+
+                    // todo: also probably a bad solution
+                    int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
+                    int newWorth = networth - investmentAmountVal;
+                    SharedPreferencesUtil.saveToSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth, newWorth);
+                    TextView uWorthTextView = getActivity().findViewById(R.id.worth);
+                    uWorthTextView.setText(String.valueOf(newWorth));
+
                     sendInvestmentRequest(investmentAmountVal, idVal);
                 }
             }
@@ -168,18 +181,6 @@ public class HomeInvestPopupFragment extends DialogFragment {
             @Override
             public void onResponse(NewInvestmentResponse response) {
                 Log.d("response", "thoughtResponse");
-
-                // todo: terrible solution
-                HomeInvestPopupFragment.this.dismiss();
-                Fragment fragment = getFragmentManager().findFragmentByTag("homeInvestFragment");
-                getFragmentManager().beginTransaction().hide(fragment).show(fragment).commit();
-
-                // todo: also probably a bad solution
-                int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
-                int newWorth = networth - initInvestment;
-                SharedPreferencesUtil.saveToSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth, newWorth);
-                TextView uWorth = getActivity().findViewById(R.id.worth);
-                uWorth.setText(String.valueOf(newWorth));
 
             }
         };
