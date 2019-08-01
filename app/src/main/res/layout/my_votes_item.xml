@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/homefeed_invest_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/voteAdapterContainer"
-    android:orientation="vertical">
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp"
+    android:id="@+id/voteAdapterContainer">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/votes_date_posted"
         style="@style/card_eyebrow"
@@ -19,16 +24,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="0dp"
         android:text="Ariel doesn't know what a fork is for, yet her dad wields a trident" />
 
+    </LinearLayout>
     <TextView
         android:id="@+id/votes_text_value"
+        android:background="@drawable/tag_background_green"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textSize="10sp"
         style="@style/BaseSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:baselineAlignBottom="true"
-        android:text="liked" />
+        android:layout_alignParentRight="true"
+        android:text="LIKED" />
 
 
-</LinearLayout>
+</RelativeLayout>

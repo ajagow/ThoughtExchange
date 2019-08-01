@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -70,7 +72,7 @@ public class VotesItemAdapter extends BaseAdapter {
         }
 
         viewHolder.content.setText(item.getContents());
-        viewHolder.postedAt.setText(closingIn);
+        viewHolder.postedAt.setText(utils.getPostedDate(item.getCreatedAt()));
         setVoteValueImage(viewHolder, voteValue);
 
         return view;
@@ -79,11 +81,17 @@ public class VotesItemAdapter extends BaseAdapter {
     private void setVoteValueImage(ViewHolder viewHolder, boolean is_like) {
         if(is_like){
             //viewHolder.voteValue.setImageResource(R.drawable.like_button_clicked);
-            viewHolder.voteValue.setBackground(ContextCompat.getDrawable(context, R.drawable.voting_background_liked));
-            viewHolder.voteValueText.setText("liked");
+//            viewHolder.voteValue.setBackground(ContextCompat.getDrawable(context, R.drawable.voting_background_liked));
+//            viewHolder.voteValue.setPadding(30, 25, 30, 25);
+            viewHolder.voteValueText.setBackground(ContextCompat.getDrawable(context, R.drawable.tag_background_green));
+            viewHolder.voteValueText.setText("LIKED");
         } else {
 //            viewHolder.voteValue.setImageResource(R.drawable.dislike_button_clicked);
-            viewHolder.voteValueText.setText("disliked");
+//            viewHolder.voteValue.setBackground(ContextCompat.getDrawable(context, R.drawable.voting_background_disliked));
+//            viewHolder.voteValue.setPadding(30, 25, 30, 25);
+
+            viewHolder.voteValueText.setBackground(ContextCompat.getDrawable(context, R.drawable.tag_background_red));
+            viewHolder.voteValueText.setText("DISLIKED");
         }
     }
 
@@ -102,7 +110,7 @@ public class VotesItemAdapter extends BaseAdapter {
         int id;
         TextView content;
         TextView postedAt;
-        ImageView voteValue;
+        RelativeLayout voteValue;
         TextView voteValueText;
     }
 }
