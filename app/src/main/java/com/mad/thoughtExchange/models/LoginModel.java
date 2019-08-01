@@ -2,6 +2,9 @@ package com.mad.thoughtExchange.models;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Model to represent Login POST API request
+ */
 public class LoginModel {
 
     @SerializedName("email")

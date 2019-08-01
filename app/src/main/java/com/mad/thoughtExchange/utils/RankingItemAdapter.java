@@ -52,10 +52,7 @@ public class RankingItemAdapter extends BaseAdapter {
         final RankingResponse item = rankingResponses.get(i);
 
         if (view == null) {
-            Log.d("votes, getView", "view == null");
             view = View.inflate(context, R.layout.ranking_item, null);
-            Log.d("VIEWLOG", "new view created");
-
             viewHolder = bindNewViewHolder(view);
 
             // link view holder to my view
@@ -65,7 +62,6 @@ public class RankingItemAdapter extends BaseAdapter {
             // If view already exists then restore view holder and I can access Image and Text View
             viewHolder = (ViewHolder) view.getTag();
         }
-
         setItemToViewHolder(item);
 
         return view;

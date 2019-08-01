@@ -71,29 +71,13 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
         String myInitialInvestment = item.getMyInitialInvestment() + "";
         String earnings = item.getEarnings() + "";
 
-
-
-
-
         if (view == null) {
             view = View.inflate(context, R.layout.fragment_wallet_my_investments_item, null);
             Log.d("VIEWLOG", "new view created");
 
 
             // create an object of view holder --> get hold of child view references
-            viewHolder = new ViewHolder();
-
-            viewHolder.numberOfInvestors = view.findViewById(R.id.my_investments_num_investors);
-            viewHolder.content = view.findViewById(R.id.my_investments_content);
-            viewHolder.investmentWorth = view.findViewById(R.id.my_investments_total_worth);
-            viewHolder.endsAt = view.findViewById(R.id.my_investments_ended_at);
-            viewHolder.id = item.getId();
-            viewHolder.indicator = view.findViewById(R.id.my_investments_closed_indicator);
-            viewHolder.earnings = view.findViewById(R.id.my_investments_earnings);
-            viewHolder.initialInvestment = view.findViewById(R.id.my_investments_my_invested);
-
-            viewHolder.earningsView = view.findViewById(R.id.my_investments_earning_box);
-            viewHolder.gainOrLost = view.findViewById(R.id.my_investments_gain_lost);
+            setNewViewHolder(view, item);
 
             if (!utils.isFinishedOnMarket(item.getCreatedAt())) {
                 TextView  indicator = view.findViewById(R.id.my_investments_closed_indicator);
@@ -101,29 +85,21 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
 
                 LinearLayout earningsView = view.findViewById(R.id.my_investments_earning_box);
                 earningsView.setVisibility(View.INVISIBLE);
-
-
             }
 
             if (item.getEarnings() < 0) {
                 TextView gainOrLostView = view.findViewById(R.id.my_investments_gain_lost);
                 gainOrLostView.setText("You lost: ");
-
             }
-
 
             // link view holder to my view
             view.setTag(viewHolder);
         } else {
             // If view already exists then restore view holder and I can access Image and Text View
             viewHolder = (ViewHolder) view.getTag();
-
         }
 
-
-
         viewHolder.numberOfInvestors.setText(numInvestors);
-
         viewHolder.endsAt.setText(closingIn);
         viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
@@ -135,7 +111,6 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
             viewHolder.earnings.setVisibility(View.VISIBLE);
             viewHolder.earningsView.setVisibility(View.VISIBLE);
             viewHolder.gainOrLost.setVisibility(View.VISIBLE);
-
         }
 
         if (!utils.isFinishedOnMarket(item.getCreatedAt())) {
@@ -143,17 +118,27 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
             viewHolder.earnings.setVisibility(View.INVISIBLE);
             viewHolder.earningsView.setVisibility(View.INVISIBLE);
             viewHolder.gainOrLost.setVisibility(View.INVISIBLE);
-
         }
 
         if (item.getEarnings() < 0) {
             viewHolder.gainOrLost.setText("You lost: ");
-
         }
 
-
-
         return view;
+    }
+
+    private void setNewViewHolder(View view, MyInvestmentsResponse item) {
+        viewHolder = new ViewHolder();
+        viewHolder.numberOfInvestors = view.findViewById(R.id.my_investments_num_investors);
+        viewHolder.content = view.findViewById(R.id.my_investments_content);
+        viewHolder.investmentWorth = view.findViewById(R.id.my_investments_total_worth);
+        viewHolder.endsAt = view.findViewById(R.id.my_investments_ended_at);
+        viewHolder.id = item.getId();
+        viewHolder.indicator = view.findViewById(R.id.my_investments_closed_indicator);
+        viewHolder.earnings = view.findViewById(R.id.my_investments_earnings);
+        viewHolder.initialInvestment = view.findViewById(R.id.my_investments_my_invested);
+        viewHolder.earningsView = view.findViewById(R.id.my_investments_earning_box);
+        viewHolder.gainOrLost = view.findViewById(R.id.my_investments_gain_lost);
     }
 
     // class to hold my child view

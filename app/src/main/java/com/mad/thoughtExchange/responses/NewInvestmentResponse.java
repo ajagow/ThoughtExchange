@@ -2,6 +2,10 @@ package com.mad.thoughtExchange.responses;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Response to new investment API request
+ */
+
 public class NewInvestmentResponse {
     @SerializedName("id")
     private int id;

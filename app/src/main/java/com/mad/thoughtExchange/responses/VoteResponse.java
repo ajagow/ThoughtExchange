@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+/**
+ * Response to vote API request
+ */
 public class VoteResponse {
 
     public int getId() {

@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 
+/**
+ * Model to represent new thought POST API request
+ */
 public class ThoughtModel {
 
     @SerializedName("initial_worth")
