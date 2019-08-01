@@ -69,48 +69,39 @@ public class WalletMyIdeasItemAdapter extends BaseAdapter {
 
         if (view == null) {
             view = View.inflate(context, R.layout.fragment_wallet_my_ideas_item, null);
-            Log.d("VIEWLOG", "new view created");
 
-
-            // create an object of view holder --> get hold of child view references
-            viewHolder = new ViewHolder();
-
-            viewHolder.numberOfInvestors = view.findViewById(R.id.my_ideas_investors);
-            viewHolder.content = view.findViewById(R.id.my_ideas_content);
-            viewHolder.investmentWorth = view.findViewById(R.id.my_ideas_value);
-            viewHolder.endsAt = view.findViewById(R.id.my_ideas_date_posted);
+            setNewViewHolder(view);
             viewHolder.id = item.getId();
-
 
             // link view holder to my view
             view.setTag(viewHolder);
         } else {
-            // If view already exists then restore view holder and I can access Image and Text View
             viewHolder = (ViewHolder) view.getTag();
-
         }
 
-
-
+        // set values to viewholder
         viewHolder.numberOfInvestors.setText(numInvestors);
-
         viewHolder.endsAt.setText(closingIn);
         viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
 
-
-
         return view;
     }
 
-    // class to hold my child view
+    private void setNewViewHolder(View view) {
+        // create an object of view holder --> get hold of child view references
+        viewHolder = new ViewHolder();
+        viewHolder.numberOfInvestors = view.findViewById(R.id.my_ideas_investors);
+        viewHolder.content = view.findViewById(R.id.my_ideas_content);
+        viewHolder.investmentWorth = view.findViewById(R.id.my_ideas_value);
+        viewHolder.endsAt = view.findViewById(R.id.my_ideas_date_posted);
+    }
+
     static class ViewHolder {
         TextView numberOfInvestors;
         TextView content;
         TextView endsAt;
         TextView investmentWorth;
         int id;
-
     }
-
 }

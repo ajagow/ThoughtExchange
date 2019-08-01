@@ -2,6 +2,10 @@ package com.mad.thoughtExchange.models;
 
 import com.google.gson.annotations.SerializedName;
 
+
+/**
+ * Model to represent like POST API request
+ */
 public class LikesModel {
 
     public int getPostId() {

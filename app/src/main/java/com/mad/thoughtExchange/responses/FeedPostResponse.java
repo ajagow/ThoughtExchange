@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+
+/**
+ * Response to home feed API request
+ */
 public class FeedPostResponse {
     @SerializedName("contents")
     private String contents;

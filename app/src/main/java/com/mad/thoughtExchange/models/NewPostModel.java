@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-
+/**
+ * Model to represent new thought POST API request
+ */
 public class NewPostModel {
 
     @SerializedName("initial_worth")
@@ -37,6 +39,4 @@ public class NewPostModel {
     public void setInitialWorth(int initialWorth) {
         this.initialWorth = initialWorth;
     }
-
-
 }

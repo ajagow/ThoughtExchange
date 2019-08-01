@@ -32,7 +32,8 @@ import java.util.Map;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    //final Fragment homeFeedFragment = new HomeFeedFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+
     final Fragment homeFeedFragment = new HomeFeedSwipeFragment();
     final Fragment newContentFragment = new NewContentFragment();
     final Fragment homeInvestFragment = new HomeInvestFragment();
@@ -41,15 +42,11 @@ public class DashboardActivity extends AppCompatActivity {
     final Fragment rankingFragment = new RankingFragment();
     final Fragment walletMyInvestmentsFragment = new WalletMyInvestmentsFragment();
 
-
-    final FragmentManager fm = getSupportFragmentManager();
-
     Button tab1;
     Button tab2;
-    ImageView logout;
+    //ImageView logout;
     LinearLayout userDetail;
     View navLine;
-
 
     private int worthVal;
     private TextView uWorth;
@@ -62,40 +59,21 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-        tab1 = findViewById(R.id.tab_feed);
-        tab2 = findViewById(R.id.tab_invest);
-//        logout = findViewById(R.id.logout);
-        navLine = findViewById(R.id.navbar_line);
+        setViews();
         RelativeLayout tabHeader = findViewById(R.id.tab_header_and_line);
+
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
-
-        // uncomment only if starting app from dashboard activity
-//        String token1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjkyNTIzNDYsImlhdCI6MTU2NDA2ODM0Niwic3ViIjoxfQ.hF3_Iyq9wxiA5kvpZkiuZCzzhCzld0keORhvtN7yNSM";
-        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
-//        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token1);
-        //SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 5000);
-
-        fm.beginTransaction().add(R.id.main_container, newContentFragment, "newContentFragment").hide(newContentFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, homeInvestFragment, "homeInvestFragment").hide(homeInvestFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, historyFragment, "historyFragment").hide(historyFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, rankingFragment, "rankingFragment").hide(rankingFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, walletMyIdeasFragment, "walletMyIdeasFragment").hide(walletMyIdeasFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, walletMyInvestmentsFragment, "walletMyInvestmentsFragment").hide(walletMyInvestmentsFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, homeFeedFragment, "homeFeedFragment").commit();
-
-        tab1 = findViewById(R.id.tab_feed);
-        tab2 = findViewById(R.id.tab_invest);
-
-//        logout = findViewById(R.id.logout);
-        userDetail = findViewById(R.id.userDetailButton);
-
-        navLine = findViewById(R.id.navbar_line);
-
         spaceNavigationView.setCentreButtonIcon(R.drawable.plus_icon);
         spaceNavigationView.setInActiveCentreButtonIconColor(ContextCompat.getColor(this,R.color.white));
 
+        // uncomment only if starting app from dashboard activity
+//        String token1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjkyNTIzNDYsImlhdCI6MTU2NDA2ODM0Niwic3ViIjoxfQ.hF3_Iyq9wxiA5kvpZkiuZCzzhCzld0keORhvtN7yNSM";
 //        int netWorth = SharedPreferencesUtil.getIntFromSharedPreferences(getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.networth);
 //        coins.setText(Integer.toString(netWorth));
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
+
+        setFragmentManager();
 
         NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
         navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
@@ -116,8 +94,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });*/
 
-        uWorth = findViewById(R.id.worth);
-
         Response.Listener<UserResponse> responseListener = new Response.Listener<UserResponse>() {
             @Override
             public void onResponse(UserResponse response) {
@@ -125,7 +101,6 @@ public class DashboardActivity extends AppCompatActivity {
                 Log.d("WORTHVAL", String.valueOf(worthVal));
                 SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, worthVal);
                 uWorth.setText(String.valueOf(SharedPreferencesUtil.getIntFromSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth)));
-
             }
         };
 
@@ -139,7 +114,6 @@ public class DashboardActivity extends AppCompatActivity {
         Map<String, String> headers = new HashMap<>();
         String token = SharedPreferencesUtil.getStringFromSharedPreferences(getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         headers.put("api-token", token);
-        headers.put("Content-Type", "application/json");
 
         GsonRequest<String, UserResponse> gsonRequest = new GsonRequest<String, UserResponse>(
                 MainActivity.URL + USERS_PATH,
@@ -149,9 +123,28 @@ public class DashboardActivity extends AppCompatActivity {
                 errorListener,
                 headers
         );
-
         gsonRequest.volley();
+    }
 
+    private void setFragmentManager() {
+        fm.beginTransaction().add(R.id.main_container, newContentFragment, "newContentFragment").hide(newContentFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, homeInvestFragment, "homeInvestFragment").hide(homeInvestFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, historyFragment, "historyFragment").hide(historyFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, rankingFragment, "rankingFragment").hide(rankingFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, walletMyIdeasFragment, "walletMyIdeasFragment").hide(walletMyIdeasFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, walletMyInvestmentsFragment, "walletMyInvestmentsFragment").hide(walletMyInvestmentsFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, homeFeedFragment, "homeFeedFragment").commit();
+    }
 
+    private void setViews() {
+        tab1 = findViewById(R.id.tab_feed);
+        tab2 = findViewById(R.id.tab_invest);
+//        logout = findViewById(R.id.logout);
+        navLine = findViewById(R.id.navbar_line);
+        tab1 = findViewById(R.id.tab_feed);
+        tab2 = findViewById(R.id.tab_invest);
+        userDetail = findViewById(R.id.userDetailButton);
+        navLine = findViewById(R.id.navbar_line);
+        uWorth = findViewById(R.id.worth);
     }
 }

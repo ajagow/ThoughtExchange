@@ -2,6 +2,10 @@ package com.mad.thoughtExchange.models;
 
 import com.google.gson.annotations.SerializedName;
 
+
+/**
+ * Model to represent sign up POST API request
+ */
 public class SignupModel {
 
     @SerializedName("name")

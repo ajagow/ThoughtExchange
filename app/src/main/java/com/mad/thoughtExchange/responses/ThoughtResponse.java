@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+
+/**
+ * Response to thought retrieval API request
+ */
 public class ThoughtResponse {
 
     @SerializedName("id")
