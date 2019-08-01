@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import java.util.Map;
 public class WalletMyIdeasFragment extends Fragment {
 
     private ListView listView;
+    private LinearLayout noHistory;
     private static String GET_MY_POSTS = "api/v1/thoughts/me";
 
 
@@ -51,6 +53,7 @@ public class WalletMyIdeasFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wallet_my_ideas, container, false);
 
         listView = view.findViewById(R.id.my_ideas_list_view);
+        noHistory = view.findViewById(R.id.my_ideas_no_history);
 
         return view;
     }
@@ -58,10 +61,17 @@ public class WalletMyIdeasFragment extends Fragment {
     private void getInvestments() {
         //vote meaning like/dislike
 
+        // before fetch data
+        noHistory.setVisibility(View.INVISIBLE);
+
         Response.Listener<List<ThoughtResponse>> resonseListener = new Response.Listener<List<ThoughtResponse>>() {
             @Override
             public void onResponse(List<ThoughtResponse> response) {
                 Log.d("getInvestments", "total response: "+response.toString());
+
+                if (response.size() == 0) {
+                    noHistory.setVisibility(View.VISIBLE);
+                }
 
                 for (ThoughtResponse response1 : response) {
                     Log.d("getInvestments", response1.getId() + "");
@@ -73,7 +83,6 @@ public class WalletMyIdeasFragment extends Fragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
                 Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         };
@@ -102,9 +111,6 @@ public class WalletMyIdeasFragment extends Fragment {
             getInvestments();
         }
     }
-
-
-
 
 
 }

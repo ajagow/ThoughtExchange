@@ -46,26 +46,6 @@ public class UserSettings extends DialogFragment {
         // Required empty public constructor
     }
 
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @return A new instance of fragment UserSettings.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static UserSettings newInstance() {
-////        String nameVal, String emailVal, int rankVal
-//
-//        UserSettings fragment = new UserSettings();
-//        Bundle args = new Bundle();
-//
-//        args.putString(USER_NAME, "mel");
-//        args.putString(USER_EMAIL, "maaaa");
-//        args.putInt(USER_RANK, 3);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

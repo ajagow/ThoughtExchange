@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +106,10 @@ public class HomeInvestPopupFragment extends DialogFragment {
         final EditText investmentAmount = view.findViewById(R.id.popup_investment_amount);
         Button investBtn = view.findViewById(R.id.popup_invest_btn);
         Button closeBtn = view.findViewById(R.id.popup_close_btn);
+
+        // enable scrolling for content
+        content.setMovementMethod(new ScrollingMovementMethod());
+
 
 
         numberOfInvestors.setText(numInvestorsVal);

@@ -1,6 +1,7 @@
 package com.mad.thoughtExchange;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.SignupModel;
 import com.mad.thoughtExchange.responses.SignupResponse;
+import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import org.json.JSONObject;
 
@@ -27,7 +29,6 @@ import java.util.HashMap;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private static String URL = "https://blog-api-tutorial1.herokuapp.com/";
     private static String USERS_PATH = "api/v1/users/";
 
     private TextView name;
@@ -77,9 +78,9 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignup(View view) {
-        SignupResponse response = new SignupResponse();
-        response.setToken("lkdsjf");
-        onSuccessfulSignup(response);
+//        SignupResponse response = new SignupResponse();
+//        response.setToken("lkdsjf");
+//        onSuccessfulSignup(response);
 
         String nameVal = name.getText().toString();
         String emailVal = email.getText().toString();
@@ -106,7 +107,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         };
 
-        GsonRequest<SignupModel, SignupResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, URL + USERS_PATH, signupModel, this,
+        GsonRequest<SignupModel, SignupResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + USERS_PATH, signupModel, this,
                 SignupModel.class, SignupResponse.class, new HashMap<String, String>(), responseListener, errorListener);
 
         gsonRequest.volley();
@@ -143,6 +144,15 @@ public class SignupActivity extends AppCompatActivity {
     private void onSuccessfulSignup(SignupResponse signupResponse) {
         Intent explicitIntent = new Intent(SignupActivity.this, DashboardActivity.class);
         explicitIntent.putExtra("jwtToken", signupResponse.getToken());
+
+        String token = signupResponse.getToken();
+        Log.d("loginResponseToken",token);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.token, token);
+        Log.d("sharedPreferences","saved token to shared preferences");
+
+        SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 6000);
         startActivity(explicitIntent);
     }
 }
