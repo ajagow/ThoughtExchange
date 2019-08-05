@@ -14,11 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
-import com.mad.thoughtExchange.HomeFeedFragment;
-import com.mad.thoughtExchange.HomeInvestFragment;
 import com.mad.thoughtExchange.R;
-
-import java.util.List;
 
 public class NavBarSetupUtil {
 

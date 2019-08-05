@@ -5,8 +5,7 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/home"
-        android:title="home"
-        android:actionLayout="@layout/menu_new_post_item"/>
+        android:title="home"/>
 
     <item
         android:id="@+id/navigation_notifications"
@@ -17,19 +16,17 @@
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/home"
         android:title="dashboard" />
 
     <item
         android:id="@+id/navigation_history"
         android:icon="@drawable/history"
-        android:title="history"
-        android:actionLayout="@layout/menu_new_post_item"/>
+        android:title="history"/>
 
     <item
         android:id="@+id/navigation_ranking"
         android:icon="@drawable/ranking"
-        android:title="ranking"
-        android:actionLayout="@layout/menu_new_post_item"/>
+        android:title="ranking"/>
 
 </menu>
