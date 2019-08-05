@@ -151,7 +151,6 @@ public class HomeInvestPopupFragment extends DialogFragment {
                     // todo: terrible solution
                     HomeInvestPopupFragment.this.dismiss();
                     Fragment fragment = getFragmentManager().findFragmentByTag("homeInvestFragment");
-                    getFragmentManager().beginTransaction().hide(fragment).show(fragment).commit();
 
                     // todo: also probably a bad solution
                     int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
@@ -160,7 +159,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
                     TextView uWorthTextView = getActivity().findViewById(R.id.worth);
                     uWorthTextView.setText(String.valueOf(newWorth));
 
-                    sendInvestmentRequest(investmentAmountVal, idVal);
+                    sendInvestmentRequest(investmentAmountVal, idVal, fragment);
                 }
             }
         });
@@ -175,7 +174,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
         return view;
     }
 
-    private void sendInvestmentRequest(int initInvestment, int postId) {
+    private void sendInvestmentRequest(int initInvestment, int postId, Fragment fragment) {
         InvestmentModel investmentModel = new InvestmentModel();
 
         // set values for POST request
@@ -186,6 +185,9 @@ public class HomeInvestPopupFragment extends DialogFragment {
             @Override
             public void onResponse(NewInvestmentResponse response) {
                 Log.d("response", "thoughtResponse");
+
+                HomeInvestFragment homeInvestFragment = (HomeInvestFragment) fragment;
+                homeInvestFragment.getInvestments();
 
             }
         };
