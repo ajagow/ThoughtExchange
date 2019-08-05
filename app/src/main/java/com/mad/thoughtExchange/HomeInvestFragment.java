@@ -44,6 +44,8 @@ public class HomeInvestFragment extends Fragment {
     private ListView listView;
     private LinearLayout noNewInvestments;
 
+    private  HomeInvestItemAdapter adapter;
+
     public HomeInvestFragment() {
         // Required empty public constructor
     }
@@ -70,7 +72,7 @@ public class HomeInvestFragment extends Fragment {
         return view;
     }
 
-    private void getInvestments() {
+    public void getInvestments() {
         //vote meaning like/dislike
 
         Response.Listener<List<ThoughtResponse>> resonseListener = new Response.Listener<List<ThoughtResponse>>() {
@@ -80,6 +82,9 @@ public class HomeInvestFragment extends Fragment {
 
                 if (response.size() == 0) {
                     noNewInvestments.setVisibility(View.VISIBLE);
+                    if (adapter != null) {
+                        listView.setAdapter(null);
+                    }
                 }
 
                 else {
@@ -109,16 +114,17 @@ public class HomeInvestFragment extends Fragment {
     }
 
     private void setInvestments(List<ThoughtResponse> responses) {
-        HomeInvestItemAdapter adapter = new HomeInvestItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
+        adapter = new HomeInvestItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
 
         listView.setAdapter(adapter);
-        //TODO: be able to invest from investment items
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
             getInvestments();
+            
         }
     }
 }
