@@ -42,6 +42,9 @@ public class UserSettings extends DialogFragment {
     private String emailVal;
     private static String USERS_PATH = "api/v1/users/me";
 
+    private Button logoutButton;
+    private Button closeButton;
+
     public UserSettings() {
         // Required empty public constructor
     }
@@ -65,13 +68,21 @@ public class UserSettings extends DialogFragment {
         final TextView uName = view.findViewById(R.id.user_popup_name);
         final TextView uEmail = view.findViewById(R.id.user_popup_email);
         final TextView uWorth = headerView.findViewById(R.id.worth);
-        Button logoutButton = view.findViewById(R.id.logout);
+        logoutButton = view.findViewById(R.id.logout);
+        closeButton = view.findViewById(R.id.settingsClose);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent explicitIntent = new Intent(getActivity(), MainActivity.class);
                 startActivity(explicitIntent);
+            }
+        });
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
             }
         });
 

@@ -1,47 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="75dp"
     android:id="@+id/headerContainer"
     style="@style/Header"
-    android:background="@color/white"
-    android:layout_gravity="top">
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:layout_gravity="top"
+    android:background="@color/white">
 
     <!--<ImageView-->
-        <!--android:layout_width="24dp"-->
-        <!--android:layout_height="24dp"-->
-        <!--android:id="@+id/logout"-->
-        <!--android:src="@drawable/setting_cog"/>-->
+    <!--android:layout_width="24dp"-->
+    <!--android:layout_height="24dp"-->
+    <!--android:id="@+id/logout"-->
+    <!--android:src="@drawable/setting_cog"/>-->
 
     <TextView
         android:id="@+id/logo"
         style="@style/HeaderAppName"
+        android:textSize="22sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="Thought Exchange" />
+        android:text="ThoughtExchange" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:paddingRight="10dp"
-        android:id="@+id/userDetailButton">
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:src="@drawable/user"/>
-
-        <TextView
-            android:id="@+id/worth"
-            style="@style/HeaderCoins"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="5dp"
-            android:text="0" />
+            android:layout_marginRight="10dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/coin"/>
+
+            <TextView
+                android:id="@+id/worth"
+                style="@style/HeaderCoins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/userDetailButton"
+            android:background="@drawable/pill_background_secondary"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_gravity="right">
+
+            <TextView
+                android:id="@+id/headerUserName"
+                style="@style/HeaderCoins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="5dp"
+                android:layout_marginRight="7dp"
+                android:text="Loading..." />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_hamburger" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 </RelativeLayout>

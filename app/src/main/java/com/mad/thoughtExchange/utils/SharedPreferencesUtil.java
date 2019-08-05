@@ -7,6 +7,7 @@ public class SharedPreferencesUtil {
     public static String token = "token_name";
     public static String networth = "networth_of_user";
     public static String myPreferences = "my_preferences";
+    public static String userName = "user_name";
 
     public static void saveToSharedPreferences(SharedPreferences sharedPreferences, String name, String data) {
         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -49,7 +49,9 @@ public class DashboardActivity extends AppCompatActivity {
     View navLine;
 
     private int worthVal;
+    private String userName;
     private TextView uWorth;
+    private TextView uName;
 
     private static String USERS_PATH = "api/v1/users/me";
 
@@ -86,21 +88,19 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        /*logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent explicitIntent = new Intent(DashboardActivity.this, MainActivity.class);
-                startActivity(explicitIntent);
-            }
-        });*/
-
         Response.Listener<UserResponse> responseListener = new Response.Listener<UserResponse>() {
             @Override
             public void onResponse(UserResponse response) {
                 worthVal = response.getNetWorth();
+                userName = response.getName();
+
+                String headerDisplayName = userName.substring(0, 1).toUpperCase() + userName.substring(1);
+
                 Log.d("WORTHVAL", String.valueOf(worthVal));
                 SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, worthVal);
+                SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.userName, userName);
                 uWorth.setText(String.valueOf(SharedPreferencesUtil.getIntFromSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth)));
+                uName.setText(headerDisplayName);
             }
         };
 
@@ -139,12 +139,12 @@ public class DashboardActivity extends AppCompatActivity {
     private void setViews() {
         tab1 = findViewById(R.id.tab_feed);
         tab2 = findViewById(R.id.tab_invest);
-//        logout = findViewById(R.id.logout);
         navLine = findViewById(R.id.navbar_line);
         tab1 = findViewById(R.id.tab_feed);
         tab2 = findViewById(R.id.tab_invest);
         userDetail = findViewById(R.id.userDetailButton);
         navLine = findViewById(R.id.navbar_line);
         uWorth = findViewById(R.id.worth);
+        uName = findViewById(R.id.headerUserName);
     }
 }

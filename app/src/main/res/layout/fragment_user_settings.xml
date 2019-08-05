@@ -20,7 +20,7 @@
             style="@style/BaseH2Dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="Loading..." />
 
         <TextView
             android:id="@+id/user_popup_email"
@@ -36,6 +36,14 @@
             android:layout_width="match_parent"
             android:layout_marginTop="40dp"
             android:text="Sign out" />
+
+        <Button
+            android:id="@+id/settingsClose"
+            android:layout_width="match_parent"
+            style="@style/BaseButtonLink"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/closeRed"
+            android:text="Close"/>
 
     </LinearLayout>
 
