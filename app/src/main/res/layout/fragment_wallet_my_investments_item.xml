@@ -42,6 +42,73 @@
                     android:text="The more important a good night's sleep is, the harder it is to fall asleep." />
 
                 <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/my_investments_earning_box"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+
+
+
+                        <TextView
+                            android:id="@+id/my_investments_gain_lost"
+                            style="@style/HeaderCoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="You gained: " />
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/coin" />
+
+                        <TextView
+                            android:id="@+id/my_investments_earnings"
+                            style="@style/HeaderCoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="24" />
+
+
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        style="@style/CardUserWrapper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center">
+
+                        <TextView
+                            style="@style/HeaderCoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="You invested: " />
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/coin" />
+
+                        <TextView
+                            android:id="@+id/my_investments_my_invested"
+                            style="@style/HeaderCoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="200" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -80,63 +147,43 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1,276" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/CardUserWrapper"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center">
-
-                        <TextView
-                            style="@style/HeaderCoins"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="You invested: " />
 
                         <ImageView
+                            style="card_icon_coin"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:src="@drawable/coin" />
+                            android:layout_marginLeft="12dp"
+                            android:baselineAlignBottom="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/like_button" />
 
                         <TextView
-                            android:id="@+id/my_investments_my_invested"
-                            style="@style/HeaderCoins"
+                            android:id="@+id/my_investments_num_likes"
+                            style="@style/card_small_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="200" />
+                            android:text="1,276" />
+
+                        <ImageView
+                            style="card_icon_coin"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:baselineAlignBottom="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/dislike_button" />
+
+                        <TextView
+                            android:id="@+id/my_investments_num_dislikes"
+                            style="@style/card_small_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1,276" />
                     </LinearLayout>
+
+
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/my_investments_earning_box"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/my_investments_gain_lost"
-                        style="@style/HeaderCoins"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="You gained: " />
-
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/coin" />
-
-                    <TextView
-                        android:id="@+id/my_investments_earnings"
-                        style="@style/HeaderCoins"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="24" />
-
-
-                </LinearLayout>
 
             </LinearLayout>
 

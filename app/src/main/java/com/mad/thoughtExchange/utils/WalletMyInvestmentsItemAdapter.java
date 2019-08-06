@@ -65,6 +65,9 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
         String numInvestors = item.getNumInvestors() + "";
         String investmentWorth = item.getTotalWorth() + "";
 
+        String numLikes = item.getNumberLikes() + "";
+        String numDislikes = item.getNumDislikes() + "";
+
         //todo: fixe this
         final String closingIn = "Posted on " + utils.getPostedDate(item.getCreatedAt());
 
@@ -106,6 +109,9 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
         viewHolder.earnings.setText(earnings);
         viewHolder.initialInvestment.setText(myInitialInvestment);
 
+        viewHolder.numLikes.setText(numLikes);
+        viewHolder.numDislikes.setText(numDislikes);
+
         if (utils.isFinishedOnMarket(item.getCreatedAt())) {
             viewHolder.indicator.setVisibility(View.VISIBLE);
             viewHolder.earnings.setVisibility(View.VISIBLE);
@@ -139,6 +145,9 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
         viewHolder.initialInvestment = view.findViewById(R.id.my_investments_my_invested);
         viewHolder.earningsView = view.findViewById(R.id.my_investments_earning_box);
         viewHolder.gainOrLost = view.findViewById(R.id.my_investments_gain_lost);
+        viewHolder.numLikes = view.findViewById(R.id.my_investments_num_likes);
+        viewHolder.numDislikes = view.findViewById(R.id.my_investments_num_dislikes);
+
     }
 
     // class to hold my child view
@@ -152,6 +161,8 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
         TextView initialInvestment;
         LinearLayout earningsView;
         TextView gainOrLost;
+        TextView numLikes;
+        TextView numDislikes;
         int id;
 
     }

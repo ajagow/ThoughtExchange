@@ -14,6 +14,12 @@ public class MyInvestmentsResponse extends ThoughtResponse {
     @SerializedName("earnings")
     private int earnings;
 
+    @SerializedName("num_likes")
+    private String numberLikes;
+
+    @SerializedName("num_dislikes")
+    private String numDislikes;
+
 
     public String getMyInitialInvestment() {
         return myInitialInvestment;
@@ -29,5 +35,21 @@ public class MyInvestmentsResponse extends ThoughtResponse {
 
     public void setEarnings(int earnings) {
         this.earnings = earnings;
+    }
+
+    public String getNumberLikes() {
+        return numberLikes;
+    }
+
+    public void setNumberLikes(String numberLikes) {
+        this.numberLikes = numberLikes;
+    }
+
+    public String getNumDislikes() {
+        return numDislikes;
+    }
+
+    public void setNumDislikes(String numDislikes) {
+        this.numDislikes = numDislikes;
     }
 }

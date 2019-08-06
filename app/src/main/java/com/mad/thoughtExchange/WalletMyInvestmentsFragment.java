@@ -25,7 +25,6 @@ import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.MyInvestmentsResponse;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
-import com.mad.thoughtExchange.utils.WalletMyIdeasItemAdapter;
 import com.mad.thoughtExchange.utils.WalletMyInvestmentsItemAdapter;
 
 import java.util.HashMap;
@@ -96,7 +95,6 @@ public class WalletMyInvestmentsFragment extends Fragment {
         String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
-        Log.d("sharedPreferences","retrieved token: "+token);
 
         GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(MainActivity.URL + GET_MY_POSTS, getContext(),
                 MyInvestmentsResponse.class, resonseListener, errorListener, headers);
