@@ -17,6 +17,11 @@ import com.mad.thoughtExchange.responses.ThoughtResponse;
 
 import java.util.List;
 
+/**
+ * Adapter for the ListView under the investment tab in the home fragment.
+ * Each represents an item that a User can potentially invest in.
+ */
+
 public class HomeInvestItemAdapter extends BaseAdapter {
 
     // Arraylist with the data points that are to populated on my items that I'm creating
@@ -100,15 +105,8 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
 
-        viewHolder.investBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                HomeInvestPopupFragment homeInvestPopupFragment = new HomeInvestPopupFragment().newInstance(item.getContents(), closingIn, item.getNumInvestors(), item.getTotalWorth(), item.getId());
-                homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
-            }
-        });
-
+        // when user clicks invest button, open HomeInvestPopupFragment so user can make an
+        // investment
         viewHolder.investBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -2,6 +2,10 @@ package com.mad.thoughtExchange.models;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * This class represents a model object we get from the API.
+ */
+
 public class InvestmentModel {
     @SerializedName("post_id")
     private int postId;

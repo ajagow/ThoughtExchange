@@ -5,6 +5,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * General Utils class for dealing with converting JSON times to Java readable times.
+ */
+
 public class GeneralUtils {
 
     String getCountdown(Date createDate, int countdownHourTime) {
