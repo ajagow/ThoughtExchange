@@ -15,7 +15,7 @@ import com.mad.thoughtExchange.responses.MyInvestmentsResponse;
 
 import java.util.List;
 
-public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
+public class WalletItemAdapter extends BaseAdapter {
 
     // Arraylist with the data points that are to populated on my items that I'm creating
     private List<MyInvestmentsResponse> myInvestmentsResponses;
@@ -32,8 +32,8 @@ public class WalletMyInvestmentsItemAdapter extends BaseAdapter {
     private GeneralUtils utils = new GeneralUtils();
 
 
-    public WalletMyInvestmentsItemAdapter(List<MyInvestmentsResponse> myInvestmentsResponses,
-                                          Context context, FragmentManager fragmentManager) {
+    public WalletItemAdapter(List<MyInvestmentsResponse> myInvestmentsResponses,
+                             Context context, FragmentManager fragmentManager) {
         this.myInvestmentsResponses = myInvestmentsResponses;
         this.context = context;
         this.fragmentManager = fragmentManager;
