@@ -2,8 +2,6 @@ package com.mad.thoughtExchange.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 /**
  * Model to represent new thought POST API request
  */

@@ -6,7 +6,6 @@ import com.android.volley.error.ParseError;
 import com.android.volley.request.JsonRequest;
 import com.android.volley.toolbox.HttpHeaderParser;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;

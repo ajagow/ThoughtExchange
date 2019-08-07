@@ -2,7 +2,6 @@ package com.mad.thoughtExchange.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Response;

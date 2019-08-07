@@ -1,7 +1,6 @@
 package com.mad.thoughtExchange.responses;
 
 import com.google.gson.annotations.SerializedName;
-import com.mad.thoughtExchange.models.ThoughtModel;
 
 /**
  * Response to fetch user's investments API request

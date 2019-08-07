@@ -1,7 +1,6 @@
 package com.mad.thoughtExchange.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,7 +12,6 @@ import androidx.fragment.app.FragmentManager;
 import com.mad.thoughtExchange.HomeInvestPopupFragment;
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
-
 
 import java.util.List;
 

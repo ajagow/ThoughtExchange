@@ -1,9 +1,18 @@
 package com.mad.thoughtExchange;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Response;
 import com.luseen.spacenavigation.SpaceNavigationView;
@@ -13,19 +22,6 @@ import com.mad.thoughtExchange.utils.NavBarSetupUtil;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 import com.mad.thoughtExchange.utils.VolleyUtils;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import java.util.HashMap;
 import java.util.Map;
 
 /**
