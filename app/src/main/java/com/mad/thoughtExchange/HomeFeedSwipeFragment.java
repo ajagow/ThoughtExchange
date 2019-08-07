@@ -21,7 +21,7 @@ import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.models.LikesModel;
 import com.mad.thoughtExchange.responses.FeedPostResponse;
 import com.mad.thoughtExchange.responses.LikeResponse;
-import com.mad.thoughtExchange.utils.HomeFeedSwipeAdapter;
+import com.mad.thoughtExchange.adapters.HomeFeedSwipeAdapter;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 import com.mad.thoughtExchange.utils.VolleyUtils;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -45,7 +45,7 @@ import butterknife.ButterKnife;
 public class HomeFeedSwipeFragment extends Fragment implements CardStackListener {
 
     private static final String LIKES_PATH = MainActivity.URL + "api/v1/likes/";
-    private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/48";
+    private static final String POSTS_PATH = MainActivity.URL + "api/v1/thoughts/marketFeedPost/10/24/48";
 
     private RecyclerView.Adapter adapter;
     private CardStackView cardStackView;
@@ -177,7 +177,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         headers.put("api-token", token);
 
-        GsonRequestArray<String, FeedPostResponse> gsonRequest = new GsonRequestArray<String, FeedPostResponse>(MainActivity.URL + POSTS_PATH, getContext(),
+        GsonRequestArray<String, FeedPostResponse> gsonRequest = new GsonRequestArray<String, FeedPostResponse>(POSTS_PATH, getContext(),
                 FeedPostResponse.class, responseListener, errorListener, headers);
 
         gsonRequest.volley();
@@ -280,6 +280,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         }
     }
 
+    // initialize views
     private void initViews(View view) {
         likeButton = view.findViewById(R.id.like_button);
         dislikeButton = view.findViewById(R.id.dislike_button);

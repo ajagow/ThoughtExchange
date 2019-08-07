@@ -1,4 +1,4 @@
-package com.mad.thoughtExchange.utils;
+package com.mad.thoughtExchange.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,7 +15,7 @@ import com.mad.thoughtExchange.responses.RankingResponse;
 import java.util.List;
 
 /**
- * Adapter for displaying rankings of users.
+ * Adapter for displaying user ranking item
  */
 public class RankingItemAdapter extends BaseAdapter {
 

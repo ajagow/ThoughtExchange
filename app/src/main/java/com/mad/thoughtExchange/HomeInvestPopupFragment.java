@@ -34,7 +34,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class HomeInvestPopupFragment extends DialogFragment {
 
-    private static String INVESTMENT_PATH = "api/v1/investments/";
+    private static String INVESTMENT_PATH = MainActivity.URL + "api/v1/investments/";
     private static String CONTENT = "content";
     private static String EXPIRE_DATE = "expireDate";
     private static String NUM_INVESTORS = "numInvestors";
@@ -205,7 +205,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
         Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
 
-        GsonRequest<InvestmentModel, NewInvestmentResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + INVESTMENT_PATH, investmentModel, getActivity(),
+        GsonRequest<InvestmentModel, NewInvestmentResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, INVESTMENT_PATH, investmentModel, getActivity(),
                 InvestmentModel.class, NewInvestmentResponse.class, headers, responseListener, errorListener);
 
         gsonRequest.volley();

@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".WalletMyIdeasFragment">
 
-
             <LinearLayout
                 style="@style/homefeed_invest_card"
                 android:layout_width="match_parent"
@@ -53,8 +52,6 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center">
 
-
-
                         <TextView
                             android:id="@+id/my_investments_gain_lost"
                             style="@style/HeaderCoins"
@@ -73,13 +70,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="24" />
-
-
-
-
                     </LinearLayout>
-
-
                     <LinearLayout
                         style="@style/CardUserWrapper"
                         android:layout_width="wrap_content"
@@ -180,13 +171,6 @@
                             android:layout_height="wrap_content"
                             android:text="1,276" />
                     </LinearLayout>
-
-
                 </RelativeLayout>
-
-
             </LinearLayout>
-
-
-
 </RelativeLayout>

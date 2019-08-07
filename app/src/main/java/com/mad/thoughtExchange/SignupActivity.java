@@ -25,7 +25,7 @@ import java.util.HashMap;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private static String USERS_PATH = "api/v1/users/";
+    private static String USERS_PATH = MainActivity.URL + "api/v1/users/";
 
     private int passwordRequiredLength;
     private boolean passwordIsValidLength;
@@ -89,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
 
         Response.ErrorListener errorListener = VolleyUtils.logError("SIGNUP");
 
-        GsonRequest<SignupModel, SignupResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + USERS_PATH, signupModel, this,
+        GsonRequest<SignupModel, SignupResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, USERS_PATH, signupModel, this,
                 SignupModel.class, SignupResponse.class, new HashMap<String, String>(), responseListener, errorListener);
 
         gsonRequest.volley();
@@ -139,6 +139,7 @@ public class SignupActivity extends AppCompatActivity {
         startActivity(explicitIntent);
     }
 
+    // initialize views
     private void initViews() {
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);

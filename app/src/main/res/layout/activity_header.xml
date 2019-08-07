@@ -71,9 +71,6 @@
                 android:layout_marginRight="5dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_hamburger" />
-
         </LinearLayout>
-
-
     </LinearLayout>
 </RelativeLayout>

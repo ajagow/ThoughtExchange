@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(explicitIntent);
     }
 
+    // initialize views
     private void initViews() {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);

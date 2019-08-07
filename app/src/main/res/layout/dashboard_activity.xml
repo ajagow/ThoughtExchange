@@ -72,5 +72,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:space_background_color="@color/testBottomLol"
         app:space_item_icon_only_size="@dimen/space_item_icon_only_size" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

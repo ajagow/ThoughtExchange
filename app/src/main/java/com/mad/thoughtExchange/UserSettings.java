@@ -56,8 +56,7 @@ public class UserSettings extends DialogFragment {
         final TextView uName = view.findViewById(R.id.user_popup_name);
         final TextView uEmail = view.findViewById(R.id.user_popup_email);
         final TextView uWorth = headerView.findViewById(R.id.worth);
-        logoutButton = view.findViewById(R.id.logout);
-        closeButton = view.findViewById(R.id.settingsClose);
+        initViews(view);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,5 +102,11 @@ public class UserSettings extends DialogFragment {
         gsonRequest.volley();
 
         return view;
+    }
+
+    // initialize views
+    private void initViews(View view) {
+        logoutButton = view.findViewById(R.id.logout);
+        closeButton = view.findViewById(R.id.settingsClose);
     }
 }

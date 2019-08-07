@@ -4,5 +4,4 @@
     <style name="RankingListItem" parent="BaseSmall">
         <item name="android:layout_marginTop">10dp</item>
     </style>
-
 </resources>

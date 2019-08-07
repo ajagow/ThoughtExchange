@@ -92,7 +92,6 @@ public class OnboardingActivity extends AppIntro {
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
-        Log.d("onboarding", "onSkipPressed");
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
         // Update the shared preferences
@@ -101,14 +100,12 @@ public class OnboardingActivity extends AppIntro {
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
-        Log.d("onboarding", "onDonePressed");
         super.onDonePressed(currentFragment);
         onOnboardingCompletion();
     }
 
     @Override
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
-        Log.d("onboarding", "onSlideChanged");
         super.onSlideChanged(oldFragment, newFragment);
         // Do something when the slide changes.
     }

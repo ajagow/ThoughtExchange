@@ -31,7 +31,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class NewContentFragment extends Fragment {
 
-    private static String USERS_PATH = "api/v1/thoughts/";
+    private static String THOUGHTS_PATH = MainActivity.URL + "api/v1/thoughts/";
 
     private TextView textCounter;
     private EditText newPostContent;
@@ -118,7 +118,7 @@ public class NewContentFragment extends Fragment {
 
         Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
-        GsonRequest<NewPostModel, ThoughtResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + USERS_PATH, thoughtModel, getActivity(),
+        GsonRequest<NewPostModel, ThoughtResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, THOUGHTS_PATH, thoughtModel, getActivity(),
                 NewPostModel.class, ThoughtResponse.class, headers, responseListener, errorListener);
 
         gsonRequest.volley();
@@ -183,6 +183,7 @@ public class NewContentFragment extends Fragment {
         clearValues();
     }
 
+    // initialize views
     private void initViews(View view) {
         newPostContent = view.findViewById(R.id.newpost_content);
         initialInvestment = view.findViewById(R.id.newpost_initial_investment);

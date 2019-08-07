@@ -20,10 +20,10 @@ import com.mad.thoughtExchange.R;
  */
 public class NavBarSetupUtil {
 
-    private static String HOME_ITEM = "HOME";
-    private static String WALLET_ITEM = "WALLET";
-    private static String HISTORY_ITEM = "HISTORY";
-    private static String RANKING_ITEM = "RANKING";
+    private static final String HOME_ITEM = "HOME";
+    private static final String WALLET_ITEM = "WALLET";
+    private static final String HISTORY_ITEM = "HISTORY";
+    private static final String RANKING_ITEM = "RANKING";
 
     public static void setupNavBar(Bundle savedInstanceState,
                             final SpaceNavigationView spaceNavigationView,
@@ -64,43 +64,47 @@ public class NavBarSetupUtil {
         });
     }
 
-
     // When HOME button or WALLET button are clicked in nav bar, change tab names on top
     // and which fragments are visible
     public static void onAnyMenuItemClick(FragmentManager fm,
-                                    String itemName, RelativeLayout tabHeader,
-                                    Button tab1, Button tab2, View nav) {
+        String itemName, RelativeLayout tabHeader,
+        Button tab1, Button tab2, View nav) {
+
         tabHeader.setVisibility(View.VISIBLE);
         Fragment active = FragmentUtil.getVisibleFragment(fm);
         Fragment newFragment = null;
 
-        if (itemName.equals(HOME_ITEM)) {
-            newFragment = fm.findFragmentByTag("homeFeedFragment");
-
-            changeTabNames(tab1, tab2, true);
-            click(tab1, "homeInvestFragment", "homeFeedFragment", null,fm, true, nav);
-            click(tab2, "homeFeedFragment", "homeInvestFragment", null,fm, false, nav);
-
-        } else if (itemName.equals(HISTORY_ITEM)) {
-            tabHeader.setVisibility(View.INVISIBLE);
-            newFragment = fm.findFragmentByTag("historyFragment");
-        } else if (itemName.equals(RANKING_ITEM)) {
-            tabHeader.setVisibility(View.INVISIBLE);
-            newFragment = fm.findFragmentByTag("rankingFragment");
+        switch (itemName) {
+            case HISTORY_ITEM:
+                tabHeader.setVisibility(View.INVISIBLE);
+                newFragment = fm.findFragmentByTag("historyFragment");
+                break;
+            case RANKING_ITEM:
+                tabHeader.setVisibility(View.INVISIBLE);
+                newFragment = fm.findFragmentByTag("rankingFragment");
+                break;
+            case HOME_ITEM:
+                newFragment = fm.findFragmentByTag("homeFeedFragment");
+                changeTabNames(tab1, tab2, true);
+                click(tab1, "homeInvestFragment", "homeFeedFragment", null, fm, true, nav);
+                click(tab2, "homeFeedFragment", "homeInvestFragment", null, fm, false, nav);
+                break;
+            default:
+                changeTabNames(tab1, tab2, false);
+                newFragment = fm.findFragmentByTag("walletMyIdeasFragment");
+                click(tab1, "walletMyInvestmentsFragment", "walletMyIdeasFragment", null, fm, true, nav);
+                click(tab2, "walletMyIdeasFragment", "walletMyInvestmentsFragment", null, fm, false, nav);
+                break;
         }
-        else {
-            changeTabNames(tab1, tab2, false);
-            newFragment = fm.findFragmentByTag("walletMyIdeasFragment");
-            click(tab1, "walletMyInvestmentsFragment", "walletMyIdeasFragment", null,fm, true, nav);
-            click(tab2, "walletMyIdeasFragment", "walletMyInvestmentsFragment", null,fm, false, nav);
-        }
+
         fm.beginTransaction().hide(active).show(newFragment).commit();
     }
 
     // change which fragments are visible based on click
     private static void click(Button button, final String current,
-                       final String goTo, final View nav, final FragmentManager fm,
-                       final boolean swipeLeft, final View navLine) {
+        final String goTo, final View nav,
+        final FragmentManager fm, final boolean swipeLeft,
+        final View navLine) {
 
         final int enter;
         final int exit;
@@ -118,7 +122,6 @@ public class NavBarSetupUtil {
 
         // animate changing fragments
         button.setOnClickListener(view -> {
-
             Fragment currentFrag = fm.findFragmentByTag(current);
             Fragment goToFragment = fm.findFragmentByTag(goTo);
             fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();
@@ -144,11 +147,6 @@ public class NavBarSetupUtil {
         }
     }
 
-    // move line without animating
-    private static void moveLineNoAnimation(View nav) {
-        nav.setTranslationX(0f);
-    }
-
     // move line with left position start and left position end
     private static void moveLine(View nav, float start, float end) {
         if (Float.compare(nav.getTranslationX(), start) == 0 ) {
@@ -160,5 +158,10 @@ public class NavBarSetupUtil {
             set.play(textViewAnimator);
             set.start();
         }
+    }
+
+    // move line without animating
+    private static void moveLineNoAnimation(View nav) {
+        nav.setTranslationX(0f);
     }
 }

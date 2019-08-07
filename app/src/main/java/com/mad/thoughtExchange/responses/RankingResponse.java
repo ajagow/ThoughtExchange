@@ -61,5 +61,4 @@ public class RankingResponse {
 
     @SerializedName("rank")
     private int rank;
-
 }

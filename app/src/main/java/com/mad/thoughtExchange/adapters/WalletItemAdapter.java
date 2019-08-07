@@ -1,4 +1,4 @@
-package com.mad.thoughtExchange.utils;
+package com.mad.thoughtExchange.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.MyInvestmentsResponse;
 
+import com.mad.thoughtExchange.utils.GeneralUtils;
 import java.util.Date;
 import java.util.List;
 

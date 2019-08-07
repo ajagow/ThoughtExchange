@@ -15,7 +15,7 @@ import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.MyInvestmentsResponse;
 import com.mad.thoughtExchange.utils.VolleyUtils;
-import com.mad.thoughtExchange.utils.WalletItemAdapter;
+import com.mad.thoughtExchange.adapters.WalletItemAdapter;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class WalletMyInvestmentsFragment extends Fragment {
 
     private ListView listView;
     private LinearLayout noInvestments;
-    private static String GET_MY_POSTS = MainActivity.URL + "api/v1/investments/me";
+    private static String GET_MY_POSTS_PATH = MainActivity.URL + "api/v1/investments/me";
 
 
     public WalletMyInvestmentsFragment() {
@@ -78,7 +78,8 @@ public class WalletMyInvestmentsFragment extends Fragment {
 
         Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
-        GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(GET_MY_POSTS, getContext(),
+        GsonRequestArray<String, MyInvestmentsResponse> gsonRequest =
+            new GsonRequestArray<String, MyInvestmentsResponse>(GET_MY_POSTS_PATH, getContext(),
                 MyInvestmentsResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();

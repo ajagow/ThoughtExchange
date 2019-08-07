@@ -16,7 +16,7 @@ import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.VoteResponse;
 import com.mad.thoughtExchange.utils.VolleyUtils;
-import com.mad.thoughtExchange.utils.VotesItemAdapter;
+import com.mad.thoughtExchange.adapters.VotesItemAdapter;
 
 import java.util.List;
 import java.util.Map;
@@ -97,6 +97,7 @@ public class VotesFragment extends Fragment {
         }
     }
 
+    // initialize views
     private void initViews(View view) {
         listView = view.findViewById(R.id.my_votes_list_view);
         noHistory = view.findViewById(R.id.votes_no_history);

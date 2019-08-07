@@ -24,8 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="Sorry, no more posts. Check back later." />
-
-
     </RelativeLayout>
 
     <com.yuyakaido.android.cardstackview.CardStackView
@@ -52,5 +50,4 @@
             style="@style/homefeed_like"
             android:background="@drawable/like_button" />
     </RelativeLayout>
-
 </RelativeLayout>
