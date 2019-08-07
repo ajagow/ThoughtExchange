@@ -26,12 +26,6 @@ public class GsonRequest<T, U> {
     private final Gson gson;
     private JsonStringRequest jsonStringRequest;
 
-    private static final String PROTOCOL_CHARSET = "utf-8";
-
-    /** Content type for request. */
-    private static final String PROTOCOL_CONTENT_TYPE =
-            String.format("application/json; charset=%s", PROTOCOL_CHARSET);
-
     /**
      * Create a GsonRequest, determine whether it's a post or get request
      * @param requestType type of request
@@ -109,7 +103,6 @@ public class GsonRequest<T, U> {
                                                        final Map<String, String> headers) {
 
         String dataIn = gson.toJson(requestObject, clazz);
-        Log.d("JSON Request", dataIn); //
 
         JsonStringRequest jsonObjectRequest = new JsonStringRequest(requestType, url, dataIn, new Response.Listener<String>() {
             @Override

@@ -25,8 +25,6 @@ public class VotesItemAdapter extends BaseAdapter {
     private FragmentManager fragmentManager;
     private ViewHolder viewHolder;
 
-    private GeneralUtils utils = new GeneralUtils();
-
 
     public VotesItemAdapter(List<VoteResponse> voteResponses,
                             Context context, FragmentManager fragmentManager) {
@@ -55,7 +53,7 @@ public class VotesItemAdapter extends BaseAdapter {
 
         final VoteResponse item = voteResponses.get(i);
 
-        final String closingIn = "Posted on " + utils.getPostedDate(item.getCreatedAt());
+        final String closingIn = "Posted on " + GeneralUtils.getPostedDate(item.getCreatedAt());
         final boolean voteValue = item.isLike();
 
         if (view == null) {
@@ -72,7 +70,7 @@ public class VotesItemAdapter extends BaseAdapter {
         }
 
         viewHolder.content.setText(item.getContents());
-        viewHolder.postedAt.setText(utils.getPostedDate(item.getCreatedAt()));
+        viewHolder.postedAt.setText(GeneralUtils.getPostedDate(item.getCreatedAt()));
         setVoteValueImage(viewHolder, voteValue);
 
         return view;

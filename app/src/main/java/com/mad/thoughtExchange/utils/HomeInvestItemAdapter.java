@@ -35,8 +35,6 @@ public class HomeInvestItemAdapter extends BaseAdapter {
 
     private FragmentManager fragmentManager;
 
-    //Use utils class
-    private GeneralUtils utils = new GeneralUtils();
 
 
     public HomeInvestItemAdapter(List<ThoughtResponse> thoughtResponses,
@@ -71,7 +69,7 @@ public class HomeInvestItemAdapter extends BaseAdapter {
 
         String numInvestors = item.getNumInvestors() + "";
         String investmentWorth = item.getTotalWorth() + "";
-        final String closingIn = "Closing in " + utils.getCountdown(item.getCreatedAt(), 24);
+        final String closingIn = "Closing in " + GeneralUtils.getCountdown(item.getCreatedAt(), 24);
 
         if (view == null) {
             view = View.inflate(context, R.layout.fragment_home_invest_item, null);

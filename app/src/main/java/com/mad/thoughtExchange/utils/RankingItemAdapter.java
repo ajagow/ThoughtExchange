@@ -21,8 +21,6 @@ public class RankingItemAdapter extends BaseAdapter {
     private FragmentManager fragmentManager;
     private ViewHolder viewHolder;
 
-    private GeneralUtils utils = new GeneralUtils();
-
 
     public RankingItemAdapter(List<RankingResponse> rankingResponses,
                             Context context, FragmentManager fragmentManager) {

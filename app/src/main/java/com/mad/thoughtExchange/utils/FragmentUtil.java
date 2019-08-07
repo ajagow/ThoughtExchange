@@ -10,16 +10,6 @@ import java.util.List;
  */
 public class FragmentUtil {
 
-    public static void hideAllFragmentsBesidesGiven(FragmentManager fragmentManager, String name) {
-        for (Fragment fragment : fragmentManager.getFragments()) {
-            String fragmentName = fragment.getTag();
-            if (!fragmentName.equals(name)) {
-                fragmentManager.beginTransaction().hide(fragment).commit();
-            }
-
-        }
-    }
-
     // get the fragment that's currently visible
     static Fragment getVisibleFragment(FragmentManager fragmentManager){
         List<Fragment> fragments = fragmentManager.getFragments();

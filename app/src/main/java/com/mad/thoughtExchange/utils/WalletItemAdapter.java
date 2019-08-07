@@ -31,9 +31,6 @@ public class WalletItemAdapter extends BaseAdapter {
 
     private FragmentManager fragmentManager;
 
-    //Use utils class
-    private GeneralUtils utils = new GeneralUtils();
-
 
     public WalletItemAdapter(List<MyInvestmentsResponse> myInvestmentsResponses,
                              Context context, FragmentManager fragmentManager) {
@@ -72,7 +69,7 @@ public class WalletItemAdapter extends BaseAdapter {
         Date creationDate = item.getCreatedAt();
 
         //todo: fixe this
-        final String closingIn = "Posted on " + utils.getPostedDate(item.getCreatedAt());
+        final String closingIn = "Posted on " + GeneralUtils.getPostedDate(item.getCreatedAt());
 
         String myInitialInvestment = item.getMyInitialInvestment() + "";
         String earnings = item.getEarnings() + "";
@@ -107,14 +104,14 @@ public class WalletItemAdapter extends BaseAdapter {
 
         setViewHolderIndicator(creationDate, view);
 
-        if (utils.isFinishedOnMarket(item.getCreatedAt())) {
+        if (GeneralUtils.isFinishedOnMarket(item.getCreatedAt())) {
             viewHolder.indicator.setVisibility(View.VISIBLE);
             viewHolder.earnings.setVisibility(View.VISIBLE);
             viewHolder.earningsView.setVisibility(View.VISIBLE);
             viewHolder.gainOrLost.setVisibility(View.VISIBLE);
         }
 
-        if (!utils.isFinishedOnMarket(item.getCreatedAt())) {
+        if (!GeneralUtils.isFinishedOnMarket(item.getCreatedAt())) {
             //viewHolder.indicator.setVisibility(View.INVISIBLE);
             viewHolder.earnings.setVisibility(View.INVISIBLE);
             viewHolder.earningsView.setVisibility(View.INVISIBLE);
@@ -129,7 +126,7 @@ public class WalletItemAdapter extends BaseAdapter {
     }
 
     private void setViewHolderIndicator(Date creationDate, View view) {
-        boolean isClosed = utils.isFinishedOnMarket(creationDate);
+        boolean isClosed = GeneralUtils.isFinishedOnMarket(creationDate);
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ViewGroup parent = (ViewGroup) view.findViewById(R.id.my_investments_header_layout);

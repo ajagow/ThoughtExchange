@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GeneralUtils {
 
-    String getCountdown(Date createDate, int countdownHourTime) {
+    static String getCountdown(Date createDate, int countdownHourTime) {
         Calendar inputCal = Calendar.getInstance();
         inputCal.setTime(createDate);
         Calendar currentCal = Calendar.getInstance();
@@ -28,13 +28,13 @@ public class GeneralUtils {
         return String.format("%d hrs %d min", hours, minutes);
     }
 
-    String getPostedDate(Date created) {
+    static String getPostedDate(Date created) {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, MM-dd-yyyy");
         String stringDate = sdf.format(created);
         return stringDate;
     }
 
-    boolean isFinishedOnMarket(Date createDate) {
+    static boolean isFinishedOnMarket(Date createDate) {
         Date current = new Date();
 
         int differenceFloor = hourDifference(current, createDate);
