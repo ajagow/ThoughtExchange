@@ -6,12 +6,12 @@ import android.os.Bundle;
 
 
 import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.responses.UserResponse;
 import com.mad.thoughtExchange.utils.NavBarSetupUtil;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -21,7 +21,6 @@ import androidx.fragment.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +28,9 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Activity that is in charge of changing out which fragments are active.
+ */
 public class DashboardActivity extends AppCompatActivity {
 
     final FragmentManager fm = getSupportFragmentManager();
@@ -42,11 +43,18 @@ public class DashboardActivity extends AppCompatActivity {
     final Fragment rankingFragment = new RankingFragment();
     final Fragment walletMyInvestmentsFragment = new WalletMyInvestmentsFragment();
 
-    Button tab1;
-    Button tab2;
-    //ImageView logout;
-    LinearLayout userDetail;
-    View navLine;
+    static String NEW_CONTENT_FRAGMENT_NAME = "newContentFragment";
+    static String HOME_INVEST_FRAGMENT_NAME = "homeInvestFragment";
+    static String HISTORY_FRAGMENT_NAME = "historyFragment";
+    static String RANKING_FRAGMENT_NAME = "rankingFragment";
+    static String WALLET_MY_IDEAS_FRAGMENT_NAME = "walletMyIdeasFragment";
+    static String WALLET_MY_INVESTMENTS_FRAGMENT_NAME = "walletMyInvestmentsFragment";
+    static String HOME_FEED_FRAGMENT_NAME = "homeFeedFragment";
+
+    private Button tab1;
+    private Button tab2;
+    private LinearLayout userDetail;
+    private View navLine;
 
     private int worthVal;
     private String userName;
@@ -68,11 +76,6 @@ public class DashboardActivity extends AppCompatActivity {
         spaceNavigationView.setCentreButtonIcon(R.drawable.plus_icon);
         spaceNavigationView.setInActiveCentreButtonIconColor(ContextCompat.getColor(this,R.color.white));
 
-        // uncomment only if starting app from dashboard activity
-//        String token1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjkyNTIzNDYsImlhdCI6MTU2NDA2ODM0Niwic3ViIjoxfQ.hF3_Iyq9wxiA5kvpZkiuZCzzhCzld0keORhvtN7yNSM";
-//        int netWorth = SharedPreferencesUtil.getIntFromSharedPreferences(getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.networth);
-//        coins.setText(Integer.toString(netWorth));
-
         SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
 
         setFragmentManager();
@@ -80,45 +83,37 @@ public class DashboardActivity extends AppCompatActivity {
         NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
         navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
 
-        userDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserSettings userSettings = new UserSettings();
-                userSettings.show(fm, "fragment_user_settings");
-            }
+        userDetail.setOnClickListener(view -> {
+            UserSettings userSettings = new UserSettings();
+            userSettings.show(fm, "fragment_user_settings");
         });
 
-        Response.Listener<UserResponse> responseListener = new Response.Listener<UserResponse>() {
-            @Override
-            public void onResponse(UserResponse response) {
-                worthVal = response.getNetWorth();
-                userName = response.getName();
-                String headerDisplayName = userName.substring(0, 1).toUpperCase()
-                        + userName.substring(1);
+        getUserSettings(sharedPreferences);
 
-                if (userName.length() >= 10) {
-                    headerDisplayName = userName.substring(0, 10);
-                    headerDisplayName += "...";
-                }
+    }
 
-                Log.d("WORTHVAL", String.valueOf(worthVal));
-                SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, worthVal);
-                SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.userName, userName);
-                uWorth.setText(String.valueOf(SharedPreferencesUtil.getIntFromSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth)));
-                uName.setText(headerDisplayName);
+    // get user settings from api
+    private void getUserSettings(SharedPreferences sharedPreferences) {
+        Response.Listener<UserResponse> responseListener = response -> {
+            worthVal = response.getNetWorth();
+            userName = response.getName();
+            String headerDisplayName = userName.substring(0, 1).toUpperCase()
+                    + userName.substring(1);
+
+            if (userName.length() >= 10) {
+                headerDisplayName = userName.substring(0, 10);
+                headerDisplayName += "...";
             }
+
+            SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, worthVal);
+            SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.userName, userName);
+            uWorth.setText(String.valueOf(SharedPreferencesUtil.getIntFromSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth)));
+            uName.setText(headerDisplayName);
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", "user settings error");
-            }
-        };
+        Response.ErrorListener errorListener = error -> Log.d("ERROR", "user settings error");
 
-        Map<String, String> headers = new HashMap<>();
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
-        headers.put("api-token", token);
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(this);
 
         GsonRequest<String, UserResponse> gsonRequest = new GsonRequest<String, UserResponse>(
                 MainActivity.URL + USERS_PATH,
@@ -131,16 +126,18 @@ public class DashboardActivity extends AppCompatActivity {
         gsonRequest.volley();
     }
 
+    // set fragment manager by adding all the fragments
     private void setFragmentManager() {
-        fm.beginTransaction().add(R.id.main_container, newContentFragment, "newContentFragment").hide(newContentFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, homeInvestFragment, "homeInvestFragment").hide(homeInvestFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, historyFragment, "historyFragment").hide(historyFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, rankingFragment, "rankingFragment").hide(rankingFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, walletMyIdeasFragment, "walletMyIdeasFragment").hide(walletMyIdeasFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, walletMyInvestmentsFragment, "walletMyInvestmentsFragment").hide(walletMyInvestmentsFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, homeFeedFragment, "homeFeedFragment").commit();
+        fm.beginTransaction().add(R.id.main_container, newContentFragment, NEW_CONTENT_FRAGMENT_NAME).hide(newContentFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, homeInvestFragment, HOME_INVEST_FRAGMENT_NAME).hide(homeInvestFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, historyFragment, HISTORY_FRAGMENT_NAME).hide(historyFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, rankingFragment, RANKING_FRAGMENT_NAME).hide(rankingFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, walletMyIdeasFragment, WALLET_MY_IDEAS_FRAGMENT_NAME).hide(walletMyIdeasFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, walletMyInvestmentsFragment, WALLET_MY_INVESTMENTS_FRAGMENT_NAME).hide(walletMyInvestmentsFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, homeFeedFragment, HOME_FEED_FRAGMENT_NAME).commit();
     }
 
+    // init all view objects
     private void initViews() {
         tab1 = findViewById(R.id.tab_feed);
         tab2 = findViewById(R.id.tab_invest);

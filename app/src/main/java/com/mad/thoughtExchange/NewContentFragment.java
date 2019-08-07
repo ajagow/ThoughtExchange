@@ -1,13 +1,6 @@
 package com.mad.thoughtExchange;
 
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,25 +12,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.NewPostModel;
-import com.mad.thoughtExchange.models.SignupModel;
-import com.mad.thoughtExchange.models.ThoughtModel;
-import com.mad.thoughtExchange.responses.SignupResponse;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
-import com.mad.thoughtExchange.utils.FragmentUtil;
 import com.mad.thoughtExchange.utils.NavBarSetupUtil;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -70,9 +56,12 @@ public class NewContentFragment extends Fragment {
         newPostContent.setHorizontallyScrolling(false);
         newPostContent.setMaxLines(Integer.MAX_VALUE);
 
+        // set submit button listener
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // submit post to api
                 onSubmit(view);
 
             }
@@ -110,6 +99,7 @@ public class NewContentFragment extends Fragment {
         }
     }
 
+    // send post to api
     private void sendNewPost(String thought, int initInvestment) {
         NewPostModel thoughtModel = new NewPostModel();
 
@@ -120,24 +110,13 @@ public class NewContentFragment extends Fragment {
         Response.Listener<ThoughtResponse> responseListener = new Response.Listener<ThoughtResponse>() {
             @Override
             public void onResponse(ThoughtResponse response) {
-                Log.d("response", "thoughtResponse");
+                // nothing happens when successful response
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
-                String body = String.valueOf(error.networkResponse.data);
+        Response.ErrorListener errorListener = VolleyUtils.logError("NEW_POST");
 
-
-                Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.token);
-        Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", token);
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
         GsonRequest<NewPostModel, ThoughtResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + USERS_PATH, thoughtModel, getActivity(),
                 NewPostModel.class, ThoughtResponse.class, headers, responseListener, errorListener);
@@ -146,6 +125,7 @@ public class NewContentFragment extends Fragment {
     }
 
 
+    // update view to show how many characters a user has left while they're typing
     private void setTextWatcherForPostCounter() {
         TextWatcher mTextEditorWatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -163,6 +143,7 @@ public class NewContentFragment extends Fragment {
         newPostContent.addTextChangedListener(mTextEditorWatcher);
     }
 
+    // on successful submit, reset how many coins a user has and go back to home page
     private void onSuccessfulSubmit(int initInvestment) {
         clearValues();
 
@@ -185,11 +166,13 @@ public class NewContentFragment extends Fragment {
 
     }
 
+    // clear values inside new content fragment after a post is submitted
     private void clearValues() {
         newPostContent.setText("");
         initialInvestment.setText("");
     }
 
+    // check that user has enough coins to make their desired investment
     private boolean userHasEnoughMoneyToInvest(int investmentVal) {
         int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
         return investmentVal <= networth;

@@ -1,7 +1,5 @@
 package com.mad.thoughtExchange;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -23,19 +21,16 @@ import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.InvestmentModel;
 import com.mad.thoughtExchange.responses.NewInvestmentResponse;
-import com.mad.thoughtExchange.responses.UserResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment for showing investments users can potentially invest in.
  */
 public class HomeInvestPopupFragment extends DialogFragment {
 
@@ -52,12 +47,12 @@ public class HomeInvestPopupFragment extends DialogFragment {
     private String worthVal;
     private int idVal;
 
-    TextView numberOfInvestors;
-    TextView content;
-    TextView endsAt;
-    TextView investmentWorth;
-    Button investBtn;
-    Button closeBtn;
+    private TextView numberOfInvestors;
+    private TextView content;
+    private TextView endsAt;
+    private TextView investmentWorth;
+    private Button investBtn;
+    private Button closeBtn;
 
 
     public HomeInvestPopupFragment() {
@@ -70,7 +65,6 @@ public class HomeInvestPopupFragment extends DialogFragment {
      *
      * @return A new instance of fragment HomeInvestPopupFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static HomeInvestPopupFragment newInstance(String content, String expireDate, int numInvestors, int worth, int id) {
         HomeInvestPopupFragment fragment = new HomeInvestPopupFragment();
         Bundle args = new Bundle();
@@ -117,7 +111,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
         investmentWorth.setText(worthVal);
 
         /*
-        Submit investment
+        Submit investment Button
          */
         investBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,22 +141,24 @@ public class HomeInvestPopupFragment extends DialogFragment {
                     Toast.makeText(getActivity(), "You don\'t have enough coins", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    // todo: terrible solution
                     HomeInvestPopupFragment.this.dismiss();
-                    Fragment fragment = getFragmentManager().findFragmentByTag("homeInvestFragment");
+                    Fragment fragment = getFragmentManager().findFragmentByTag(DashboardActivity.HOME_INVEST_FRAGMENT_NAME);
 
-                    // todo: also probably a bad solution
+                    // send investment request to api
+                    sendInvestmentRequest(investmentAmountVal, idVal, fragment);
+
+                    // update net worth in header
                     int networth = SharedPreferencesUtil.getIntFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth);
                     int newWorth = networth - investmentAmountVal;
                     SharedPreferencesUtil.saveToSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE), SharedPreferencesUtil.networth, newWorth);
                     TextView uWorthTextView = getActivity().findViewById(R.id.worth);
                     uWorthTextView.setText(String.valueOf(newWorth));
 
-                    sendInvestmentRequest(investmentAmountVal, idVal, fragment);
                 }
             }
         });
 
+        // set close button to close popup
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,6 +169,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
         return view;
     }
 
+    // send investment request to api
     private void sendInvestmentRequest(int initInvestment, int postId, Fragment fragment) {
         InvestmentModel investmentModel = new InvestmentModel();
 
@@ -183,8 +180,8 @@ public class HomeInvestPopupFragment extends DialogFragment {
         Response.Listener<NewInvestmentResponse> responseListener = new Response.Listener<NewInvestmentResponse>() {
             @Override
             public void onResponse(NewInvestmentResponse response) {
-                Log.d("response", "thoughtResponse");
 
+                // refresh investments in HomeInvestFragment
                 HomeInvestFragment homeInvestFragment = (HomeInvestFragment) fragment;
                 homeInvestFragment.getInvestments();
 
@@ -194,27 +191,19 @@ public class HomeInvestPopupFragment extends DialogFragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String body = null;
-                try {
-                    body = new String(error.networkResponse.data, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
 
-                Log.d("INVEST", body);
-
+                // 400 error means user doesn't have enough coins
                 if (error.networkResponse.statusCode == 400) {
                     Toast.makeText(getActivity(), "You don't have enough coins. Please enter a lower amount.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "Please try again. There was a network error.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please try again.", Toast.LENGTH_SHORT).show();
 
                 }
             }
         };
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
-        Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", token);
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
+
 
         GsonRequest<InvestmentModel, NewInvestmentResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + INVESTMENT_PATH, investmentModel, getActivity(),
                 InvestmentModel.class, NewInvestmentResponse.class, headers, responseListener, errorListener);
@@ -230,6 +219,7 @@ public class HomeInvestPopupFragment extends DialogFragment {
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
     }
 
+    // init views
     private void initViews(View view) {
         numberOfInvestors = view.findViewById(R.id.popup_num_of_investors);
         content = view.findViewById(R.id.popup_content);

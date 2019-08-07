@@ -14,16 +14,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.SignupModel;
 import com.mad.thoughtExchange.responses.SignupResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
-
-import org.json.JSONObject;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 
 import java.util.HashMap;
 
@@ -88,17 +84,10 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onResponse(SignupResponse response) {
                 onSuccessfulSignup(response);
-                Log.d("OnResponse", response.getToken()); ///
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
-                Toast.makeText(getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
+        Response.ErrorListener errorListener = VolleyUtils.logError("SIGNUP");
 
         GsonRequest<SignupModel, SignupResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + USERS_PATH, signupModel, this,
                 SignupModel.class, SignupResponse.class, new HashMap<String, String>(), responseListener, errorListener);
@@ -106,6 +95,7 @@ public class SignupActivity extends AppCompatActivity {
         gsonRequest.volley();
     }
 
+    // set text watcher for password counter to show how many chars a user has left
     private void setTextWatcherForPasswordCounter() {
         TextWatcher mTextEditorWatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

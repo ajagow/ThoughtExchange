@@ -1,37 +1,31 @@
 package com.mad.thoughtExchange;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
 import com.android.volley.request.GsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.RankingResponse;
 import com.mad.thoughtExchange.responses.UserResponse;
 import com.mad.thoughtExchange.utils.RankingItemAdapter;
-import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 /**
- * Fragment displaying leaderboard
+ * Fragment displaying leaderboard.
  */
 public class RankingFragment extends Fragment {
 
@@ -66,8 +60,9 @@ public class RankingFragment extends Fragment {
         }
     }
 
+    // get rankings from api
     private void getRankings() {
-        Response.Listener<List<RankingResponse>> resonseListener = new Response.Listener<List<RankingResponse>>() {
+        Response.Listener<List<RankingResponse>> responseListener = new Response.Listener<List<RankingResponse>>() {
             @Override
             public void onResponse(List<RankingResponse> responses) {
                 setRankings(responses);
@@ -75,19 +70,13 @@ public class RankingFragment extends Fragment {
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                showVolleyErrorToast(error);
-            }
-        };
+        Response.ErrorListener errorListener = VolleyUtils.logError("RANKING");
 
         // update api-token to headers
-        Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", retrieveToken());
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
         GsonRequestArray<String, RankingResponse> gsonRequest = new GsonRequestArray<String, RankingResponse>(GET_RANKING,
-            getContext(), RankingResponse.class, resonseListener, errorListener, headers);
+            getContext(), RankingResponse.class, responseListener, errorListener, headers);
 
         gsonRequest.volley();
     }
@@ -155,15 +144,9 @@ public class RankingFragment extends Fragment {
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                showVolleyErrorToast(error);
-            }
-        };
+        Response.ErrorListener errorListener = VolleyUtils.logError("RANKING");
 
-        Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", retrieveToken());
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         GsonRequest<UserResponse> gsonRequest = new GsonRequest<UserResponse>(GET_ME,
@@ -171,12 +154,14 @@ public class RankingFragment extends Fragment {
         queue.add(gsonRequest);
     }
 
+    // set leaderboard title
     private void setLeaderboardTitle() {
         String placeholderTitle = getResources().getString(R.string.leaderboardTitle);
         String title = String.format(placeholderTitle, Integer.toString(RANKING_LIMIT));
         leaderboardtitle.setText(title);
     }
 
+    // initialize views
     private void initViews(View view) {
         leaderboardtitle = view.findViewById(R.id.leaderboardTitle);
         username = view.findViewById(R.id.currentUserUsername);
@@ -185,13 +170,5 @@ public class RankingFragment extends Fragment {
         leaderboardListview = view.findViewById(R.id.leaderboardListView);
     }
 
-    private String retrieveToken() {
-        SharedPreferences sPreferences = getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE);
-        return SharedPreferencesUtil.getStringFromSharedPreferences(sPreferences, SharedPreferencesUtil.token);
-    }
 
-    private void showVolleyErrorToast(VolleyError error) {
-        String message = "Error: " + error.networkResponse.toString() + error.getLocalizedMessage();
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
 }

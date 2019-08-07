@@ -31,6 +31,7 @@ import com.mad.thoughtExchange.responses.LikeResponse;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
 import com.mad.thoughtExchange.utils.HomeInvestItemAdapter;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,21 +66,21 @@ public class HomeInvestFragment extends Fragment {
 
         initViews(view);
 
+        // get potential investments from api
         getInvestments();
-
-        Log.d("INVEST", "log");
 
         return view;
     }
 
-    public void getInvestments() {
-        //vote meaning like/dislike
 
-        Response.Listener<List<ThoughtResponse>> resonseListener = new Response.Listener<List<ThoughtResponse>>() {
+    // fetch investments from api
+    void getInvestments() {
+
+        Response.Listener<List<ThoughtResponse>> responseListener = new Response.Listener<List<ThoughtResponse>>() {
             @Override
             public void onResponse(List<ThoughtResponse> response) {
-                Log.d("getInvestments", "total response: "+response.toString());
 
+                // if no potential investments, set adapter to null and show no new investment msg
                 if (response.size() == 0) {
                     noNewInvestments.setVisibility(View.VISIBLE);
                     if (adapter != null) {
@@ -88,31 +89,26 @@ public class HomeInvestFragment extends Fragment {
                 }
 
                 else {
+                    // set investments
                     setInvestments(response);
+
+                    // hide no new invesments message
                     noNewInvestments.setVisibility(View.INVISIBLE);
                 }
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
-                Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
+        Response.ErrorListener errorListener = VolleyUtils.logError("INVESTMENTS");
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
-        Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", token);
-        Log.d("sharedPreferences","retrieved token: "+token);
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
         GsonRequestArray<String, ThoughtResponse> gsonRequest = new GsonRequestArray<String, ThoughtResponse>(MainActivity.URL + GET_INVESTMENTS_URL, getContext(),
-                ThoughtResponse.class, resonseListener, errorListener, headers);
+                ThoughtResponse.class, responseListener, errorListener, headers);
 
         gsonRequest.volley();
     }
 
+    // set list of investments to HomeInvestItemAdapter
     private void setInvestments(List<ThoughtResponse> responses) {
         adapter = new HomeInvestItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
 

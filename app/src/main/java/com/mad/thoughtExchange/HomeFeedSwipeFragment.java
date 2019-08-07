@@ -13,11 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequest;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.models.LikesModel;
@@ -25,6 +23,7 @@ import com.mad.thoughtExchange.responses.FeedPostResponse;
 import com.mad.thoughtExchange.responses.LikeResponse;
 import com.mad.thoughtExchange.utils.HomeFeedSwipeAdapter;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -41,7 +40,7 @@ import butterknife.ButterKnife;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment for Home Voting Page. Users can like or dislike posts in this fragment.
  */
 public class HomeFeedSwipeFragment extends Fragment implements CardStackListener {
 
@@ -60,12 +59,13 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
     private Button likeButton;
     private Button dislikeButton;
 
-    // swipe animation
+    // swipe animation for dislike (make card swipe left)
     SwipeAnimationSetting dislikeAnimationSetting = new SwipeAnimationSetting.Builder()
             .setDirection(Direction.Left)
             .setDuration(Duration.Normal.duration)
             .build();
 
+    // swipe animation for like (make card swipe right)
     SwipeAnimationSetting likeAnimationSetting = new SwipeAnimationSetting.Builder()
             .setDirection(Direction.Right)
             .setDuration(Duration.Normal.duration)
@@ -89,7 +89,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         View view = inflater.inflate(R.layout.fragment_home_feed_swipe, container, false);
 
         cardStackView = view.findViewById(R.id.home_feed_swipe);
-        Log.d("carStackView", "found cardStackView");
 
         manager = new CardStackLayoutManager(getActivity(), this);
         manager.setCanScrollHorizontal(true);
@@ -97,16 +96,19 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         cardStackView.setLayoutManager(manager);
 
         emptyFeed = view.findViewById(R.id.empty_feed);
-        Log.d("cardStackView", "setLayoutManager");
 
+        // get current feed posts (posts that users haven't seen yet)
         getCurrentFeedPost();
 
+        // initialize view items
         initViews(view);
 
+
+        // set on click listener for like button
+        // if user clicks like, then card swipes to the right
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("LIKE", "hello like");
 
                 manager.setSwipeAnimationSetting(likeAnimationSetting);
 
@@ -115,19 +117,23 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
             }
         });
 
+        // set on click listener for dislike button
+        // if user clicks like, then card swipes to the left
         dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("DISLIKE", "hello dislike");
 
                 manager.setSwipeAnimationSetting(dislikeAnimationSetting);
                 cardStackView.swipe();
 
             }
         });
+
         return view;
     }
 
+    // set vote buttons visible or invisible
+    // should be invisible when user runs out posts to vote on
     private void setVoteButtonVisible(boolean visible) {
         if (visible) {
             Log.d("setVoteButtonVisible", "set to VISIBLE");
@@ -141,24 +147,24 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         }
     }
 
+    // fetch all market active posts for user to vote on that they haven't seen yet
     private void getCurrentFeedPost() {
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                onError(error);
-            }
-        };
+
+        Response.ErrorListener errorListener = VolleyUtils.logError("FETCH_POST");
 
         Response.Listener<List<FeedPostResponse>> responseListener = new Response.Listener<List<FeedPostResponse>>() {
             @Override
             public void onResponse(List<FeedPostResponse> response) {
-                Log.d("feed response",response.toString()); ///
+
+                // set feedpost responses
                 feedPostResponses = response;
+
+                // if there are responses, show like/dislike button and hide no more posts message
                 if (response.size() > 0) {
                     emptyFeed.setVisibility(View.INVISIBLE);
                     setVoteButtonVisible(true);
                 }
-
+                // if no responses, hide like/dislike button and display no more posts message
                 if (response.size() == 0) {
                     emptyFeed.setVisibility(View.VISIBLE);
                     setVoteButtonVisible(false);
@@ -177,12 +183,9 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         gsonRequest.volley();
     }
 
-    private void onError(VolleyError error) {
-        Toast.makeText(getActivity().getApplicationContext(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-    }
 
+    // create new adapter with responses
     private void onSuccessfulResponse() {
-        Log.d("FETCHPOST", feedPostResponses.size() + "");
         adapter = new HomeFeedSwipeAdapter(feedPostResponses, getContext());
 
         cardStackView.setAdapter(adapter);
@@ -198,7 +201,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
     public void onCardSwiped(Direction direction) {
         int currentPostID = -1; //TODO: pull actual post ID
         int pos = manager.getTopPosition();
-        Log.d("SWIPE", pos + "");
 
         if (pos == feedPostResponses.size()) {
             emptyFeed.setVisibility(View.VISIBLE);
@@ -235,42 +237,34 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         CardStackListener.DEFAULT.onCardDisappeared(view, position);
     }
 
+    // when post is liked, send vote to api
     private void onLike(int postId) {
-        Log.d("LIKE", "you liked this");
         sendVote(postId, 1);
     }
 
+    // when post is disliked, send vote to api
     private void onDislike(int postId) {
-        Log.d("LIKE", "you disliked this");
         sendVote(postId, 0);
     }
 
+    // send vote to api. 1 = like, 0 = dislike
     private void sendVote(int postId, int vote) {
         LikesModel likesModel = new LikesModel();
 
         // set values for POST request
         likesModel.setPostId(postId);
         likesModel.setIsLike(vote);
-        Log.d("LIKES", "post id: " + postId +     "is like: " + vote);
 
         Response.Listener<LikeResponse> responseListener = new Response.Listener<LikeResponse>() {
             @Override
             public void onResponse(LikeResponse response) {
                 Log.d("response","likesResponse");
-                //onSuccessfulVote(response);
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
-            }
-        };
+        Response.ErrorListener errorListener = VolleyUtils.logError("VOTE");
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
-        Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", token);
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
         GsonRequest<LikesModel, LikeResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, LIKES_PATH, likesModel, getActivity(),
                 LikesModel.class, LikeResponse.class, headers, responseListener, errorListener);
@@ -280,7 +274,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        Log.d("HIDDEN", hidden + "");
         if (!hidden) {
             getCurrentFeedPost();
 

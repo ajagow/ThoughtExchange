@@ -1,7 +1,6 @@
 package com.mad.thoughtExchange.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.mad.thoughtExchange.R;
@@ -18,9 +16,12 @@ import com.mad.thoughtExchange.responses.MyInvestmentsResponse;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Adapter for each item in the wallet (both past investments and past ideas)
+ */
 public class WalletItemAdapter extends BaseAdapter {
 
-    // Arraylist with the data points that are to populated on my items that I'm creating
+    // List with the data points that are to populated on my items that I'm creating
     private List<MyInvestmentsResponse> myInvestmentsResponses;
 
     // Initialize the View holder
@@ -29,6 +30,7 @@ public class WalletItemAdapter extends BaseAdapter {
     // Receive the context from Main Activity
     private Context context;
 
+    // Fragment manager from activity
     private FragmentManager fragmentManager;
 
 
@@ -57,26 +59,24 @@ public class WalletItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        // we aren't attaching to root
-        // create and return the view
 
         final MyInvestmentsResponse item = myInvestmentsResponses.get(i);
 
+        // convert item values to strings so that they can be used in text views
         String numInvestors = item.getNumInvestors() + "";
         String investmentWorth = item.getTotalWorth() + "";
         String numLikes = item.getNumberLikes() + "";
         String numDislikes = item.getNumDislikes() + "";
         Date creationDate = item.getCreatedAt();
 
-        //todo: fixe this
         final String closingIn = "Posted on " + GeneralUtils.getPostedDate(item.getCreatedAt());
 
         String myInitialInvestment = item.getMyInitialInvestment() + "";
         String earnings = item.getEarnings() + "";
 
+
         if (view == null) {
             view = View.inflate(context, R.layout.fragment_wallet_my_investments_item, null);
-            Log.d("VIEWLOG", "new view created");
 
             // create an object of view holder --> get hold of child view references
             setNewViewHolder(view, item);
@@ -106,6 +106,7 @@ public class WalletItemAdapter extends BaseAdapter {
 
         setViewHolderIndicator(creationDate, view);
 
+        // if item is closed on market, then display closed tag and how much a user earned
         if (GeneralUtils.isFinishedOnMarket(item.getCreatedAt())) {
             viewHolder.indicator.setVisibility(View.VISIBLE);
             viewHolder.earnings.setVisibility(View.VISIBLE);
@@ -113,6 +114,7 @@ public class WalletItemAdapter extends BaseAdapter {
             viewHolder.gainOrLost.setVisibility(View.VISIBLE);
         }
 
+        // if item is still market active, then display active tag and hide how much a user earned
         if (!GeneralUtils.isFinishedOnMarket(item.getCreatedAt())) {
             //viewHolder.indicator.setVisibility(View.INVISIBLE);
             viewHolder.earnings.setVisibility(View.INVISIBLE);

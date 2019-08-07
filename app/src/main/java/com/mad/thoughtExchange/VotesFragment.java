@@ -22,6 +22,7 @@ import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.VoteResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 import com.mad.thoughtExchange.utils.VotesItemAdapter;
 
 import java.util.HashMap;
@@ -61,9 +62,6 @@ public class VotesFragment extends Fragment {
         Response.Listener<List<VoteResponse>> resonseListener = new Response.Listener<List<VoteResponse>>() {
             @Override
             public void onResponse(List<VoteResponse> responses) {
-                for (VoteResponse response1 : responses) {
-                    Log.d("getVotingHistory", response1.isLike() + " LIKE");
-                }
                 setVotingHistory(responses);
             }
         };
@@ -71,7 +69,7 @@ public class VotesFragment extends Fragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.networkResponse.toString());
+                // if 404, that means user doesn't have any votes fragments
                 if (error.networkResponse.statusCode == 404) {
                     noHistory.setVisibility(View.VISIBLE);
                     listView.setAdapter(null);
@@ -82,10 +80,7 @@ public class VotesFragment extends Fragment {
             }
         };
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity()
-            .getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
-        Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", token);
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
         noHistory.setVisibility(View.INVISIBLE);
 
@@ -95,6 +90,7 @@ public class VotesFragment extends Fragment {
         gsonRequest.volley();
     }
 
+    // set vote responses to VoteItemAdapter
     private void setVotingHistory(List<VoteResponse> responses) {
         adapter = new VotesItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
 

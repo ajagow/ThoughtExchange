@@ -36,13 +36,18 @@ import butterknife.ButterKnife;
  */
 public class HomeFeedSwipeAdapter extends RecyclerView.Adapter<HomeFeedSwipeAdapter.HomeFeedViewHolder>{
 
+    private List<FeedPostResponse> feedPostResponses;
+    private Context context;
+
+    /**
+     * Constructor for HomeFeedSwipeAdapter.
+     * @param feedPostResponses List of feed post responses to adapt
+     * @param context context
+     */
     public HomeFeedSwipeAdapter(List<FeedPostResponse> feedPostResponses, Context context) {
         this.feedPostResponses = feedPostResponses;
         this.context = context;
     }
-
-    private List<FeedPostResponse> feedPostResponses;
-    private Context context;
 
     @Override
     public HomeFeedSwipeAdapter.HomeFeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -24,7 +24,7 @@ import java.util.List;
 
 public class HomeInvestItemAdapter extends BaseAdapter {
 
-    // Arraylist with the data points that are to populated on my items that I'm creating
+    // List of thought responses to adapt
     private List<ThoughtResponse> thoughtResponses;
 
     // Initialize the View holder
@@ -35,8 +35,12 @@ public class HomeInvestItemAdapter extends BaseAdapter {
 
     private FragmentManager fragmentManager;
 
-
-
+    /**
+     * Constructor for HomeInvestItemAdapter.
+     * @param thoughtResponses list of thought responses to adapt
+     * @param context context
+     * @param fragmentManager fragment manager from activity
+     */
     public HomeInvestItemAdapter(List<ThoughtResponse> thoughtResponses,
                                  Context context, FragmentManager fragmentManager) {
         this.thoughtResponses = thoughtResponses;
@@ -62,15 +66,16 @@ public class HomeInvestItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
+        // get current thought response item
         final ThoughtResponse item = thoughtResponses.get(i);
 
+        // convert fields in thought response item into strings
         String numInvestors = item.getNumInvestors() + "";
         String investmentWorth = item.getTotalWorth() + "";
         final String closingIn = "Closing in " + GeneralUtils.getCountdown(item.getCreatedAt(), 24);
 
         if (view == null) {
             view = View.inflate(context, R.layout.fragment_home_invest_item, null);
-            Log.d("VIEWLOG", "new view created");
 
             viewHolder = bindNewViewHolder(view);
             viewHolder.id = item.getId();
@@ -82,6 +87,7 @@ public class HomeInvestItemAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
+        // set information in view
         viewHolder.numberOfInvestors.setText(numInvestors);
         viewHolder.endsAt.setText(closingIn);
         viewHolder.investmentWorth.setText(investmentWorth);
@@ -99,6 +105,8 @@ public class HomeInvestItemAdapter extends BaseAdapter {
                         item.getNumInvestors(),
                         item.getTotalWorth(),
                         item.getId());
+
+                // open the invest popup fragment
                 homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
             }
         });
@@ -107,6 +115,7 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         return view;
     }
 
+    // helper to bind view Holder
     private ViewHolder bindNewViewHolder(View view) {
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.numberOfInvestors = view.findViewById(R.id.num_of_investors);

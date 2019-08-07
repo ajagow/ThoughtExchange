@@ -18,6 +18,9 @@ import com.mad.thoughtExchange.responses.VoteResponse;
 
 import java.util.List;
 
+/**
+ * Adapter for displaying vote history of a user.
+ */
 public class VotesItemAdapter extends BaseAdapter {
 
     private List<VoteResponse> voteResponses;
@@ -53,7 +56,6 @@ public class VotesItemAdapter extends BaseAdapter {
 
         final VoteResponse item = voteResponses.get(i);
 
-        final String closingIn = "Posted on " + GeneralUtils.getPostedDate(item.getCreatedAt());
         final boolean voteValue = item.isLike();
 
         if (view == null) {
@@ -71,11 +73,14 @@ public class VotesItemAdapter extends BaseAdapter {
 
         viewHolder.content.setText(item.getContents());
         viewHolder.postedAt.setText(GeneralUtils.getPostedDate(item.getCreatedAt()));
+
+        // set whether vote is a like or dislike
         setVoteValueImage(viewHolder, voteValue);
 
         return view;
     }
 
+    // set whether a vote was a like or dislike
     private void setVoteValueImage(ViewHolder viewHolder, boolean is_like) {
         if(is_like){
             viewHolder.voteValueText.setBackground(ContextCompat.getDrawable(context, R.drawable.tag_background_green));
@@ -86,6 +91,7 @@ public class VotesItemAdapter extends BaseAdapter {
         }
     }
 
+    // bind vew holder to views
     private ViewHolder bindNewViewHolder(View view) {
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.content = view.findViewById(R.id.votes_content);
@@ -96,6 +102,7 @@ public class VotesItemAdapter extends BaseAdapter {
         return viewHolder;
     }
 
+    // view holder class
     static class ViewHolder {
         int id;
         TextView content;

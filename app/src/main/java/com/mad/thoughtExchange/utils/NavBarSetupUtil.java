@@ -21,7 +21,12 @@ import com.mad.thoughtExchange.R;
  */
 public class NavBarSetupUtil {
 
-    public void setupNavBar(Bundle savedInstanceState,
+    private static String HOME_ITEM = "HOME";
+    private static String WALLET_ITEM = "WALLET";
+    private static String HISTORY_ITEM = "HISTORY";
+    private static String RANKING_ITEM = "RANKING";
+
+    public static void setupNavBar(Bundle savedInstanceState,
                             final SpaceNavigationView spaceNavigationView,
                             final FragmentManager fm,
                             final RelativeLayout tabHeader,
@@ -31,14 +36,13 @@ public class NavBarSetupUtil {
 
         click(tab1, "homeInvestFragment", "homeFeedFragment", null,fm, true, nav);
         click(tab2, "homeFeedFragment", "homeInvestFragment", null,fm, false, nav);
-        Log.d("NavBarSetup","set up tab1, tab2 clicks");
 
         spaceNavigationView.showIconOnly();
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
-        spaceNavigationView.addSpaceItem(new SpaceItem("HOME", R.drawable.home));
-        spaceNavigationView.addSpaceItem(new SpaceItem("WALLET", R.drawable.history));
-        spaceNavigationView.addSpaceItem(new SpaceItem("HISTORY", R.drawable.ic_thumbupdown));
-        spaceNavigationView.addSpaceItem(new SpaceItem("RANKING", R.drawable.ranking));
+        spaceNavigationView.addSpaceItem(new SpaceItem(HOME_ITEM, R.drawable.home));
+        spaceNavigationView.addSpaceItem(new SpaceItem(WALLET_ITEM, R.drawable.history));
+        spaceNavigationView.addSpaceItem(new SpaceItem(HISTORY_ITEM, R.drawable.ic_thumbupdown));
+        spaceNavigationView.addSpaceItem(new SpaceItem(RANKING_ITEM, R.drawable.ranking));
 
         spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
@@ -47,7 +51,6 @@ public class NavBarSetupUtil {
                 Fragment active = FragmentUtil.getVisibleFragment(fm);
                 Fragment centerFragment = fm.findFragmentByTag("newContentFragment");
                 fm.beginTransaction().setCustomAnimations(R.anim.slide_up, R.anim.fade_out).hide(active).show(centerFragment).commit();
-                Log.d("CLICK",  "  activetag: " + active.getTag());
             }
 
             @Override
@@ -71,19 +74,18 @@ public class NavBarSetupUtil {
         tabHeader.setVisibility(View.VISIBLE);
         Fragment active = FragmentUtil.getVisibleFragment(fm);
         Fragment newFragment = null;
-        Log.d("ITEMNAME", itemName);
-        if (itemName.equals("HOME")) {
+
+        if (itemName.equals(HOME_ITEM)) {
             newFragment = fm.findFragmentByTag("homeFeedFragment");
 
             changeTabNames(tab1, tab2, true);
             click(tab1, "homeInvestFragment", "homeFeedFragment", null,fm, true, nav);
             click(tab2, "homeFeedFragment", "homeInvestFragment", null,fm, false, nav);
-            Log.d("CLICK", "SWITCH TO homeFeedFragment");
-        } else if (itemName.equals("HISTORY")) {
-            Log.d("NAVBAR", "itemName.equals(HISTORY)");
+
+        } else if (itemName.equals(HISTORY_ITEM)) {
             tabHeader.setVisibility(View.INVISIBLE);
             newFragment = fm.findFragmentByTag("historyFragment");
-        } else if (itemName.equals("RANKING")) {
+        } else if (itemName.equals(RANKING_ITEM)) {
             tabHeader.setVisibility(View.INVISIBLE);
             newFragment = fm.findFragmentByTag("rankingFragment");
         }
@@ -92,7 +94,6 @@ public class NavBarSetupUtil {
             newFragment = fm.findFragmentByTag("walletMyIdeasFragment");
             click(tab1, "walletMyInvestmentsFragment", "walletMyIdeasFragment", null,fm, true, nav);
             click(tab2, "walletMyIdeasFragment", "walletMyInvestmentsFragment", null,fm, false, nav);
-            Log.d("CLICK", "SWITCH TO walletMyIdeasFragment");
         }
         fm.beginTransaction().hide(active).show(newFragment).commit();
     }
@@ -105,7 +106,6 @@ public class NavBarSetupUtil {
         final int enter;
         final int exit;
 
-        Log.d("CLICK HERE", "current: " + current + "    goto: " + goTo);
         moveLineNoAnimation(navLine);
 
         if (!swipeLeft) {
@@ -117,20 +117,18 @@ public class NavBarSetupUtil {
             exit = R.anim.exit_to_right;
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-      
-                Fragment currentFrag = fm.findFragmentByTag(current);
-                Fragment goToFragment = fm.findFragmentByTag(goTo);
-                fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();
+        // animate changing fragments
+        button.setOnClickListener(view -> {
 
-                if (swipeLeft) {
-                    moveLine(navLine, 550f, 0f);
-                }
-                else {
-                    moveLine(navLine, 0f, 550f);
-                }
+            Fragment currentFrag = fm.findFragmentByTag(current);
+            Fragment goToFragment = fm.findFragmentByTag(goTo);
+            fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();
+
+            if (swipeLeft) {
+                moveLine(navLine, 550f, 0f);
+            }
+            else {
+                moveLine(navLine, 0f, 550f);
             }
         });
     }

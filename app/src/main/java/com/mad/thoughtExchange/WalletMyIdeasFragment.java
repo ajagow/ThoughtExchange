@@ -1,31 +1,27 @@
 package com.mad.thoughtExchange;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.MyInvestmentsResponse;
-import com.mad.thoughtExchange.responses.ThoughtResponse;
-import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
+import com.mad.thoughtExchange.utils.VolleyUtils;
 import com.mad.thoughtExchange.utils.WalletItemAdapter;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
+/**
+ * Represents a Fragment that displays a user's previous posts.
+ */
 public class WalletMyIdeasFragment extends Fragment {
 
     private static String GET_MY_POSTS = MainActivity.URL + "api/v1/thoughts/me";
@@ -51,11 +47,12 @@ public class WalletMyIdeasFragment extends Fragment {
         return view;
     }
 
+    // get a user's previous investments from the api
     private void getInvestments() {
         // before fetch data
         noHistory.setVisibility(View.INVISIBLE);
 
-        Response.Listener<List<MyInvestmentsResponse>> resonseListener = new Response.Listener<List<MyInvestmentsResponse>>() {
+        Response.Listener<List<MyInvestmentsResponse>> responseListener = new Response.Listener<List<MyInvestmentsResponse>>() {
             @Override
             public void onResponse(List<MyInvestmentsResponse> responses) {
                 setNoHistoryVisibility(responses);
@@ -63,23 +60,14 @@ public class WalletMyIdeasFragment extends Fragment {
             }
         };
 
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                String errorMsg = "Error: " + error.networkResponse.toString() + error.getLocalizedMessage();
-                Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
-            }
-        };
+        Response.ErrorListener errorListener = VolleyUtils.logError("WALLET_MY_IDEAS");
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity()
-            .getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE),
-            SharedPreferencesUtil.token);
-        Map<String, String> headers = new HashMap<>();
-        headers.put("api-token", token);
-        Log.d("sharedPreferences","retrieved token: "+token);
+
+        Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
+
 
         GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(GET_MY_POSTS,
-            getContext(), MyInvestmentsResponse.class, resonseListener, errorListener, headers);
+            getContext(), MyInvestmentsResponse.class, responseListener, errorListener, headers);
 
         gsonRequest.volley();
     }
@@ -89,7 +77,7 @@ public class WalletMyIdeasFragment extends Fragment {
             getActivity().getSupportFragmentManager());
 
         listView.setAdapter(adapter);
-        //TODO: be able to invest from investment items
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -99,9 +87,13 @@ public class WalletMyIdeasFragment extends Fragment {
         }
     }
 
+    // if there are no responses, then hide no history message
     private void setNoHistoryVisibility(List<MyInvestmentsResponse> responses) {
         if (responses.size() == 0) {
             noHistory.setVisibility(View.VISIBLE);
+        }
+        else {
+            noHistory.setVisibility(View.INVISIBLE);
         }
     }
 

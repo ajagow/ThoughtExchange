@@ -14,6 +14,9 @@ import com.mad.thoughtExchange.responses.RankingResponse;
 
 import java.util.List;
 
+/**
+ * Adapter for displaying rankings of users.
+ */
 public class RankingItemAdapter extends BaseAdapter {
 
     private List<RankingResponse> rankingResponses;
@@ -65,12 +68,14 @@ public class RankingItemAdapter extends BaseAdapter {
         return view;
     }
 
+    // set view holder
     private void setItemToViewHolder(RankingResponse item) {
         viewHolder.rank.setText(Integer.toString(item.getRank()));
         viewHolder.username.setText(item.getName());
         viewHolder.netWorth.setText(Integer.toString(item.getNetWorth()));
     }
 
+    // bind view holder to views
     private ViewHolder bindNewViewHolder(View view) {
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.rank = view.findViewById(R.id.rankingRank);
@@ -80,6 +85,7 @@ public class RankingItemAdapter extends BaseAdapter {
         return viewHolder;
     }
 
+    // View holder class
     static class ViewHolder {
         TextView rank;
         TextView username;

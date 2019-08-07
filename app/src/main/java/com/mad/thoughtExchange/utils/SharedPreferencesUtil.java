@@ -2,6 +2,10 @@ package com.mad.thoughtExchange.utils;
 
 import android.content.SharedPreferences;
 
+/**
+ * Util for helping to get and set things to SharedPreferences
+ */
+
 public class SharedPreferencesUtil {
 
     public static String token = "token_name";
