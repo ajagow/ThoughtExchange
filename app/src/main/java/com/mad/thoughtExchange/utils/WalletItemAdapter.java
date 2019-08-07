@@ -146,6 +146,10 @@ public class WalletItemAdapter extends BaseAdapter {
             parent.addView(D, index);
         } else {
             viewHolder.earningsView.setVisibility(View.INVISIBLE);
+
+            TextView V = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
+            parent.removeView(V);
+
             TextView E = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, parent, false);
             parent.addView(E, index);
         }
