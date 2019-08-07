@@ -155,7 +155,7 @@
                             android:layout_marginLeft="12dp"
                             android:baselineAlignBottom="true"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/like_button" />
+                            android:src="@drawable/ic_like_outline" />
 
                         <TextView
                             android:id="@+id/my_investments_num_likes"
@@ -171,7 +171,7 @@
                             android:layout_marginLeft="12dp"
                             android:baselineAlignBottom="true"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/dislike_button" />
+                            android:src="@drawable/ic_dislike_outline" />
 
                         <TextView
                             android:id="@+id/my_investments_num_dislikes"
