@@ -84,9 +84,11 @@ public class WalletItemAdapter extends BaseAdapter {
             // create an object of view holder --> get hold of child view references
             setNewViewHolder(view, item);
 
+            TextView gainOrLostView = view.findViewById(R.id.my_investments_gain_lost);
             if (item.getEarnings() < 0) {
-                TextView gainOrLostView = view.findViewById(R.id.my_investments_gain_lost);
                 gainOrLostView.setText("You lost: ");
+            } else {
+                gainOrLostView.setText("You gained: ");
             }
 
             // link view holder to my view
@@ -109,6 +111,8 @@ public class WalletItemAdapter extends BaseAdapter {
 
         if (item.getEarnings() < 0) {
             viewHolder.gainOrLost.setText("You lost: ");
+        } else {
+            viewHolder.gainOrLost.setText("You gained: ");
         }
 
         return view;
