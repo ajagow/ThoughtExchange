@@ -16,6 +16,9 @@ import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 import com.mad.thoughtExchange.R;
 
+/**
+ * Utility for setting up the bottom navbar navigation and all fragment changing logic.
+ */
 public class NavBarSetupUtil {
 
     public void setupNavBar(Bundle savedInstanceState,

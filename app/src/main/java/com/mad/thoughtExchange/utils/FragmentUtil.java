@@ -5,6 +5,9 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.List;
 
+/**
+ * Fragment Utility class for commonly used Fragment methods.
+ */
 public class FragmentUtil {
 
     public static void hideAllFragmentsBesidesGiven(FragmentManager fragmentManager, String name) {

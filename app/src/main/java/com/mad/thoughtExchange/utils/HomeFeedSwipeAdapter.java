@@ -31,6 +31,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Adapter for creating the Tinder-like wiping in the voting fragment.
+ */
 public class HomeFeedSwipeAdapter extends RecyclerView.Adapter<HomeFeedSwipeAdapter.HomeFeedViewHolder>{
 
     public HomeFeedSwipeAdapter(List<FeedPostResponse> feedPostResponses, Context context) {
