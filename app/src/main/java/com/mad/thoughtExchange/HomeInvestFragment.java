@@ -62,8 +62,8 @@ public class HomeInvestFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_invest, container, false);
-        listView = view.findViewById(R.id.myListView);
-        noNewInvestments = view.findViewById(R.id.investments_feed_none);
+
+        initViews(view);
 
         getInvestments();
 
@@ -126,5 +126,10 @@ public class HomeInvestFragment extends Fragment {
             getInvestments();
             
         }
+    }
+
+    private void initViews(View view) {
+        listView = view.findViewById(R.id.myListView);
+        noNewInvestments = view.findViewById(R.id.investments_feed_none);
     }
 }
