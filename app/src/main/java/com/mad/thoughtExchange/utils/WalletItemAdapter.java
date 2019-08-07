@@ -107,20 +107,6 @@ public class WalletItemAdapter extends BaseAdapter {
 
         setViewHolderIndicator(creationDate, view);
 
-        if (utils.isFinishedOnMarket(item.getCreatedAt())) {
-            viewHolder.indicator.setVisibility(View.VISIBLE);
-            viewHolder.earnings.setVisibility(View.VISIBLE);
-            viewHolder.earningsView.setVisibility(View.VISIBLE);
-            viewHolder.gainOrLost.setVisibility(View.VISIBLE);
-        }
-
-        if (!utils.isFinishedOnMarket(item.getCreatedAt())) {
-            //viewHolder.indicator.setVisibility(View.INVISIBLE);
-            viewHolder.earnings.setVisibility(View.INVISIBLE);
-            viewHolder.earningsView.setVisibility(View.INVISIBLE);
-            viewHolder.gainOrLost.setVisibility(View.INVISIBLE);
-        }
-
         if (item.getEarnings() < 0) {
             viewHolder.gainOrLost.setText("You lost: ");
         }
@@ -128,30 +114,41 @@ public class WalletItemAdapter extends BaseAdapter {
         return view;
     }
 
+    /**
+     * set indicator card for wallet item.
+     * calculates market active, sets active/closed cards
+     *
+     * @param creationDate date of thought creation
+     * @param view item view
+     */
     private void setViewHolderIndicator(Date creationDate, View view) {
         boolean isClosed = utils.isFinishedOnMarket(creationDate);
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ViewGroup parent = (ViewGroup) view.findViewById(R.id.my_investments_header_layout);
-        TextView C = (TextView) view.findViewById(R.id.my_investments_closed_indicator);
 
-        int index = parent.indexOfChild(C);
-        parent.removeView(C);
+        TextView placeholder = (TextView) view.findViewById(R.id.my_investments_closed_indicator);
+        TextView closedCardTemp = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
+
+        int index = parent.indexOfChild(placeholder);
+        parent.removeView(placeholder);
+        parent.removeView(closedCardTemp);
 
         if (!isClosed) {
-            TextView E = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
-            parent.removeView(E);
+            TextView activeCard = (TextView) layoutInflater.inflate(R.layout.active_card_textview, parent, false);
+            parent.addView(activeCard, index);
 
-            TextView D = (TextView) layoutInflater.inflate(R.layout.active_card_textview, parent, false);
-            parent.addView(D, index);
-        } else {
             viewHolder.earningsView.setVisibility(View.INVISIBLE);
+            viewHolder.earnings.setVisibility(View.INVISIBLE);
+            viewHolder.earningsView.setVisibility(View.INVISIBLE);
+            viewHolder.gainOrLost.setVisibility(View.INVISIBLE);
+        } else {
+            TextView closedCard = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, parent, false);
+            parent.addView(closedCard, index);
 
-            TextView V = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
-            parent.removeView(V);
-
-            TextView E = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, parent, false);
-            parent.addView(E, index);
+            viewHolder.earnings.setVisibility(View.VISIBLE);
+            viewHolder.earningsView.setVisibility(View.VISIBLE);
+            viewHolder.gainOrLost.setVisibility(View.VISIBLE);
         }
     }
 
