@@ -23,14 +23,13 @@ import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Header extends RelativeLayout {
+    private static String USERS_PATH = "api/v1/users/me";
     public static final String TAG = Header.class.getSimpleName();
 
     private ImageView settings;
     protected TextView logo;
     private TextView coins;
 
-
-    private static String USERS_PATH = "api/v1/users/me";
 
     public Header(Context context) {
         super(context);
@@ -55,6 +54,5 @@ public class Header extends RelativeLayout {
 //        settings = findViewById(R.id.logout);
         logo = findViewById(R.id.logo);
         coins = findViewById(R.id.worth);
-
     }
 }

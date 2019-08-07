@@ -30,7 +30,7 @@ public class WalletMyInvestmentsFragment extends Fragment {
 
     private ListView listView;
     private LinearLayout noInvestments;
-    private static String GET_MY_POSTS = "api/v1/investments/me";
+    private static String GET_MY_POSTS = MainActivity.URL + "api/v1/investments/me";
 
 
     public WalletMyInvestmentsFragment() {
@@ -45,9 +45,8 @@ public class WalletMyInvestmentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wallet_my_investments, container, false);
+        initViews(view);
 
-        listView = view.findViewById(R.id.my_investments_list_view);
-        noInvestments = view.findViewById(R.id.my_investments_no_investments);
         noInvestments.setVisibility(View.INVISIBLE);
 
         return view;
@@ -59,13 +58,7 @@ public class WalletMyInvestmentsFragment extends Fragment {
         Response.Listener<List<MyInvestmentsResponse>> resonseListener = new Response.Listener<List<MyInvestmentsResponse>>() {
             @Override
             public void onResponse(List<MyInvestmentsResponse> response) {
-                Log.d("getInvestments", "total response: "+response.toString());
                 noInvestments.setVisibility(View.INVISIBLE);
-
-
-                for (ThoughtResponse response1 : response) {
-                    Log.d("getInvestments", response1.getId() + "");
-                }
                 setInvestments(response);
             }
         };
@@ -79,7 +72,8 @@ public class WalletMyInvestmentsFragment extends Fragment {
                     noInvestments.setVisibility(View.VISIBLE);
                 }
                 else {
-                    Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    String errorMsg = "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage();
+                    Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -88,15 +82,15 @@ public class WalletMyInvestmentsFragment extends Fragment {
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
 
-        GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(MainActivity.URL + GET_MY_POSTS, getContext(),
+        GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(GET_MY_POSTS, getContext(),
                 MyInvestmentsResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();
     }
 
     private void setInvestments(List<MyInvestmentsResponse> responses) {
-        WalletItemAdapter adapter = new WalletItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
-
+        WalletItemAdapter adapter = new WalletItemAdapter(responses, getContext(),
+            getActivity().getSupportFragmentManager());
         listView.setAdapter(adapter);
     }
 
@@ -105,5 +99,10 @@ public class WalletMyInvestmentsFragment extends Fragment {
         if (!hidden) {
             getInvestments();
         }
+    }
+
+    private void initViews(View view) {
+        listView = view.findViewById(R.id.my_investments_list_view);
+        noInvestments = view.findViewById(R.id.my_investments_no_investments);
     }
 }

@@ -90,7 +90,6 @@ public class VotesItemAdapter extends BaseAdapter {
 
     private ViewHolder bindNewViewHolder(View view) {
         ViewHolder viewHolder = new ViewHolder();
-
         viewHolder.content = view.findViewById(R.id.votes_content);
         viewHolder.postedAt = view.findViewById(R.id.votes_date_posted);
         viewHolder.voteValue = view.findViewById(R.id.voteAdapterContainer);

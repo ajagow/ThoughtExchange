@@ -45,8 +45,7 @@ import butterknife.ButterKnife;
  */
 public class HomeFeedSwipeFragment extends Fragment implements CardStackListener {
 
-//    private static final String POSTS_PATH = "api/v1/thoughts";
-    private static final String LIKES_PATH = "api/v1/likes/";
+    private static final String LIKES_PATH = MainActivity.URL + "api/v1/likes/";
     private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/48";
 
     private RecyclerView.Adapter adapter;
@@ -273,7 +272,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
 
-        GsonRequest<LikesModel, LikeResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + LIKES_PATH, likesModel, getActivity(),
+        GsonRequest<LikesModel, LikeResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, LIKES_PATH, likesModel, getActivity(),
                 LikesModel.class, LikeResponse.class, headers, responseListener, errorListener);
 
         gsonRequest.volley();

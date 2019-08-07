@@ -64,9 +64,6 @@ public class HomeInvestItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        // we aren't attaching to root
-        // create and return the view
-
         final ThoughtResponse item = thoughtResponses.get(i);
 
         String numInvestors = item.getNumInvestors() + "";
@@ -77,30 +74,17 @@ public class HomeInvestItemAdapter extends BaseAdapter {
             view = View.inflate(context, R.layout.fragment_home_invest_item, null);
             Log.d("VIEWLOG", "new view created");
 
-
-            // create an object of view holder --> get hold of child view references
-            viewHolder = new ViewHolder();
-
-            viewHolder.numberOfInvestors = view.findViewById(R.id.num_of_investors);
-            viewHolder.content = view.findViewById(R.id.investment_text);
-            viewHolder.investmentWorth = view.findViewById(R.id.investment_worth);
-            viewHolder.endsAt = view.findViewById(R.id.investment_end_time);
-            viewHolder.investBtn = view.findViewById(R.id.make_investment_btn);
+            viewHolder = bindNewViewHolder(view);
             viewHolder.id = item.getId();
-
 
             // link view holder to my view
             view.setTag(viewHolder);
         } else {
             // If view already exists then restore view holder and I can access Image and Text View
             viewHolder = (ViewHolder) view.getTag();
-
         }
 
-
-
         viewHolder.numberOfInvestors.setText(numInvestors);
-   
         viewHolder.endsAt.setText(closingIn);
         viewHolder.investmentWorth.setText(investmentWorth);
         viewHolder.content.setText(item.getContents());
@@ -125,6 +109,17 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         return view;
     }
 
+    private ViewHolder bindNewViewHolder(View view) {
+        ViewHolder viewHolder = new ViewHolder();
+        viewHolder.numberOfInvestors = view.findViewById(R.id.num_of_investors);
+        viewHolder.content = view.findViewById(R.id.investment_text);
+        viewHolder.investmentWorth = view.findViewById(R.id.investment_worth);
+        viewHolder.endsAt = view.findViewById(R.id.investment_end_time);
+        viewHolder.investBtn = view.findViewById(R.id.make_investment_btn);
+
+        return viewHolder;
+    }
+
     // class to hold my child view
     static class ViewHolder {
         TextView numberOfInvestors;
@@ -133,7 +128,5 @@ public class HomeInvestItemAdapter extends BaseAdapter {
         TextView investmentWorth;
         int id;
         Button investBtn;
-
     }
-
 }
