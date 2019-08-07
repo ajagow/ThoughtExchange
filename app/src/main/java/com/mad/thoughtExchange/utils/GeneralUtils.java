@@ -36,14 +36,12 @@ public class GeneralUtils {
 
     boolean isFinishedOnMarket(Date createDate) {
         Date current = new Date();
-
         int differenceFloor = hourDifference(current, createDate);
 
         return differenceFloor > 48;
     }
 
     private static int hourDifference(Date date1, Date date2) {
-
         final int MILLI_TO_HOUR = 1000 * 60 * 60;
         return (int) (date1.getTime() - date2.getTime()) / MILLI_TO_HOUR;
     }

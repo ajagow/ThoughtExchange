@@ -72,9 +72,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
             .setDuration(Duration.Normal.duration)
             .build();
 
-
-
-
     public HomeFeedSwipeFragment() {
         // Required empty public constructor
     }
@@ -105,8 +102,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
 
         getCurrentFeedPost();
 
-        likeButton = view.findViewById(R.id.like_button);
-        dislikeButton = view.findViewById(R.id.dislike_button);
+        initViews(view);
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +185,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
     private void onSuccessfulResponse() {
         Log.d("FETCHPOST", feedPostResponses.size() + "");
         adapter = new HomeFeedSwipeAdapter(feedPostResponses, getContext());
-
 
         cardStackView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -291,5 +286,10 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
             getCurrentFeedPost();
 
         }
+    }
+
+    private void initViews(View view) {
+        likeButton = view.findViewById(R.id.like_button);
+        dislikeButton = view.findViewById(R.id.dislike_button);
     }
 }

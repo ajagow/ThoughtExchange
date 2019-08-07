@@ -2,7 +2,6 @@ package com.mad.thoughtExchange;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -65,13 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         t.start();
 
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        submitButton = findViewById(R.id.login_btn);
-        signupButton = findViewById(R.id.signup_btn);
+        initViews();
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +81,13 @@ public class MainActivity extends AppCompatActivity {
                 onSignup(view);
             }
         });
-
     }
 
+    /**
+     * Move to signUp activity
+     *
+     * @param view view
+     */
     public void onSignup(View view) {
         Intent intentToSignup = new Intent(MainActivity.this, SignupActivity.class);
         startActivity(intentToSignup);
@@ -130,10 +129,13 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Submit reaud", "here");
         gsonRequest.volley();
-
 }
 
-    // on successful login attempt, go to HomeActivity
+    /**
+     * updates user token to Shared Preferences and moves to Dashboard activity
+     *
+     * @param loginResponse API loginResponse model returning user token from
+     */
     private void onSuccessfulLogin(LoginResponse loginResponse) {
         String token = loginResponse.getToken();
         Log.d("loginResponseToken",token);
@@ -145,5 +147,12 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 6000);
         startActivity(explicitIntent);
+    }
+
+    private void initViews() {
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        submitButton = findViewById(R.id.login_btn);
+        signupButton = findViewById(R.id.signup_btn);
     }
 }
