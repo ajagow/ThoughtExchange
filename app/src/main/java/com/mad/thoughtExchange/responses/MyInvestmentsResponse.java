@@ -20,6 +20,16 @@ public class MyInvestmentsResponse extends ThoughtResponse {
     @SerializedName("num_dislikes")
     private String numDislikes;
 
+    @SerializedName("market_active")
+    private boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public String getMyInitialInvestment() {
         return myInitialInvestment;

@@ -36,7 +36,6 @@ public class GeneralUtils {
         int differenceFloor = hourDifference(current, createDate);
 
         return differenceFloor > 48;
-
     }
 
     private static int hourDifference(Date date1, Date date2) {

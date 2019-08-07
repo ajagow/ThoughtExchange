@@ -2,17 +2,20 @@ package com.mad.thoughtExchange.utils;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.MyInvestmentsResponse;
 
+import java.util.Date;
 import java.util.List;
 
 public class WalletItemAdapter extends BaseAdapter {
@@ -68,6 +71,9 @@ public class WalletItemAdapter extends BaseAdapter {
         String numLikes = item.getNumberLikes() + "";
         String numDislikes = item.getNumDislikes() + "";
 
+        //boolean marketActive = item.isActive();
+        Date creationDate = item.getCreatedAt();
+
         //todo: fixe this
         final String closingIn = "Posted on " + utils.getPostedDate(item.getCreatedAt());
 
@@ -82,13 +88,13 @@ public class WalletItemAdapter extends BaseAdapter {
             // create an object of view holder --> get hold of child view references
             setNewViewHolder(view, item);
 
-            if (!utils.isFinishedOnMarket(item.getCreatedAt())) {
-                TextView  indicator = view.findViewById(R.id.my_investments_closed_indicator);
-                indicator.setVisibility(View.INVISIBLE);
-
-                LinearLayout earningsView = view.findViewById(R.id.my_investments_earning_box);
-                earningsView.setVisibility(View.INVISIBLE);
-            }
+//            if (!utils.isFinishedOnMarket(item.getCreatedAt())) {
+//                TextView  indicator = view.findViewById(R.id.my_investments_closed_indicator);
+//                indicator.setVisibility(View.INVISIBLE);
+//
+//                LinearLayout earningsView = view.findViewById(R.id.my_investments_earning_box);
+//                earningsView.setVisibility(View.INVISIBLE);
+//            }
 
             if (item.getEarnings() < 0) {
                 TextView gainOrLostView = view.findViewById(R.id.my_investments_gain_lost);
@@ -112,6 +118,44 @@ public class WalletItemAdapter extends BaseAdapter {
         viewHolder.numLikes.setText(numLikes);
         viewHolder.numDislikes.setText(numDislikes);
 
+        //setViewHolderIndicator(creationDate, view);
+
+        boolean isClosed = utils.isFinishedOnMarket(creationDate);
+        Log.d("set indcator", Boolean.toString(!isClosed));
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        ViewGroup parent = (ViewGroup) view.findViewById(R.id.my_investments_header_layout);
+        //int index = parent.indexOfChild(viewHolder.indicator);
+        //parent.removeView(viewHolder.indicator);
+        TextView C = (TextView) view.findViewById(R.id.my_investments_closed_indicator);
+        int index = parent.indexOfChild(C);
+        parent.removeView(C);
+
+        if (!isClosed) {
+            Log.d("indicator","!isClosed " + item.getContents() + " "+ creationDate);
+            //viewHolder.indicator = (TextView) layoutInflater.inflate(R.layout.active_card_textview, null);
+            //viewHolder.indicator.setText("active");
+            //viewHolder.indicator.setTextAppearance(R.style.card_tag_active);
+
+            TextView E = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
+            parent.removeView(E);
+
+
+            TextView D = (TextView) layoutInflater.inflate(R.layout.active_card_textview, parent, false);
+            parent.addView(D, index);
+        } else {
+            Log.d("indicator","isClosed " + item.getContents() + " " + creationDate);
+            //viewHolder.indicator = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, null);
+            //viewHolder.indicator.setText("closed");
+            //viewHolder.indicator.setTextAppearance(R.style.card_tag_closed);
+
+            TextView E = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, parent, false);
+            parent.addView(E, index);
+            viewHolder.earningsView.setVisibility(View.INVISIBLE);
+        }
+
+        ///////////////////////////////////////
+
         if (utils.isFinishedOnMarket(item.getCreatedAt())) {
             viewHolder.indicator.setVisibility(View.VISIBLE);
             viewHolder.earnings.setVisibility(View.VISIBLE);
@@ -120,7 +164,7 @@ public class WalletItemAdapter extends BaseAdapter {
         }
 
         if (!utils.isFinishedOnMarket(item.getCreatedAt())) {
-            viewHolder.indicator.setVisibility(View.INVISIBLE);
+            //viewHolder.indicator.setVisibility(View.INVISIBLE);
             viewHolder.earnings.setVisibility(View.INVISIBLE);
             viewHolder.earningsView.setVisibility(View.INVISIBLE);
             viewHolder.gainOrLost.setVisibility(View.INVISIBLE);
@@ -132,6 +176,37 @@ public class WalletItemAdapter extends BaseAdapter {
 
         return view;
     }
+
+//    private void setViewHolderIndicator(Date creationDate, View view) {
+//        boolean isClosed = utils.isFinishedOnMarket(creationDate);
+//        Log.d("set indcator", Boolean.toString(!isClosed));
+//        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//        ViewGroup parent = (ViewGroup) view.findViewById(R.id.my_investments_header_layout);
+//        //int index = parent.indexOfChild(viewHolder.indicator);
+//        //parent.removeView(viewHolder.indicator);
+//        TextView C = (TextView) view.findViewById(R.id.my_investments_closed_indicator);
+//        int index = parent.indexOfChild(C);
+//        parent.removeView(C);
+//
+//        if (!isClosed) {
+//            Log.d("indicator","!isClosed " + viewHolder.content + " "+ creationDate);
+//            //viewHolder.indicator = (TextView) layoutInflater.inflate(R.layout.active_card_textview, null);
+//            //viewHolder.indicator.setText("active");
+//            //viewHolder.indicator.setTextAppearance(R.style.card_tag_active);
+//            TextView D = (TextView) layoutInflater.inflate(R.layout.active_card_textview, parent, false);
+//            parent.addView(D, index);
+//        } else {
+//            Log.d("indicator","isClosed " + viewHolder.content + " " + creationDate);
+//            //viewHolder.indicator = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, null);
+//            //viewHolder.indicator.setText("closed");
+//            //viewHolder.indicator.setTextAppearance(R.style.card_tag_closed);
+//
+//            TextView E = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, parent, false);
+//            parent.addView(E, index);
+//            viewHolder.earningsView.setVisibility(View.INVISIBLE);
+//        }
+//    }
 
     private void setNewViewHolder(View view, MyInvestmentsResponse item) {
         viewHolder = new ViewHolder();
@@ -147,7 +222,6 @@ public class WalletItemAdapter extends BaseAdapter {
         viewHolder.gainOrLost = view.findViewById(R.id.my_investments_gain_lost);
         viewHolder.numLikes = view.findViewById(R.id.my_investments_num_likes);
         viewHolder.numDislikes = view.findViewById(R.id.my_investments_num_dislikes);
-
     }
 
     // class to hold my child view
@@ -164,7 +238,5 @@ public class WalletItemAdapter extends BaseAdapter {
         TextView numLikes;
         TextView numDislikes;
         int id;
-
     }
-
 }

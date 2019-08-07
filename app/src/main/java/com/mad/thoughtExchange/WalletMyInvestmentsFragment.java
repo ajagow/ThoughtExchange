@@ -50,8 +50,6 @@ public class WalletMyInvestmentsFragment extends Fragment {
         noInvestments = view.findViewById(R.id.my_investments_no_investments);
         noInvestments.setVisibility(View.INVISIBLE);
 
-
-
         return view;
     }
 
@@ -108,9 +106,4 @@ public class WalletMyInvestmentsFragment extends Fragment {
             getInvestments();
         }
     }
-
-
-
-
-
 }
