@@ -36,8 +36,8 @@ public class NavBarSetupUtil {
         spaceNavigationView.showIconOnly();
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
         spaceNavigationView.addSpaceItem(new SpaceItem("HOME", R.drawable.home));
-        spaceNavigationView.addSpaceItem(new SpaceItem("WALLET", R.drawable.wallet));
-        spaceNavigationView.addSpaceItem(new SpaceItem("HISTORY", R.drawable.history));
+        spaceNavigationView.addSpaceItem(new SpaceItem("WALLET", R.drawable.history));
+        spaceNavigationView.addSpaceItem(new SpaceItem("HISTORY", R.drawable.ic_thumbupdown));
         spaceNavigationView.addSpaceItem(new SpaceItem("RANKING", R.drawable.ranking));
 
         spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {

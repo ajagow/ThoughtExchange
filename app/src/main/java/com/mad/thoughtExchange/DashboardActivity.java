@@ -93,8 +93,13 @@ public class DashboardActivity extends AppCompatActivity {
             public void onResponse(UserResponse response) {
                 worthVal = response.getNetWorth();
                 userName = response.getName();
+                String headerDisplayName = userName.substring(0, 1).toUpperCase()
+                        + userName.substring(1);
 
-                String headerDisplayName = userName.substring(0, 1).toUpperCase() + userName.substring(1);
+                if (userName.length() >= 10) {
+                    headerDisplayName = userName.substring(0, 10);
+                    headerDisplayName += "...";
+                }
 
                 Log.d("WORTHVAL", String.valueOf(worthVal));
                 SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, worthVal);
