@@ -83,7 +83,6 @@ public class NavBarSetupUtil {
             Log.d("NAVBAR", "itemName.equals(HISTORY)");
             tabHeader.setVisibility(View.INVISIBLE);
             newFragment = fm.findFragmentByTag("historyFragment");
-
         } else if (itemName.equals("RANKING")) {
             tabHeader.setVisibility(View.INVISIBLE);
             newFragment = fm.findFragmentByTag("rankingFragment");

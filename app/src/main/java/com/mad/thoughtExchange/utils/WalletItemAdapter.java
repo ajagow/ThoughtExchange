@@ -81,9 +81,11 @@ public class WalletItemAdapter extends BaseAdapter {
             // create an object of view holder --> get hold of child view references
             setNewViewHolder(view, item);
 
+            TextView gainOrLostView = view.findViewById(R.id.my_investments_gain_lost);
             if (item.getEarnings() < 0) {
-                TextView gainOrLostView = view.findViewById(R.id.my_investments_gain_lost);
                 gainOrLostView.setText("You lost: ");
+            } else {
+                gainOrLostView.setText("You gained: ");
             }
 
             // link view holder to my view
@@ -120,35 +122,48 @@ public class WalletItemAdapter extends BaseAdapter {
 
         if (item.getEarnings() < 0) {
             viewHolder.gainOrLost.setText("You lost: ");
+        } else {
+            viewHolder.gainOrLost.setText("You gained: ");
         }
 
         return view;
     }
 
+    /**
+     * set indicator card for wallet item.
+     * calculates market active, sets active/closed cards
+     *
+     * @param creationDate date of thought creation
+     * @param view item view
+     */
     private void setViewHolderIndicator(Date creationDate, View view) {
         boolean isClosed = GeneralUtils.isFinishedOnMarket(creationDate);
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ViewGroup parent = (ViewGroup) view.findViewById(R.id.my_investments_header_layout);
-        TextView C = (TextView) view.findViewById(R.id.my_investments_closed_indicator);
 
-        int index = parent.indexOfChild(C);
-        parent.removeView(C);
+        TextView placeholder = (TextView) view.findViewById(R.id.my_investments_closed_indicator);
+        TextView closedCardTemp = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
+
+        int index = parent.indexOfChild(placeholder);
+        parent.removeView(placeholder);
+        parent.removeView(closedCardTemp);
 
         if (!isClosed) {
-            TextView E = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
-            parent.removeView(E);
+            TextView activeCard = (TextView) layoutInflater.inflate(R.layout.active_card_textview, parent, false);
+            parent.addView(activeCard, index);
 
-            TextView D = (TextView) layoutInflater.inflate(R.layout.active_card_textview, parent, false);
-            parent.addView(D, index);
-        } else {
             viewHolder.earningsView.setVisibility(View.INVISIBLE);
+            viewHolder.earnings.setVisibility(View.INVISIBLE);
+            viewHolder.earningsView.setVisibility(View.INVISIBLE);
+            viewHolder.gainOrLost.setVisibility(View.INVISIBLE);
+        } else {
+            TextView closedCard = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, parent, false);
+            parent.addView(closedCard, index);
 
-            TextView V = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
-            parent.removeView(V);
-
-            TextView E = (TextView) layoutInflater.inflate(R.layout.closed_card_textview, parent, false);
-            parent.addView(E, index);
+            viewHolder.earnings.setVisibility(View.VISIBLE);
+            viewHolder.earningsView.setVisibility(View.VISIBLE);
+            viewHolder.gainOrLost.setVisibility(View.VISIBLE);
         }
     }
 

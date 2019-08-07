@@ -28,10 +28,10 @@ import java.util.Map;
 
 public class WalletMyIdeasFragment extends Fragment {
 
+    private static String GET_MY_POSTS = MainActivity.URL + "api/v1/thoughts/me";
+
     private ListView listView;
     private LinearLayout noHistory;
-    private static String GET_MY_POSTS = "api/v1/thoughts/me";
-
 
 
     public WalletMyIdeasFragment() {
@@ -46,56 +46,47 @@ public class WalletMyIdeasFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wallet_my_ideas, container, false);
-
-        listView = view.findViewById(R.id.my_ideas_list_view);
-        noHistory = view.findViewById(R.id.my_ideas_no_history);
+        initViews(view);
 
         return view;
     }
 
     private void getInvestments() {
-        //vote meaning like/dislike
-
         // before fetch data
         noHistory.setVisibility(View.INVISIBLE);
 
         Response.Listener<List<MyInvestmentsResponse>> resonseListener = new Response.Listener<List<MyInvestmentsResponse>>() {
             @Override
-            public void onResponse(List<MyInvestmentsResponse> response) {
-                Log.d("getInvestments", "total response: "+response.toString());
-
-                if (response.size() == 0) {
-                    noHistory.setVisibility(View.VISIBLE);
-                }
-
-                for (ThoughtResponse response1 : response) {
-                    Log.d("getInvestments", response1.getId() + "");
-                }
-                setInvestments(response);
+            public void onResponse(List<MyInvestmentsResponse> responses) {
+                setNoHistoryVisibility(responses);
+                setInvestments(responses);
             }
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "Error:  " + error.networkResponse.toString() + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                String errorMsg = "Error: " + error.networkResponse.toString() + error.getLocalizedMessage();
+                Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
             }
         };
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity()
+            .getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE),
+            SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
         Log.d("sharedPreferences","retrieved token: "+token);
 
-        GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(MainActivity.URL + GET_MY_POSTS, getContext(),
-                MyInvestmentsResponse.class, resonseListener, errorListener, headers);
+        GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(GET_MY_POSTS,
+            getContext(), MyInvestmentsResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();
     }
 
     private void setInvestments(List<MyInvestmentsResponse> responses) {
-
-        WalletItemAdapter adapter = new WalletItemAdapter(responses, getContext(), getActivity().getSupportFragmentManager());
+        WalletItemAdapter adapter = new WalletItemAdapter(responses, getContext(),
+            getActivity().getSupportFragmentManager());
 
         listView.setAdapter(adapter);
         //TODO: be able to invest from investment items
@@ -108,5 +99,14 @@ public class WalletMyIdeasFragment extends Fragment {
         }
     }
 
+    private void setNoHistoryVisibility(List<MyInvestmentsResponse> responses) {
+        if (responses.size() == 0) {
+            noHistory.setVisibility(View.VISIBLE);
+        }
+    }
 
+    private void initViews(View view) {
+        listView = view.findViewById(R.id.my_ideas_list_view);
+        noHistory = view.findViewById(R.id.my_ideas_no_history);
+    }
 }

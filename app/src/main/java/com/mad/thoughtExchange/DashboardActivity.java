@@ -61,7 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-        setViews();
+        initViews();
         RelativeLayout tabHeader = findViewById(R.id.tab_header_and_line);
 
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
@@ -141,7 +141,7 @@ public class DashboardActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.main_container, homeFeedFragment, "homeFeedFragment").commit();
     }
 
-    private void setViews() {
+    private void initViews() {
         tab1 = findViewById(R.id.tab_feed);
         tab2 = findViewById(R.id.tab_invest);
         navLine = findViewById(R.id.navbar_line);

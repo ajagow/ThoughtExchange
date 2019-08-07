@@ -45,8 +45,7 @@ import butterknife.ButterKnife;
  */
 public class HomeFeedSwipeFragment extends Fragment implements CardStackListener {
 
-//    private static final String POSTS_PATH = "api/v1/thoughts";
-    private static final String LIKES_PATH = "api/v1/likes/";
+    private static final String LIKES_PATH = MainActivity.URL + "api/v1/likes/";
     private static final String POSTS_PATH = "api/v1/thoughts/marketFeedPost/10/24/48";
 
     private RecyclerView.Adapter adapter;
@@ -71,9 +70,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
             .setDirection(Direction.Right)
             .setDuration(Duration.Normal.duration)
             .build();
-
-
-
 
     public HomeFeedSwipeFragment() {
         // Required empty public constructor
@@ -105,8 +101,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
 
         getCurrentFeedPost();
 
-        likeButton = view.findViewById(R.id.like_button);
-        dislikeButton = view.findViewById(R.id.dislike_button);
+        initViews(view);
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +184,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
     private void onSuccessfulResponse() {
         Log.d("FETCHPOST", feedPostResponses.size() + "");
         adapter = new HomeFeedSwipeAdapter(feedPostResponses, getContext());
-
 
         cardStackView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -278,7 +272,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
 
-        GsonRequest<LikesModel, LikeResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, MainActivity.URL + LIKES_PATH, likesModel, getActivity(),
+        GsonRequest<LikesModel, LikeResponse> gsonRequest = new GsonRequest<>(Request.Method.POST, LIKES_PATH, likesModel, getActivity(),
                 LikesModel.class, LikeResponse.class, headers, responseListener, errorListener);
 
         gsonRequest.volley();
@@ -291,5 +285,10 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
             getCurrentFeedPost();
 
         }
+    }
+
+    private void initViews(View view) {
+        likeButton = view.findViewById(R.id.like_button);
+        dislikeButton = view.findViewById(R.id.dislike_button);
     }
 }

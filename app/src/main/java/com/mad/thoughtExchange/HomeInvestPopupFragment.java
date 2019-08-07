@@ -39,6 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class HomeInvestPopupFragment extends DialogFragment {
 
+    private static String INVESTMENT_PATH = "api/v1/investments/";
     private static String CONTENT = "content";
     private static String EXPIRE_DATE = "expireDate";
     private static String NUM_INVESTORS = "numInvestors";
@@ -51,7 +52,12 @@ public class HomeInvestPopupFragment extends DialogFragment {
     private String worthVal;
     private int idVal;
 
-    private static String INVESTMENT_PATH = "api/v1/investments/";
+    TextView numberOfInvestors;
+    TextView content;
+    TextView endsAt;
+    TextView investmentWorth;
+    Button investBtn;
+    Button closeBtn;
 
 
     public HomeInvestPopupFragment() {
@@ -99,18 +105,11 @@ public class HomeInvestPopupFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_home_invest_popup, container, false);
 
-        TextView numberOfInvestors = view.findViewById(R.id.popup_num_of_investors);
-        TextView content = view.findViewById(R.id.popup_content);
-        TextView endsAt = view.findViewById(R.id.popup_end_time);
-        TextView investmentWorth = view.findViewById(R.id.popu_investment_worth);
+        initViews(view);
         final EditText investmentAmount = view.findViewById(R.id.popup_investment_amount);
-        Button investBtn = view.findViewById(R.id.popup_invest_btn);
-        Button closeBtn = view.findViewById(R.id.popup_close_btn);
 
         // enable scrolling for content
         content.setMovementMethod(new ScrollingMovementMethod());
-
-
 
         numberOfInvestors.setText(numInvestorsVal);
         content.setText(contentVal);
@@ -229,5 +228,14 @@ public class HomeInvestPopupFragment extends DialogFragment {
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+    }
+
+    private void initViews(View view) {
+        numberOfInvestors = view.findViewById(R.id.popup_num_of_investors);
+        content = view.findViewById(R.id.popup_content);
+        endsAt = view.findViewById(R.id.popup_end_time);
+        investmentWorth = view.findViewById(R.id.popu_investment_worth);
+        investBtn = view.findViewById(R.id.popup_invest_btn);
+        closeBtn = view.findViewById(R.id.popup_close_btn);
     }
 }

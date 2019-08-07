@@ -31,11 +31,12 @@ import java.util.Map;
 
 public class VotesFragment extends Fragment {
 
-    private ListView listView;
-    private LinearLayout noHistory;
+    private static String GET_MY_VOTING_HISTORY = MainActivity.URL + "/api/v1/users/me/votes";
+
     private VotesItemAdapter adapter;
 
-    private static String GET_MY_VOTING_HISTORY = "/api/v1/users/me/votes";
+    private ListView listView;
+    private LinearLayout noHistory;
 
 
     public VotesFragment() {
@@ -49,11 +50,8 @@ public class VotesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("votes","in onCreateView");
         View view = inflater.inflate(R.layout.fragment_votes, container, false);
-        Log.d("votes","inflated fragment_votes");
-        listView = view.findViewById(R.id.my_votes_list_view);
-        noHistory = view.findViewById(R.id.votes_no_history);
+        initViews(view);
 
         return view;
     }
@@ -63,8 +61,6 @@ public class VotesFragment extends Fragment {
         Response.Listener<List<VoteResponse>> resonseListener = new Response.Listener<List<VoteResponse>>() {
             @Override
             public void onResponse(List<VoteResponse> responses) {
-                Log.d("getVotingHistory", "total response: "+responses.toString());
-
                 for (VoteResponse response1 : responses) {
                     Log.d("getVotingHistory", response1.isLike() + " LIKE");
                 }
@@ -79,22 +75,21 @@ public class VotesFragment extends Fragment {
                 if (error.networkResponse.statusCode == 404) {
                     noHistory.setVisibility(View.VISIBLE);
                     listView.setAdapter(null);
-
                 }
                 else {
                     Toast.makeText(getActivity(), "Please try again.", Toast.LENGTH_SHORT).show();
-
                 }
             }
         };
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity()
+            .getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
 
         noHistory.setVisibility(View.INVISIBLE);
 
-        GsonRequestArray<String, VoteResponse> gsonRequest = new GsonRequestArray<String, VoteResponse>(MainActivity.URL + GET_MY_VOTING_HISTORY, getContext(),
+        GsonRequestArray<String, VoteResponse> gsonRequest = new GsonRequestArray<String, VoteResponse>(GET_MY_VOTING_HISTORY, getContext(),
                 VoteResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();
@@ -112,6 +107,11 @@ public class VotesFragment extends Fragment {
         if (!hidden) {
             getVotingHistory();
         }
+    }
+
+    private void initViews(View view) {
+        listView = view.findViewById(R.id.my_votes_list_view);
+        noHistory = view.findViewById(R.id.votes_no_history);
     }
 }
 

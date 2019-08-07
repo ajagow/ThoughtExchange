@@ -31,11 +31,12 @@ public class SignupActivity extends AppCompatActivity {
 
     private static String USERS_PATH = "api/v1/users/";
 
+    private int passwordRequiredLength;
+    private boolean passwordIsValidLength;
+
     private TextView name;
     private TextView email;
     private TextView password;
-    private int passwordRequiredLength;
-    private boolean passwordIsValidLength;
     private TextView passwordValidLength;
     private Button signup_btn;
     private Button back_to_login_btn;
@@ -45,12 +46,8 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        name = findViewById(R.id.name);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        back_to_login_btn = findViewById(R.id.back_to_login_btn);
-        signup_btn = findViewById(R.id.signup_btn);
-        passwordValidLength = findViewById(R.id.pass_validation);
+        initViews();
+
         passwordIsValidLength = false;
         passwordRequiredLength = 8;
 
@@ -78,10 +75,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignup(View view) {
-//        SignupResponse response = new SignupResponse();
-//        response.setToken("lkdsjf");
-//        onSuccessfulSignup(response);
-
         String nameVal = name.getText().toString();
         String emailVal = email.getText().toString();
         String passwordVal = password.getText().toString();
@@ -154,5 +147,14 @@ public class SignupActivity extends AppCompatActivity {
 
         SharedPreferencesUtil.saveToSharedPreferences(sharedPreferences, SharedPreferencesUtil.networth, 6000);
         startActivity(explicitIntent);
+    }
+
+    private void initViews() {
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        back_to_login_btn = findViewById(R.id.back_to_login_btn);
+        signup_btn = findViewById(R.id.signup_btn);
+        passwordValidLength = findViewById(R.id.pass_validation);
     }
 }

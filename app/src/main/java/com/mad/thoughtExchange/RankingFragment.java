@@ -54,8 +54,7 @@ public class RankingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
-
-        findViews(view);
+        initViews(view);
 
         return view;
     }
@@ -178,7 +177,7 @@ public class RankingFragment extends Fragment {
         leaderboardtitle.setText(title);
     }
 
-    private void findViews(View view) {
+    private void initViews(View view) {
         leaderboardtitle = view.findViewById(R.id.leaderboardTitle);
         username = view.findViewById(R.id.currentUserUsername);
         rank = view.findViewById(R.id.currentUserRank);

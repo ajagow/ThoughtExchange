@@ -90,7 +90,6 @@ public class OnboardingActivity extends AppIntro {
         page.setTitleTypefaceFontRes(R.font.lato_reg);
         page.setDescTypefaceFontRes(R.font.lato_reg);
 
-
         return AppIntroFragment.newInstance(page);
     }
 
@@ -119,15 +118,12 @@ public class OnboardingActivity extends AppIntro {
 
     private void onOnboardingCompletion() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
         SharedPreferences.Editor e = preferences.edit();
         e.putBoolean("need_onboarding", false);
+        e.apply();
 
         boolean isFirstStart = preferences.getBoolean("need_onboarding", true); //
-        Log.d("isFirstStart", Boolean.toString(isFirstStart)); //
 
-        //  Apply changes
-        e.apply();
         // go back to the MainActivity TODO: move from signup to Dashboard
         Intent toMain = new Intent(this, MainActivity.class);
         startActivity(toMain);
