@@ -92,16 +92,13 @@ public class NewContentFragment extends Fragment {
         // check if initial investment value is an positive integer
         try {
             initInvestment = Integer.parseInt(initInvestmentVal);
-            if (thought.equals("")) {
-                Toast.makeText(getActivity(), "Please enter in a valid thought", Toast.LENGTH_SHORT).show();
+            if (thought.equals("") || thought.trim().length() <= 0) {
+                Toast.makeText(getActivity(), "Thoughts can't be empty", Toast.LENGTH_SHORT).show();
             }
             else if (initInvestment <= 0) {
                 Toast.makeText(getActivity(), "Enter an amount greater than 0", Toast.LENGTH_SHORT).show();
             } else if (!userHasEnoughMoneyToInvest(initInvestment)) {
                 Toast.makeText(getActivity(), "You don't have enough coins. Enter a lower amount", Toast.LENGTH_SHORT).show();
-            } else if (thought.equals("")) {
-                Toast.makeText(getActivity(), "Content cannot be left blank", Toast.LENGTH_SHORT).show();
-
             } else {
                 onSuccessfulSubmit(initInvestment);
                 sendNewPost(thought, initInvestment);
