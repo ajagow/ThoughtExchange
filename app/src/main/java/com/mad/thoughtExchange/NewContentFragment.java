@@ -65,10 +65,7 @@ public class NewContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_content, container, false);
 
-        newPostContent = view.findViewById(R.id.newpost_content);
-        initialInvestment = view.findViewById(R.id.newpost_initial_investment);
-        textCounter = view.findViewById(R.id.text_counter);
-        submitBtn = view.findViewById(R.id.newpost_submit);
+        initViews(view);
 
         newPostContent.setHorizontallyScrolling(false);
         newPostContent.setMaxLines(Integer.MAX_VALUE);
@@ -204,6 +201,13 @@ public class NewContentFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         clearValues();
+    }
+
+    private void initViews(View view) {
+        newPostContent = view.findViewById(R.id.newpost_content);
+        initialInvestment = view.findViewById(R.id.newpost_initial_investment);
+        textCounter = view.findViewById(R.id.text_counter);
+        submitBtn = view.findViewById(R.id.newpost_submit);
     }
 
 }

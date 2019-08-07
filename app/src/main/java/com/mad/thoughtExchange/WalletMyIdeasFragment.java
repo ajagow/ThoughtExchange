@@ -28,10 +28,10 @@ import java.util.Map;
 
 public class WalletMyIdeasFragment extends Fragment {
 
+    private static String GET_MY_POSTS = MainActivity.URL + "api/v1/thoughts/me";
+
     private ListView listView;
     private LinearLayout noHistory;
-    private static String GET_MY_POSTS = "api/v1/thoughts/me";
-
 
 
     public WalletMyIdeasFragment() {
@@ -47,8 +47,7 @@ public class WalletMyIdeasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wallet_my_ideas, container, false);
 
-        listView = view.findViewById(R.id.my_ideas_list_view);
-        noHistory = view.findViewById(R.id.my_ideas_no_history);
+        initViews(view);
 
         return view;
     }
@@ -82,12 +81,13 @@ public class WalletMyIdeasFragment extends Fragment {
             }
         };
 
-        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity().getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
+        String token = SharedPreferencesUtil.getStringFromSharedPreferences(getActivity()
+            .getSharedPreferences(SharedPreferencesUtil.myPreferences, Context.MODE_PRIVATE), SharedPreferencesUtil.token);
         Map<String, String> headers = new HashMap<>();
         headers.put("api-token", token);
         Log.d("sharedPreferences","retrieved token: "+token);
 
-        GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(MainActivity.URL + GET_MY_POSTS, getContext(),
+        GsonRequestArray<String, MyInvestmentsResponse> gsonRequest = new GsonRequestArray<String, MyInvestmentsResponse>(GET_MY_POSTS, getContext(),
                 MyInvestmentsResponse.class, resonseListener, errorListener, headers);
 
         gsonRequest.volley();
@@ -108,5 +108,8 @@ public class WalletMyIdeasFragment extends Fragment {
         }
     }
 
-
+    private void initViews(View view) {
+        listView = view.findViewById(R.id.my_ideas_list_view);
+        noHistory = view.findViewById(R.id.my_ideas_no_history);
+    }
 }
