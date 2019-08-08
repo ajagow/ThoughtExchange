@@ -1,4 +1,4 @@
-package com.mad.thoughtExchange.utils;
+package com.mad.thoughtExchange.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.VoteResponse;
 
+import com.mad.thoughtExchange.utils.GeneralUtils;
 import java.util.List;
 
 /**

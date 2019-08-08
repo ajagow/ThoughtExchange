@@ -95,8 +95,6 @@
                     android:text="Log in"/>
 
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

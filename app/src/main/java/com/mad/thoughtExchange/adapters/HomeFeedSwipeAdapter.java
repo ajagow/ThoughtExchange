@@ -1,4 +1,4 @@
-package com.mad.thoughtExchange.utils;
+package com.mad.thoughtExchange.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

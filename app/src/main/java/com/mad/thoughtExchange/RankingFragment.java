@@ -16,7 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.RankingResponse;
 import com.mad.thoughtExchange.responses.UserResponse;
-import com.mad.thoughtExchange.utils.RankingItemAdapter;
+import com.mad.thoughtExchange.adapters.RankingItemAdapter;
 import com.mad.thoughtExchange.utils.VolleyUtils;
 
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ import java.util.Map;
 public class RankingFragment extends Fragment {
 
     private static int RANKING_LIMIT = 3;
-    private static String GET_RANKING = MainActivity.URL + "/api/v1/users/rankings";
-    private static String GET_ME = MainActivity.URL + "/api/v1/users/me";
+    private static String GET_RANKING_PATH = MainActivity.URL + "/api/v1/users/rankings";
+    private static String GET_ME_PATH = MainActivity.URL + "/api/v1/users/me";
 
     private TextView leaderboardtitle; // "Global Top _"
     private TextView username;
@@ -75,8 +75,9 @@ public class RankingFragment extends Fragment {
         // update api-token to headers
         Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
-        GsonRequestArray<String, RankingResponse> gsonRequest = new GsonRequestArray<String, RankingResponse>(GET_RANKING,
-            getContext(), RankingResponse.class, responseListener, errorListener, headers);
+        GsonRequestArray<String, RankingResponse> gsonRequest =
+            new GsonRequestArray<String, RankingResponse>(GET_RANKING_PATH, getContext(),
+                RankingResponse.class, responseListener, errorListener, headers);
 
         gsonRequest.volley();
     }
@@ -149,8 +150,9 @@ public class RankingFragment extends Fragment {
         Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        GsonRequest<UserResponse> gsonRequest = new GsonRequest<UserResponse>(GET_ME,
-            UserResponse.class, headers, resonseListener, errorListener);
+        GsonRequest<UserResponse> gsonRequest =
+            new GsonRequest<UserResponse>(GET_ME_PATH, UserResponse.class,
+                headers, resonseListener, errorListener);
         queue.add(gsonRequest);
     }
 
@@ -169,6 +171,4 @@ public class RankingFragment extends Fragment {
         netWorth = view.findViewById(R.id.currentUserNetWorth);
         leaderboardListview = view.findViewById(R.id.leaderboardListView);
     }
-
-
 }

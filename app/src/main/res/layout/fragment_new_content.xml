@@ -57,8 +57,6 @@
                     style="@style/NewPostInputLabelMedium"
                     android:layout_alignParentEnd="true"
                     android:text="100 characters left" />
-
-
             </RelativeLayout>
 
             <EditText
@@ -97,5 +95,4 @@
 
         </LinearLayout>
     </RelativeLayout>
-
 </FrameLayout>

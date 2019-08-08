@@ -29,6 +29,7 @@ import java.util.Map;
  */
 public class DashboardActivity extends AppCompatActivity {
 
+
     final FragmentManager fm = getSupportFragmentManager();
 
     final Fragment homeFeedFragment = new HomeFeedSwipeFragment();
@@ -38,6 +39,8 @@ public class DashboardActivity extends AppCompatActivity {
     final Fragment historyFragment = new VotesFragment();
     final Fragment rankingFragment = new RankingFragment();
     final Fragment walletMyInvestmentsFragment = new WalletMyInvestmentsFragment();
+
+    private static String ME_PATH = MainActivity.URL + "api/v1/users/me";
 
     static String NEW_CONTENT_FRAGMENT_NAME = "newContentFragment";
     static String HOME_INVEST_FRAGMENT_NAME = "homeInvestFragment";
@@ -56,8 +59,6 @@ public class DashboardActivity extends AppCompatActivity {
     private String userName;
     private TextView uWorth;
     private TextView uName;
-
-    private static String USERS_PATH = "api/v1/users/me";
 
 
     @Override
@@ -112,17 +113,17 @@ public class DashboardActivity extends AppCompatActivity {
         Map<String, String> headers = VolleyUtils.getAuthenticationHeader(this);
 
         GsonRequest<String, UserResponse> gsonRequest = new GsonRequest<String, UserResponse>(
-                MainActivity.URL + USERS_PATH,
-                this,
-                UserResponse.class,
-                responseListener,
-                errorListener,
-                headers
+            ME_PATH,
+            this,
+            UserResponse.class,
+            responseListener,
+            errorListener,
+            headers
         );
         gsonRequest.volley();
     }
-
     // set fragment manager by adding all the fragments
+
     private void setFragmentManager() {
         fm.beginTransaction().add(R.id.main_container, newContentFragment, NEW_CONTENT_FRAGMENT_NAME).hide(newContentFragment).commit();
         fm.beginTransaction().add(R.id.main_container, homeInvestFragment, HOME_INVEST_FRAGMENT_NAME).hide(homeInvestFragment).commit();

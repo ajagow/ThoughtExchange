@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.Response;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
-import com.mad.thoughtExchange.utils.HomeInvestItemAdapter;
+import com.mad.thoughtExchange.adapters.HomeInvestItemAdapter;
 import com.mad.thoughtExchange.utils.VolleyUtils;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class HomeInvestFragment extends Fragment {
 
-    private static String GET_INVESTMENTS_URL = "api/v1/thoughts/investments/10/24";
+    private static String GET_INVESTMENTS_PATH = MainActivity.URL + "api/v1/thoughts/investments/10/24";
 
     private ListView listView;
     private LinearLayout noNewInvestments;
@@ -53,7 +53,6 @@ public class HomeInvestFragment extends Fragment {
         return view;
     }
 
-
     // fetch investments from api
     void getInvestments() {
 
@@ -83,7 +82,8 @@ public class HomeInvestFragment extends Fragment {
 
         Map<String, String> headers = VolleyUtils.getAuthenticationHeader(getActivity());
 
-        GsonRequestArray<String, ThoughtResponse> gsonRequest = new GsonRequestArray<String, ThoughtResponse>(MainActivity.URL + GET_INVESTMENTS_URL, getContext(),
+        GsonRequestArray<String, ThoughtResponse> gsonRequest =
+            new GsonRequestArray<String, ThoughtResponse>(GET_INVESTMENTS_PATH, getContext(),
                 ThoughtResponse.class, responseListener, errorListener, headers);
 
         gsonRequest.volley();
@@ -105,6 +105,7 @@ public class HomeInvestFragment extends Fragment {
         }
     }
 
+    // initialize views
     private void initViews(View view) {
         listView = view.findViewById(R.id.myListView);
         noNewInvestments = view.findViewById(R.id.investments_feed_none);

@@ -1,4 +1,4 @@
-package com.mad.thoughtExchange.utils;
+package com.mad.thoughtExchange.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -13,6 +13,7 @@ import com.mad.thoughtExchange.HomeInvestPopupFragment;
 import com.mad.thoughtExchange.R;
 import com.mad.thoughtExchange.responses.ThoughtResponse;
 
+import com.mad.thoughtExchange.utils.GeneralUtils;
 import java.util.List;
 
 /**
@@ -108,8 +109,6 @@ public class HomeInvestItemAdapter extends BaseAdapter {
                 homeInvestPopupFragment.show(fragmentManager, "fragment_fragment_home_invest_popup");
             }
         });
-
-
         return view;
     }
 

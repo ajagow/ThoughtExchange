@@ -13,7 +13,7 @@ import com.android.volley.Response;
 import com.mad.thoughtExchange.models.GsonRequestArray;
 import com.mad.thoughtExchange.responses.MyInvestmentsResponse;
 import com.mad.thoughtExchange.utils.VolleyUtils;
-import com.mad.thoughtExchange.utils.WalletItemAdapter;
+import com.mad.thoughtExchange.adapters.WalletItemAdapter;
 
 import java.util.List;
 import java.util.Map;
@@ -97,6 +97,7 @@ public class WalletMyIdeasFragment extends Fragment {
         }
     }
 
+    // initialize views
     private void initViews(View view) {
         listView = view.findViewById(R.id.my_ideas_list_view);
         noHistory = view.findViewById(R.id.my_ideas_no_history);

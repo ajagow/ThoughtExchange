@@ -20,10 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="Every toothbrush is recommended by dentists because they just want us to brush our teeth to brush our teeth" />
-
-
     </RelativeLayout>
-
 
     <FrameLayout
         android:id="@+id/left_overlay"
@@ -50,5 +47,4 @@
             android:src="@drawable/home_vote_like_outline"/>
 
     </FrameLayout>
-
 </RelativeLayout>

@@ -67,7 +67,5 @@
                 android:text="Loading..." />
 
         </LinearLayout>
-
-
     </LinearLayout>
 </RelativeLayout>

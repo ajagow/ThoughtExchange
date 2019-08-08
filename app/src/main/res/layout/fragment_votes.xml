@@ -32,5 +32,4 @@
             android:text="You don't have a voting history yet." />
 
     </LinearLayout>
-
 </RelativeLayout>

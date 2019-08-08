@@ -20,7 +20,6 @@
         <item name="android:layout_centerHorizontal">true</item>
     </style>
     <style name="NewPostH2" parent="BaseH2Dark">
-
     </style>
 
 </resources>

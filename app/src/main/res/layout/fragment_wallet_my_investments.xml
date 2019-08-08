@@ -31,7 +31,4 @@
             android:text="You don't have any investments" />
 
     </LinearLayout>
-
-
-
 </RelativeLayout>

@@ -78,10 +78,7 @@
                     android:id="@+id/signup_btn"
                     style="@style/BaseButtonLink"
                     android:text="Sign up"/>
-
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

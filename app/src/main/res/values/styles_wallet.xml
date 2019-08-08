@@ -24,5 +24,4 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:background">@drawable/pill_background</item>
     </style>
-
 </resources>
