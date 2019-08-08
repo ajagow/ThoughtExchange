@@ -69,7 +69,7 @@ public class DashboardActivity extends AppCompatActivity {
         RelativeLayout tabHeader = findViewById(R.id.tab_header_and_line);
 
         SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
-        spaceNavigationView.setCentreButtonIcon(R.drawable.plus_icon);
+        spaceNavigationView.setCentreButtonIcon(R.drawable.navigation_icon_plus);
         spaceNavigationView.setInActiveCentreButtonIconColor(ContextCompat.getColor(this,R.color.white));
 
         SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesUtil.myPreferences, MODE_PRIVATE);
@@ -144,5 +144,19 @@ public class DashboardActivity extends AppCompatActivity {
         navLine = findViewById(R.id.navbar_line);
         uWorth = findViewById(R.id.worth);
         uName = findViewById(R.id.headerUserName);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+//            super.onBackPressed();
+        } else {
+            SpaceNavigationView spaceNavigationView = this.findViewById(R.id.space);
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, homeFeedFragment);
+            spaceNavigationView.changeCurrentItem(0);
+        }
     }
 }

@@ -84,7 +84,7 @@ public class RankingFragment extends Fragment {
     /**
      * Set top n rankings and leaderboard title
      *
-     * @param responses top n ranking responses
+     * @param responses top n navigation_icon_ranking responses
      */
     private void setRankings(List<RankingResponse> responses) {
         setLeaderboardTitle();
@@ -99,7 +99,7 @@ public class RankingFragment extends Fragment {
     /**
      * Filter top n rankings from all rankings
      *
-     * @param responses all ranking responses from API
+     * @param responses all navigation_icon_ranking responses from API
      * @return filtered list of top n rankings
      */
     private List<RankingResponse> pullTopRankings(List<RankingResponse> responses) {
@@ -118,7 +118,7 @@ public class RankingFragment extends Fragment {
      * User information: Username, rank and net worth
      *
      * @param response current user information from API
-     * @param rankings all ranking responses from API
+     * @param rankings all navigation_icon_ranking responses from API
      */
     private void setMe(UserResponse response, List<RankingResponse> rankings) {
         username.setText(response.getName());
@@ -134,7 +134,7 @@ public class RankingFragment extends Fragment {
     /**
      * Retrieve current user information from API
      *
-     * @param rankings all ranking responses to find current user from
+     * @param rankings all navigation_icon_ranking responses to find current user from
      */
     private void getMe(List<RankingResponse> rankings) {
         Response.Listener<UserResponse> resonseListener = new Response.Listener<UserResponse>() {

@@ -4,29 +4,24 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/home"
         android:title="home"/>
 
     <item
         android:id="@+id/navigation_notifications"
 
         android:iconTintMode="src_in"
-        android:icon="@drawable/wallet"
         android:title="navigation" />
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/home"
         android:title="dashboard" />
 
     <item
         android:id="@+id/navigation_history"
-        android:icon="@drawable/history"
         android:title="history"/>
 
     <item
         android:id="@+id/navigation_ranking"
-        android:icon="@drawable/ranking"
         android:title="ranking"/>
 
 </menu>

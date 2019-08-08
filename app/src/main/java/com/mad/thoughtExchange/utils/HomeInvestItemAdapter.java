@@ -16,7 +16,7 @@ import com.mad.thoughtExchange.responses.ThoughtResponse;
 import java.util.List;
 
 /**
- * Adapter for the ListView under the investment tab in the home fragment.
+ * Adapter for the ListView under the investment tab in the navigation_icon_home fragment.
  * Each represents an item that a User can potentially invest in.
  */
 

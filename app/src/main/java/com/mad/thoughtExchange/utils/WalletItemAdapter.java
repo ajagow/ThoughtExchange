@@ -72,7 +72,7 @@ public class WalletItemAdapter extends BaseAdapter {
         final String closingIn = "Posted on " + GeneralUtils.getPostedDate(item.getCreatedAt());
 
         String myInitialInvestment = item.getMyInitialInvestment() + "";
-        String earnings = item.getEarnings() + "";
+        String earnings = Math.abs(item.getEarnings()) + "";
 
 
         if (view == null) {
@@ -83,9 +83,9 @@ public class WalletItemAdapter extends BaseAdapter {
 
             TextView gainOrLostView = view.findViewById(R.id.my_investments_gain_lost);
             if (item.getEarnings() < 0) {
-                gainOrLostView.setText("You lost: ");
+                gainOrLostView.setText("Net Loss: ");
             } else {
-                gainOrLostView.setText("You gained: ");
+                gainOrLostView.setText("Net Gain: ");
             }
 
             // link view holder to my view
@@ -123,9 +123,9 @@ public class WalletItemAdapter extends BaseAdapter {
         }
 
         if (item.getEarnings() < 0) {
-            viewHolder.gainOrLost.setText("You lost: ");
+            viewHolder.gainOrLost.setText("Net loss: ");
         } else {
-            viewHolder.gainOrLost.setText("You gained: ");
+            viewHolder.gainOrLost.setText("Net gain: ");
         }
 
         return view;

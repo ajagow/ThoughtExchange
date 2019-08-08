@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:padding="40dp"
-        android:background="@drawable/login_card_background">
+        android:background="@drawable/backgrounds_login_card">
 
         <TextView
             android:id="@+id/current_feed_post"
@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_dislike_overlay"/>
+            android:src="@drawable/home_vote_dislike_outline"/>
 
     </FrameLayout>
 
@@ -47,7 +47,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_like_overlay"/>
+            android:src="@drawable/home_vote_like_outline"/>
 
     </FrameLayout>
 

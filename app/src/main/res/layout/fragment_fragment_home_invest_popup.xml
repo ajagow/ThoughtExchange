@@ -13,7 +13,7 @@
         android:layout_centerVertical="true"
         android:padding="40dp"
         android:orientation="vertical"
-        android:background="@drawable/login_card_background">
+        android:background="@drawable/backgrounds_login_card">
 
         <TextView
             android:id="@+id/popup_content"
@@ -61,7 +61,7 @@
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:baselineAlignBottom="true"
-                        android:src="@drawable/investor" />
+                        android:src="@drawable/icons_investor" />
 
                     <TextView
                         android:id="@+id/popup_num_of_investors"
@@ -76,7 +76,7 @@
                         android:layout_height="12dp"
                         android:layout_marginLeft="12dp"
                         android:baselineAlignBottom="true"
-                        android:src="@drawable/coin" />
+                        android:src="@drawable/navigation_icon_coin" />
 
                     <TextView
                         android:id="@+id/popu_investment_worth"

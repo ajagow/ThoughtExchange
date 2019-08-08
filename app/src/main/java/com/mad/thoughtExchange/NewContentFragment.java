@@ -143,7 +143,7 @@ public class NewContentFragment extends Fragment {
         newPostContent.addTextChangedListener(mTextEditorWatcher);
     }
 
-    // on successful submit, reset how many coins a user has and go back to home page
+    // on successful submit, reset how many coins a user has and go back to navigation_icon_home page
     private void onSuccessfulSubmit(int initInvestment) {
         clearValues();
 

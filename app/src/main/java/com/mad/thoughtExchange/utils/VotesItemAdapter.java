@@ -16,7 +16,7 @@ import com.mad.thoughtExchange.responses.VoteResponse;
 import java.util.List;
 
 /**
- * Adapter for displaying vote history of a user.
+ * Adapter for displaying vote navigation_icon_history of a user.
  */
 public class VotesItemAdapter extends BaseAdapter {
 
@@ -80,10 +80,8 @@ public class VotesItemAdapter extends BaseAdapter {
     // set whether a vote was a like or dislike
     private void setVoteValueImage(ViewHolder viewHolder, boolean is_like) {
         if(is_like){
-            viewHolder.voteValueText.setBackground(ContextCompat.getDrawable(context, R.drawable.tag_background_green));
             viewHolder.voteValueText.setText("LIKED");
         } else {
-            viewHolder.voteValueText.setBackground(ContextCompat.getDrawable(context, R.drawable.tag_background_red));
             viewHolder.voteValueText.setText("DISLIKED");
         }
     }

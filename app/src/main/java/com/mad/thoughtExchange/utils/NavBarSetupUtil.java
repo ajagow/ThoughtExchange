@@ -38,10 +38,10 @@ public class NavBarSetupUtil {
 
         spaceNavigationView.showIconOnly();
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
-        spaceNavigationView.addSpaceItem(new SpaceItem(HOME_ITEM, R.drawable.home));
-        spaceNavigationView.addSpaceItem(new SpaceItem(WALLET_ITEM, R.drawable.history));
-        spaceNavigationView.addSpaceItem(new SpaceItem(HISTORY_ITEM, R.drawable.ic_thumbupdown));
-        spaceNavigationView.addSpaceItem(new SpaceItem(RANKING_ITEM, R.drawable.ranking));
+        spaceNavigationView.addSpaceItem(new SpaceItem(HOME_ITEM, R.drawable.navigation_icon_home));
+        spaceNavigationView.addSpaceItem(new SpaceItem(WALLET_ITEM, R.drawable.navigation_icon_history));
+        spaceNavigationView.addSpaceItem(new SpaceItem(HISTORY_ITEM, R.drawable.navigation_icon_likehistory));
+        spaceNavigationView.addSpaceItem(new SpaceItem(RANKING_ITEM, R.drawable.navigation_icon_ranking));
 
         spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
@@ -94,7 +94,11 @@ public class NavBarSetupUtil {
             click(tab1, "walletMyInvestmentsFragment", "walletMyIdeasFragment", null,fm, true, nav);
             click(tab2, "walletMyIdeasFragment", "walletMyInvestmentsFragment", null,fm, false, nav);
         }
-        fm.beginTransaction().hide(active).show(newFragment).commit();
+        fm.beginTransaction()
+                .hide(active)
+                .show(newFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     // change which fragments are visible based on click
@@ -121,7 +125,11 @@ public class NavBarSetupUtil {
 
             Fragment currentFrag = fm.findFragmentByTag(current);
             Fragment goToFragment = fm.findFragmentByTag(goTo);
-            fm.beginTransaction().setCustomAnimations(enter, exit).hide(currentFrag).show(goToFragment).commit();
+            fm.beginTransaction()
+                    .setCustomAnimations(enter, exit)
+                    .hide(currentFrag)
+                    .show(goToFragment)
+                    .commit();
 
             if (swipeLeft) {
                 moveLine(navLine, 550f, 0f);

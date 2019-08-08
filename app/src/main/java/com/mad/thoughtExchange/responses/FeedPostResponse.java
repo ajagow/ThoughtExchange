@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 /**
- * Response to home feed API request
+ * Response to navigation_icon_home feed API request
  */
 public class FeedPostResponse {
     @SerializedName("contents")

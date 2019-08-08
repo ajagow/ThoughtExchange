@@ -65,7 +65,7 @@ public class WalletMyInvestmentsFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                // if 404 error, user doesn't have an investment history
+                // if 404 error, user doesn't have an investment navigation_icon_history
                 if (error.networkResponse.statusCode == 404) {
                     noInvestments.setVisibility(View.VISIBLE);
                 }

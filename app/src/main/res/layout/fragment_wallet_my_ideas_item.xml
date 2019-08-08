@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    style="@style/homefeed_invest_card">
+    style="@style/homefeed_invest_card"
+    android:layout_marginTop="0dp">
 
             <TextView
                 android:id="@+id/my_ideas_date_posted"
@@ -27,7 +28,7 @@
                     style="card_icon_user"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
-                    android:src="@drawable/investor"
+                    android:src="@drawable/icons_investor"
                     android:baselineAlignBottom="true"
                     />
                 <TextView
@@ -41,7 +42,7 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_marginLeft="12dp"
-                    android:src="@drawable/coin"
+                    android:src="@drawable/navigation_icon_coin"
                     android:baselineAlignBottom="true"
                     />
                 <TextView

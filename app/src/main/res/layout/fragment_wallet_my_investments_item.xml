@@ -8,6 +8,7 @@
 
             <LinearLayout
                 style="@style/homefeed_invest_card"
+                android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -65,7 +66,7 @@
                         <ImageView
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:src="@drawable/coin" />
+                            android:src="@drawable/navigation_icon_coin" />
 
                         <TextView
                             android:id="@+id/my_investments_earnings"
@@ -96,7 +97,7 @@
                         <ImageView
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:src="@drawable/coin" />
+                            android:src="@drawable/navigation_icon_coin" />
 
                         <TextView
                             android:id="@+id/my_investments_my_invested"
@@ -124,7 +125,7 @@
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:baselineAlignBottom="true"
-                            android:src="@drawable/investor" />
+                            android:src="@drawable/icons_investor" />
 
                         <TextView
                             android:id="@+id/my_investments_num_investors"
@@ -139,7 +140,7 @@
                             android:layout_height="12dp"
                             android:layout_marginLeft="12dp"
                             android:baselineAlignBottom="true"
-                            android:src="@drawable/coin" />
+                            android:src="@drawable/navigation_icon_coin" />
 
                         <TextView
                             android:id="@+id/my_investments_total_worth"
@@ -155,7 +156,7 @@
                             android:layout_marginLeft="12dp"
                             android:baselineAlignBottom="true"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/ic_like_outline" />
+                            android:src="@drawable/icon_like" />
 
                         <TextView
                             android:id="@+id/my_investments_num_likes"
@@ -171,7 +172,7 @@
                             android:layout_marginLeft="12dp"
                             android:baselineAlignBottom="true"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/ic_dislike_outline" />
+                            android:src="@drawable/icon_thumbsdown" />
 
                         <TextView
                             android:id="@+id/my_investments_num_dislikes"

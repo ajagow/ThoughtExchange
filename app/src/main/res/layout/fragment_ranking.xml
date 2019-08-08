@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:background="@drawable/login_card_background"
+        android:background="@drawable/backgrounds_login_card"
         android:padding="30dp">
 
         <LinearLayout
@@ -37,7 +37,7 @@
                 android:layout_height="75dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/ic_user" />
+                android:src="@drawable/icons_user" />
 
             <TextView
                 android:id="@+id/currentUserUsername"
@@ -78,7 +78,7 @@
                     <ImageView
                         android:layout_width="10dp"
                         android:layout_height="10dp"
-                        android:src="@drawable/coin"/>
+                        android:src="@drawable/navigation_icon_coin"/>
 
                     <TextView
                         android:id="@+id/currentUserNetWorth"

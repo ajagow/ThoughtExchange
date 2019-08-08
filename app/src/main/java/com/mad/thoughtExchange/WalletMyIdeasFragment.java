@@ -87,7 +87,7 @@ public class WalletMyIdeasFragment extends Fragment {
         }
     }
 
-    // if there are no responses, then hide no history message
+    // if there are no responses, then hide no navigation_icon_history message
     private void setNoHistoryVisibility(List<MyInvestmentsResponse> responses) {
         if (responses.size() == 0) {
             noHistory.setVisibility(View.VISIBLE);

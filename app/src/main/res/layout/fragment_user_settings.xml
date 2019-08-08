@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/login_card_background"
+        android:background="@drawable/backgrounds_login_card"
         android:orientation="vertical"
         android:padding="40dp">
 

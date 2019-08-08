@@ -59,7 +59,7 @@ public class RankingItemAdapter extends BaseAdapter {
             // link view holder to my view
             view.setTag(viewHolder);
         } else {
-            Log.d("ranking, getView", "view != null");
+            Log.d("navigation_icon_ranking, getView", "view != null");
             // If view already exists then restore view holder and I can access Image and Text View
             viewHolder = (ViewHolder) view.getTag();
         }

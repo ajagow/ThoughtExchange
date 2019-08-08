@@ -33,7 +33,7 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/coin"/>
+                android:src="@drawable/navigation_icon_coin"/>
 
             <TextView
                 android:id="@+id/worth"
@@ -62,15 +62,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:layout_marginRight="7dp"
                 android:text="Loading..." />
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_hamburger" />
 
         </LinearLayout>
 

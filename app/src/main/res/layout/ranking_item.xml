@@ -34,7 +34,7 @@
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:src="@drawable/coin" />
+                android:src="@drawable/navigation_icon_coin" />
 
             <TextView
                 android:id="@+id/rankingNetWorth"

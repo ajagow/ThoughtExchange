@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DashboardActivity"
-    android:background="@drawable/ic_tx_dash_back">
+    android:background="@drawable/backgrounds_dashboard">
 
     <include
         android:id="@+id/header"
