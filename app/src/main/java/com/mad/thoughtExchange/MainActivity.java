@@ -157,4 +157,9 @@ public class MainActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.login_btn);
         signupButton = findViewById(R.id.signup_btn);
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }
