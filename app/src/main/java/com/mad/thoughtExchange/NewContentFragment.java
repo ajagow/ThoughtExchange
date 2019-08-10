@@ -153,7 +153,7 @@ public class NewContentFragment extends Fragment {
         TextView uWorth = getActivity().findViewById(R.id.worth);
         uWorth.setText(String.valueOf(newWorth));
 
-        // todo: this is bad
+        //
         NavBarSetupUtil.onAnyMenuItemClick(getFragmentManager(),
                 "HOME",
                 getActivity().findViewById(R.id.tab_header_and_line),

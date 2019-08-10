@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,13 +18,9 @@ public class VolleyUtils {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                try {
-                    String body = new String(error.networkResponse.data,"UTF-8");
-                    Log.d("FETCH_VOTES", body);
+                String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                Log.d("FETCH_VOTES", body);
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
             }
         };
     }

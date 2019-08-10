@@ -143,10 +143,10 @@ public class WalletItemAdapter extends BaseAdapter {
         boolean isClosed = GeneralUtils.isFinishedOnMarket(creationDate);
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ViewGroup parent = (ViewGroup) view.findViewById(R.id.my_investments_header_layout);
+        ViewGroup parent = view.findViewById(R.id.my_investments_header_layout);
 
-        TextView placeholder = (TextView) view.findViewById(R.id.my_investments_closed_indicator);
-        TextView closedCardTemp = (TextView) view.findViewById(R.id.my_investments_closed_indicator_temp);
+        TextView placeholder = view.findViewById(R.id.my_investments_closed_indicator);
+        TextView closedCardTemp = view.findViewById(R.id.my_investments_closed_indicator_temp);
 
         int index = parent.indexOfChild(placeholder);
         parent.removeView(placeholder);

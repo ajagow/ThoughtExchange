@@ -18,11 +18,6 @@ import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
 public class OnboardingActivity extends AppIntro {
-    private final String TITLE = "title";
-    private final String DESCRIPTION = "description";
-    private final String IMAGE = "image";
-    private final String COLOR = "background_color";
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,7 +113,7 @@ public class OnboardingActivity extends AppIntro {
 
         boolean isFirstStart = preferences.getBoolean("need_onboarding", true); //
 
-        // go back to the MainActivity TODO: move from signup to Dashboard
+        // go back to the MainActivity
         Intent toMain = new Intent(this, MainActivity.class);
         startActivity(toMain);
     }

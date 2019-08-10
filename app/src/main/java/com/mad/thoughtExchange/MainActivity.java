@@ -21,6 +21,7 @@ import com.mad.thoughtExchange.responses.LoginResponse;
 import com.mad.thoughtExchange.utils.SharedPreferencesUtil;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean isFirstStart = preferences.getBoolean("need_onboarding", true);
                 Log.d("isFirstStart", Boolean.toString(isFirstStart));
 
-                // TODO: debugging onboarding Remove isFirstStart declaration later
-                //isFirstStart = true;
+
                 if (isFirstStart) {
                     final Intent i = new Intent(MainActivity.this, OnboardingActivity.class);
 
@@ -114,13 +114,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("EROR_LOGIN", "dlkfj");
-                try {
-                    String body = new String(error.networkResponse.data,"UTF-8");
-                    Log.d("LOGIN", body);
+                String body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                Log.d("LOGIN", body);
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
                 Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
             }
         };

@@ -199,7 +199,6 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
 
     @Override
     public void onCardSwiped(Direction direction) {
-        int currentPostID = -1; //TODO: pull actual post ID
         int pos = manager.getTopPosition();
 
         if (pos == feedPostResponses.size()) {
@@ -207,7 +206,7 @@ public class HomeFeedSwipeFragment extends Fragment implements CardStackListener
             setVoteButtonVisible(false);
         }
 
-        currentPostID = feedPostResponses.get(pos-1).getPost_id();
+        int currentPostID = feedPostResponses.get(pos-1).getPost_id();
 
         if (direction == Direction.Left) {
             onDislike(currentPostID);

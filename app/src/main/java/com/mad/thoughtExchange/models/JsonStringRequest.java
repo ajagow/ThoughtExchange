@@ -23,7 +23,7 @@ public class JsonStringRequest extends JsonRequest<String> {
      */
     public JsonStringRequest(int method, String url, String jsonRequest,
                              Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(method, url, (jsonRequest == null) ? null : jsonRequest, listener,
+        super(method, url, jsonRequest, listener,
                 errorListener);
     }
 

@@ -78,7 +78,7 @@ public class DashboardActivity extends AppCompatActivity {
         setFragmentManager();
 
         NavBarSetupUtil navBarSetupUtil = new NavBarSetupUtil();
-        navBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
+        NavBarSetupUtil.setupNavBar(savedInstanceState, spaceNavigationView, fm, tabHeader, tab1, tab2, navLine);
 
         userDetail.setOnClickListener(view -> {
             UserSettings userSettings = new UserSettings();
